@@ -14,6 +14,12 @@
 		CD86E06B1E6D639600A0B8AE /* NSJSONSerialization+JSONString.h in Headers */ = {isa = PBXBuildFile; fileRef = CD86E0691E6D639600A0B8AE /* NSJSONSerialization+JSONString.h */; };
 		CD86E06C1E6D639600A0B8AE /* NSJSONSerialization+JSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = CD86E06A1E6D639600A0B8AE /* NSJSONSerialization+JSONString.m */; };
 		CD92EFC71DE6B2DC00AC6A25 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD92EFC61DE6B2DC00AC6A25 /* JMessage.framework */; };
+		CE88C7FF1ECADA570083741C /* jpush-ios-3.0.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE88C7F91ECADA570083741C /* jpush-ios-3.0.5.a */; };
+		CE88C8001ECADA570083741C /* JPUSHService.h in Headers */ = {isa = PBXBuildFile; fileRef = CE88C7FA1ECADA570083741C /* JPUSHService.h */; };
+		CE88C8011ECADA570083741C /* RCTJPushActionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CE88C7FB1ECADA570083741C /* RCTJPushActionQueue.h */; };
+		CE88C8021ECADA570083741C /* RCTJPushActionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88C7FC1ECADA570083741C /* RCTJPushActionQueue.m */; };
+		CE88C8031ECADA570083741C /* RCTJPushModule.h in Headers */ = {isa = PBXBuildFile; fileRef = CE88C7FD1ECADA570083741C /* RCTJPushModule.h */; };
+		CE88C8041ECADA570083741C /* RCTJPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88C7FE1ECADA570083741C /* RCTJPushModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +44,12 @@
 		CD86E0691E6D639600A0B8AE /* NSJSONSerialization+JSONString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+JSONString.h"; sourceTree = "<group>"; };
 		CD86E06A1E6D639600A0B8AE /* NSJSONSerialization+JSONString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+JSONString.m"; sourceTree = "<group>"; };
 		CD92EFC61DE6B2DC00AC6A25 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMessage.framework; sourceTree = "<group>"; };
+		CE88C7F91ECADA570083741C /* jpush-ios-3.0.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.5.a"; sourceTree = "<group>"; };
+		CE88C7FA1ECADA570083741C /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		CE88C7FB1ECADA570083741C /* RCTJPushActionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushActionQueue.h; sourceTree = "<group>"; };
+		CE88C7FC1ECADA570083741C /* RCTJPushActionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushActionQueue.m; sourceTree = "<group>"; };
+		CE88C7FD1ECADA570083741C /* RCTJPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushModule.h; sourceTree = "<group>"; };
+		CE88C7FE1ECADA570083741C /* RCTJPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD92EFC71DE6B2DC00AC6A25 /* JMessage.framework in Frameworks */,
+				CE88C7FF1ECADA570083741C /* jpush-ios-3.0.5.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +68,7 @@
 		CD252CE91DE56CA700EFB429 = {
 			isa = PBXGroup;
 			children = (
+				CE88C7F81ECADA570083741C /* RCTJPushModele */,
 				CD252CF41DE56CA700EFB429 /* RCTJMessage */,
 				CD252CF31DE56CA700EFB429 /* Products */,
 			);
@@ -82,6 +96,19 @@
 			path = RCTJMessage;
 			sourceTree = "<group>";
 		};
+		CE88C7F81ECADA570083741C /* RCTJPushModele */ = {
+			isa = PBXGroup;
+			children = (
+				CE88C7F91ECADA570083741C /* jpush-ios-3.0.5.a */,
+				CE88C7FA1ECADA570083741C /* JPUSHService.h */,
+				CE88C7FB1ECADA570083741C /* RCTJPushActionQueue.h */,
+				CE88C7FC1ECADA570083741C /* RCTJPushActionQueue.m */,
+				CE88C7FD1ECADA570083741C /* RCTJPushModule.h */,
+				CE88C7FE1ECADA570083741C /* RCTJPushModule.m */,
+			);
+			path = RCTJPushModele;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -90,6 +117,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD4E9FEA1E5447AC009E2752 /* RCTJMessageModule.h in Headers */,
+				CE88C8031ECADA570083741C /* RCTJPushModule.h in Headers */,
+				CE88C8011ECADA570083741C /* RCTJPushActionQueue.h in Headers */,
+				CE88C8001ECADA570083741C /* JPUSHService.h in Headers */,
 				CD86E06B1E6D639600A0B8AE /* NSJSONSerialization+JSONString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,7 +183,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD86E06C1E6D639600A0B8AE /* NSJSONSerialization+JSONString.m in Sources */,
+				CE88C8041ECADA570083741C /* RCTJPushModule.m in Sources */,
 				CD3B6D321DEEBFAD0011B9F5 /* RCTJMessageModule.m in Sources */,
+				CE88C8021ECADA570083741C /* RCTJPushActionQueue.m in Sources */,
 				CD3B6D391DEECFBA0011B9F5 /* NSObject+KVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +298,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RCTJPushModele",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -290,6 +323,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RCTJPushModele",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
