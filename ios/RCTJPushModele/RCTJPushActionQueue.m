@@ -8,7 +8,6 @@
 
 #import "RCTJPushActionQueue.h"
 
-
 @interface RCTJPushActionQueue () {
   NSMutableArray<NSDictionary *>* _notificationQueue;
   RCTResponseSenderBlock getRidCallback;

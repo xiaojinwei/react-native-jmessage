@@ -12,9 +12,12 @@ const JMessageModule = NativeModules.JMessageModule;
 
 export default class JMessage {
     static eventEmitter = new NativeEventEmitter(JMessageModule);
-    static appKey = JMessageModule.AppKey;
-    static masterSecret = JMessageModule.MasterSecret;
-    static authKey = Base64.encode(`${JMessage.appKey}:${JMessage.masterSecret}`);
+    // static appKey = JMessageModule.AppKey;
+    static appKey = '';
+    // static masterSecret = JMessageModule.MasterSecret;
+    static masterSecret = '';
+    // static authKey = Base64.encode(`${JMessage.appKey}:${JMessage.masterSecret}`);
+    static authKey = '';
     static events = {
         "onReceiveMessage": "onReceiveMessage",
     };
@@ -96,6 +99,9 @@ export default class JMessage {
     }
     static removeConversation(cid) {
         return JMessageModule.removeConversation(cid);
+    }
+    static toChatpage(){
+        return JMessageModule.toChatpage('aaa');
     }
 }
 

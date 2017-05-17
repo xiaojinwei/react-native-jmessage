@@ -9,7 +9,7 @@
 #import "RCTJMessageModule.h"
 #import <JMessage/JMSGTextContent.h>
 #import <JMessage/JMSGImageContent.h>
-
+#import "LoginViewController.h"
 @interface RCTJMessageModule () {
 @private
     NSMutableDictionary *_sendMessageIdDic;
@@ -120,6 +120,14 @@ RCT_EXPORT_MODULE()
 - (void)onReceiveMessageDownloadFailed:(JMSGMessage *)message {
     [self sendEventWithName:@"onReceiveMessageDownloadFailed"
                        body: [self toDictoryWithMessage:message]];
+}
+RCT_EXPORT_METHOD(toChatpage:(NSString *)key){
+    NSLog(@"%@",key);
+    UINavigationController *nav = [UIApplication sharedApplication].delegate.window.rootViewController;
+    LoginViewController *login=[[LoginViewController alloc]init];
+    
+    [nav pushViewController:login animated:YES];
+    
 }
 //MARK: 公开方法
 /**
@@ -783,5 +791,8 @@ RCT_EXPORT_METHOD(removeConversation
             handler(nil, conversationInvalidError);
         }
     }];
+}
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
 }
 @end

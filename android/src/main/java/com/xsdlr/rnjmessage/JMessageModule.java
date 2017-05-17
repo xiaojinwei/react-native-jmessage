@@ -275,6 +275,10 @@ public class JMessageModule extends ReactContextBaseJavaModule {
             promise.reject(e.getCode(), e.getMessage());
         }
     }
+    @ReactMethod
+    public void toChatpage(String key){
+
+    }
     /**
      * 接收消息事件监听
      * @param event
