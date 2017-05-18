@@ -136,6 +136,18 @@
         <meta-data
             android:name="JPUSH_MASTER_SECRET"
             android:value="${JIGUANG_MASTER_SECRET}" />
+
+        <activity
+            android:name="com.xsdlr.rnjmessage.im.activity.DemoActivity">
+        </activity>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.BaseActivity"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.AboutActivity"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.chatting.ChatActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.ChatMainActivity"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.LoginActivity"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.RegisterActivity"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.ReloginActivity"/>
     </application>
 
 

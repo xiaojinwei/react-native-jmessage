@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
-            JIGUANG_APPKEY: '111111',
+            JIGUANG_APPKEY: '7856f2efcdac4cc48753f1e5',
             JGUANG_APPCHANNEL: "developer-default",
             JIGUANG_MASTER_SECRET: '222222'
         ]
@@ -34,4 +34,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/jpush-android_v3.0.6.jar')
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
