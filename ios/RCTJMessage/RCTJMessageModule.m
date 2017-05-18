@@ -158,6 +158,24 @@ RCT_EXPORT_METHOD(login:(NSString *)username
     }];
 }
 /**
+ MARK: 注册
+ 
+ @param username 用户名
+ @param password 密码
+ */
+RCT_EXPORT_METHOD(register:(NSString *)username
+                  :(NSString *)password
+                  :(RCTPromiseResolveBlock)resolve
+                  :(RCTPromiseRejectBlock)reject) {
+    [JMSGUser registerWithUsername:username password:password completionHandler:^(id resultObject, NSError *error) {
+        if (!error) {
+            resolve(@{@"login":@"login"});
+        } else {
+            reject([@(error.code) stringValue], error.localizedDescription, error);
+        }
+    }];
+}
+/**
  MARK: 注销
  
  */

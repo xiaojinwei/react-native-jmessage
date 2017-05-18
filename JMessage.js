@@ -12,12 +12,10 @@ const JMessageModule = NativeModules.JMessageModule;
 
 export default class JMessage {
     static eventEmitter = new NativeEventEmitter(JMessageModule);
-    // static appKey = JMessageModule.AppKey;
-    static appKey = '';
-    // static masterSecret = JMessageModule.MasterSecret;
-    static masterSecret = '';
-    // static authKey = Base64.encode(`${JMessage.appKey}:${JMessage.masterSecret}`);
-    static authKey = '';
+    static appKey = JMessageModule.AppKey;
+    static masterSecret = JMessageModule.MasterSecret;
+    static authKey = Base64.encode(`${JMessageModule.AppKey}:${JMessageModule.MasterSecret}`);
+
     static events = {
         "onReceiveMessage": "onReceiveMessage",
     };
@@ -58,6 +56,41 @@ export default class JMessage {
         });
     }
     static login(username, password) {
+        return JMessageModule.login(username, password).then((info) => {
+            const {avatar} = info;
+            if(avatar) {
+                return requsetMediaURL(JMessage.authKey, avatar).then((data) => {
+                    return {...info, ...{avatar: data.url}};
+                })
+            } else {
+                return info;
+            }
+        });
+    }
+    static register(username, password) {
+        return JMessageModule.register(username, password).then((info) => {
+                return info;
+        });
+    }
+    static async registerAndLogin(username, password){
+        let loginInfo = {}
+        try{
+            loginInfo = await JMessage.login(username, password)
+        }catch(err){
+            console.log('err===aaaaaa',err.code)
+            if(err.code==='801003'){
+                try {
+                    await JMessage.register(username, password)
+                    return await JMessage.login(username, password)
+                }catch (err){
+                    throw err
+                }
+            }else{
+                throw err
+            }
+        }
+
+
         return JMessageModule.login(username, password).then((info) => {
             const {avatar} = info;
             if(avatar) {
