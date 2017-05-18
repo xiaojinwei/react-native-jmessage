@@ -35,7 +35,8 @@
 
 
 + (UIView *)nib:(char *)nib {
-  NSArray *nibs=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithUTF8String:nib]
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+  NSArray *nibs=[bundle loadNibNamed:[NSString stringWithUTF8String:nib]
                                               owner:self
                                             options:nil];
   return [nibs objectAtIndex:0];

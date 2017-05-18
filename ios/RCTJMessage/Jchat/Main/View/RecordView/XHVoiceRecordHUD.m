@@ -143,7 +143,7 @@
   
   if (!_microPhoneImageView) {
     UIImageView *microPhoneImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 30, 61, 93.0)];
-    microPhoneImageView.image = [UIImage imageNamed:@"RecordingBkg"];
+    microPhoneImageView.image = [UIImage imageNamed:@"RCTJMessageBundle.bundle/RecordingBkg"];
     microPhoneImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     microPhoneImageView.contentMode = UIViewContentModeScaleToFill;
     [self addSubview:microPhoneImageView];
@@ -152,7 +152,7 @@
   
   if (!_recordingHUDImageView) {
     UIImageView *recordHUDImageView = [[UIImageView alloc] initWithFrame:CGRectMake(112, 30, 45, 92)];
-    recordHUDImageView.image = [UIImage imageNamed:@"recordListen01"];
+    recordHUDImageView.image = [UIImage imageNamed:@"RCTJMessageBundle.bundle/recordListen01"];
        recordHUDImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     recordHUDImageView.contentMode = UIViewContentModeScaleToFill;
     [self addSubview:recordHUDImageView];
@@ -161,7 +161,7 @@
   
   if (!_cancelRecordImageView) {
     UIImageView *cancelRecordImageView = [[UIImageView alloc] initWithFrame:CGRectMake(57, 30, 79, 79)];
-    cancelRecordImageView.image = [UIImage imageNamed:@"RecordCancel"];
+    cancelRecordImageView.image = [UIImage imageNamed:@"RCTJMessageBundle.bundle/RecordCancel"];
     cancelRecordImageView.hidden = YES;
     cancelRecordImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     cancelRecordImageView.contentMode = UIViewContentModeScaleToFill;

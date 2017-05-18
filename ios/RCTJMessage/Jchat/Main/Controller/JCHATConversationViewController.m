@@ -43,6 +43,16 @@
 
 
 @implementation JCHATConversationViewController//change name chatcontroller
+- (instancetype)init
+{
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]]; 
+//    NSArray *nibs =  [bundle loadNibNamed:@"JCHATConversationViewController" owner:nil options:nil];
+    self = [super initWithNibName:@"JCHATConversationViewController" bundle:bundle];
+    if (self) {
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
   
   [super viewDidLoad];
@@ -137,6 +147,8 @@
   _toolBarContainer.toolbar.delegate = self;
   [_toolBarContainer.toolbar setUserInteractionEnabled:YES];
   self.toolBarContainer.toolbar.textView.text = [[JCHATSendMsgManager ins] draftStringWithConversation:_conversation];
+    
+    NSLog(@"table===%@",_messageTableView);
   _messageTableView.userInteractionEnabled = YES;
   _messageTableView.showsVerticalScrollIndicator = NO;
   _messageTableView.delegate = self;
@@ -153,11 +165,11 @@
   _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
   [_rightBtn setFrame:navigationRightButtonRect];
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal];
+    [_rightBtn setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/userDetail"] forState:UIControlStateNormal];
   } else {
     [self updateGroupConversationTittle:nil];
     if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
-      [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
+      [_rightBtn setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/groupDetail"] forState:UIControlStateNormal];
     } else _rightBtn.hidden = YES;
   }
   

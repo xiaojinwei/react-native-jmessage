@@ -19,7 +19,7 @@ For using YLGIFImage, it's very simple:
 
     YLImageView* imageView = [[YLImageView alloc] initWithFrame:CGRectMake(0, 160, 320, 240)];
     [self.view addSubview:imageView];
-    imageView.image = [YLGIFImage imageNamed:@"joy.gif"];
+    imageView.image = [YLGIFImage imageNamed:@"RCTJMessageBundle.bundle/joy.gif"];
 
 Here is the demo looks like:
 

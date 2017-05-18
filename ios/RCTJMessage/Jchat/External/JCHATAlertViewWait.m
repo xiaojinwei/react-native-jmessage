@@ -55,7 +55,7 @@
   
   UIImageView *clockImage = [UIImageView new];
   [alertHub addSubview:clockImage];
-  clockImage.image = [UIImage imageNamed:@"talking_icon_c_"];
+  clockImage.image = [UIImage imageNamed:@"RCTJMessageBundle.bundle/talking_icon_c_"];
   
   [clockImage mas_makeConstraints:^(MASConstraintMaker *make) {
     make.size.mas_equalTo(CGSizeMake(17, 17));

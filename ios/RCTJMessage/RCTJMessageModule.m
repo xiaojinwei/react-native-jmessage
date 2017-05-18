@@ -10,6 +10,7 @@
 #import <JMessage/JMSGTextContent.h>
 #import <JMessage/JMSGImageContent.h>
 #import "LoginViewController.h"
+#import "JCHATConversationViewController.h"
 @interface RCTJMessageModule () {
 @private
     NSMutableDictionary *_sendMessageIdDic;
@@ -121,12 +122,47 @@ RCT_EXPORT_MODULE()
     [self sendEventWithName:@"onReceiveMessageDownloadFailed"
                        body: [self toDictoryWithMessage:message]];
 }
-RCT_EXPORT_METHOD(toChatpage:(NSString *)key){
-    NSLog(@"%@",key);
+RCT_EXPORT_METHOD(toChatpage:(NSString *)username isSingle:(BOOL)isSingle){
+//    NSLog(@"%@",key);
     UINavigationController *nav = [UIApplication sharedApplication].delegate.window.rootViewController;
-    LoginViewController *login=[[LoginViewController alloc]init];
+//    LoginViewController *login=[[LoginViewController alloc]init];
+//    
+//    [nav pushViewController:login animated:YES];
+//    JMSGConversation
+    if (isSingle) {
+        [JMSGConversation createSingleConversationWithUsername:username completionHandler:^(id resultObject, NSError *error) {
+            if (!error) {
+//                dispatch_sync(dispatch_get_main_queue(), ^{
+                    JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
+                    jchat.conversation=resultObject;
+                    [nav pushViewController:jchat animated:YES];
+//                });
+                
+            } else {
+                //创建单聊会话失败
+            }
+        }];
+    }else{
+        [JMSGConversation createGroupConversationWithGroupId:username completionHandler:^(id resultObject, NSError *error) {
+            if (!error) {
+                JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
+                jchat.conversation=resultObject;
+                [nav pushViewController:jchat animated:YES];
+            } else {
+                //创建群聊会话失败
+            }
+        }];
+    }
     
-    [nav pushViewController:login animated:YES];
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 //MARK: 公开方法

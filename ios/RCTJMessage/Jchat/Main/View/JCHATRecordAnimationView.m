@@ -20,20 +20,20 @@
     self.layer.cornerRadius=3.0;
     self.clipsToBounds = YES;
     UIImageView *backView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    backView.image = [[UIImage imageNamed:@"chat_voice"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+    backView.image = [[UIImage imageNamed:@"RCTJMessageBundle.bundle/chat_voice"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     [self addSubview:backView];
     
     phoneIV=[[UIImageView alloc]initWithFrame:CGRectMake(13, 10, 72, 99)];
-    phoneIV.image=[UIImage imageNamed:@"RecordingBkg"];
+    phoneIV.image=[UIImage imageNamed:@"RCTJMessageBundle.bundle/RecordingBkg"];
     [self addSubview:phoneIV];
     
     cancelIV = [[UIImageView alloc] initWithFrame:CGRectMake(35, 10, 72, 99)];
-    cancelIV.image = [UIImage imageNamed:@"voice_delete"];
+    cancelIV.image = [UIImage imageNamed:@"RCTJMessageBundle.bundle/voice_delete"];
     cancelIV.hidden = YES;
     [self addSubview:cancelIV];
     
     signalIV=[[UIImageView alloc]initWithFrame:CGRectMake(96,40, 18, 62)];
-    signalIV.image=[UIImage imageNamed:@"RecordingSignal001"];
+    signalIV.image=[UIImage imageNamed:@"RCTJMessageBundle.bundle/RecordingSignal001"];
     [self addSubview:signalIV];
     
     tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 115, 140, 25)];
@@ -78,59 +78,59 @@
   //     signalIV.image=[UIImage imageNamed:[NSString stringWithFormat:@"RecordingSignal00%d",index]];
   if (0<lowPassResults<=0.06)
   {
-    [signalIV setImage:[UIImage imageNamed:@"RecordingSignal000.png"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/RecordingSignal000.png"]];
     
   }
   else if (0.06<lowPassResults<=0.13) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording01"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording01"]];
     
   }
   else if (0.13<lowPassResults<=0.20) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording02"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording02"]];
     
   }
   else if (0.20<lowPassResults<=0.27) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording02"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording02"]];
     
   }
   else if (0.27<lowPassResults<=0.34) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording03"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording03"]];
     
   }
   else if (0.34<lowPassResults<=0.41) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording03"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording03"]];
     
   }
   else if (0.41<lowPassResults<=0.48) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording04"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording04"]];
     
   }
   else if (0.48<lowPassResults<=0.55) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording05"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording05"]];
     
   }
   else if (0.55<lowPassResults<=0.62) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording05"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording05"]];
     
   }
   else if (0.62<lowPassResults<=0.69) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording06"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording06"]];
     
   }
   else if (0.69<lowPassResults<=0.76) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording06"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording06"]];
     
   }
   else if (0.76<lowPassResults<=0.83) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording06"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording06"]];
     
   }
   else if (0.83<lowPassResults<=0.9) {
-    [signalIV setImage:[UIImage imageNamed:@"Recording06"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording06"]];
     
   }
   else {
-    [signalIV setImage:[UIImage imageNamed:@"Recording01"]];
+    [signalIV setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/Recording01"]];
     
   }
 }

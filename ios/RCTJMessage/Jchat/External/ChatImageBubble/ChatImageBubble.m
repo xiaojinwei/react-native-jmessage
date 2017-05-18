@@ -39,9 +39,9 @@
 //  UIImageView *maskView = nil;
 //  UIImage *maskImage = nil;
 //  if (_isReceivedBubble) {
-//    maskImage = [UIImage imageNamed:@"otherChatBg"];
+//    maskImage = [UIImage imageNamed:@"RCTJMessageBundle.bundle/otherChatBg"];
 //  } else {
-//    maskImage = [UIImage imageNamed:@"mychatBg"];
+//    maskImage = [UIImage imageNamed:@"RCTJMessageBundle.bundle/mychatBg"];
 //  }
 //  maskImage = [maskImage resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
 //

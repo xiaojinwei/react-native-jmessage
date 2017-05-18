@@ -36,7 +36,7 @@ static NSInteger const readViewRadius = 4;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
     _headView = [UIImageView new];
-    [_headView setImage:[UIImage imageNamed:@"headDefalt.png"]];
+    [_headView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/headDefalt.png"]];
     _headView.layer.cornerRadius = 5;
     _headView.layer.masksToBounds = YES;
     _headView.contentMode = UIViewContentModeScaleAspectFill;
@@ -52,7 +52,7 @@ static NSInteger const readViewRadius = 4;
     
     self.sendFailView = [UIImageView new];
     [self.sendFailView setUserInteractionEnabled:YES];
-    [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
+    [self.sendFailView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/fail05"]];
     [self addSubview:self.sendFailView];
     
 //    _circleView = [UIActivityIndicatorView new];
@@ -119,14 +119,14 @@ static NSInteger const readViewRadius = 4;
         if (data != nil) {
           [self.headView setImage:[UIImage imageWithData:data]];
         } else {
-          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+          [self.headView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/headDefalt"]];
         }
       } else {
 //        DDLogDebug(@"该头像是异步乱序的头像");
       }
     } else {
 //      DDLogDebug(@"Action -- get thumbavatar fail");
-      [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+      [self.headView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/headDefalt"]];
     }
   }];
   
@@ -392,9 +392,9 @@ static NSInteger const readViewRadius = 4;
   _isPlaying = NO;
   self.index = 0;
   if ([_model.message isReceived]) {
-    [_messageContent.voiceConent setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying.png"]];
+    [_messageContent.voiceConent setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/ReceiverVoiceNodePlaying.png"]];
   } else {
-    [_messageContent.voiceConent setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying.png"]];
+    [_messageContent.voiceConent setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/SenderVoiceNodePlaying.png"]];
   }
   if (self.continuePlayer) {
     self.continuePlayer = NO;

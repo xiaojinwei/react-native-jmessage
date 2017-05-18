@@ -47,9 +47,9 @@ static NSInteger const textMessageContentRightOffset = 15;
   UIImageView *maskView = nil;
   UIImage *maskImage = nil;
   if (isReceived) {
-    maskImage = [UIImage imageNamed:@"otherChatBg.png"];
+    maskImage = [UIImage imageNamed:@"RCTJMessageBundle.bundle/otherChatBg.png"];
   } else {
-    maskImage = [UIImage imageNamed:@"mychatBg.png"];
+    maskImage = [UIImage imageNamed:@"RCTJMessageBundle.bundle/mychatBg.png"];
   }
   maskImage = [maskImage resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
   [self setImage:maskImage];
@@ -87,17 +87,17 @@ static NSInteger const textMessageContentRightOffset = 15;
       _textContent.hidden = YES;
       self.contentMode = UIViewContentModeScaleAspectFill;
       if (message.status == kJMSGMessageStatusReceiveDownloadFailed) {
-        [self setImage:[UIImage imageNamed:@"sendFail"]];
+        [self setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/sendFail"]];
       } else {
         [(JMSGImageContent *)message.content thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
           if (error == nil) {
             if (data != nil) {
               [self setImage:[UIImage imageWithData:data]];
             } else {
-              [self setImage:[UIImage imageNamed:@"sendFail"]];
+              [self setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/sendFail"]];
             }
           } else {
-            [self setImage:[UIImage imageNamed:@"sendFail"]];
+            [self setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/sendFail"]];
           }
         }];
       }
@@ -108,10 +108,10 @@ static NSInteger const textMessageContentRightOffset = 15;
       _voiceConent.hidden = NO;
       if (isReceived) {
         [_voiceConent setFrame:CGRectMake(20, 15, 9, 16)];
-        [_voiceConent setImage:[UIImage imageNamed:@"reciveVoice2"]];
+        [_voiceConent setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/reciveVoice2"]];
       } else {
         [_voiceConent setFrame:CGRectMake(self.frame.size.width - 30, 15, 9, 16)];
-        [_voiceConent setImage:[UIImage imageNamed:@"sendVoice2"]];
+        [_voiceConent setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/sendVoice2"]];
       }
       break;
     case kJMSGContentTypeUnknown:

@@ -38,7 +38,7 @@
         if (!data) {
          
          
-       _iconImage.image = [UIImage imageNamed:@"headDefalt.png"];
+       _iconImage.image = [UIImage imageNamed:@"RCTJMessageBundle.bundle/headDefalt.png"];
           
         }
     }];
@@ -113,14 +113,14 @@
     _MessageLabel.text=messageDic[@"content"];
     if (self.indexPath.row==0) {
         _NameLabel.text=@"交易通知";
-        _iconImage.image=[UIImage imageNamed:@"transactionMessage"];
+        _iconImage.image=[UIImage imageNamed:@"RCTJMessageBundle.bundle/transactionMessage"];
     }else if (self.indexPath.row==1)
     {
         _NameLabel.text=@"客户预约";
-        _iconImage.image=[UIImage imageNamed:@"reserveMessage"];
+        _iconImage.image=[UIImage imageNamed:@"RCTJMessageBundle.bundle/reserveMessage"];
     }else{
         _NameLabel.text=@"互动消息";
-        _iconImage.image=[UIImage imageNamed:@"projectMessage"];
+        _iconImage.image=[UIImage imageNamed:@"RCTJMessageBundle.bundle/projectMessage"];
     }
 }
 -(void)setcellView
@@ -166,7 +166,7 @@
     [jiantouView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10];
     [jiantouView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:30];
     [jiantouView autoSetDimensionsToSize:CGSizeMake(6, 10)];
-    jiantouView.image=[UIImage imageNamed:@"rightCopy"];
+    jiantouView.image=[UIImage imageNamed:@"RCTJMessageBundle.bundle/rightCopy"];
 
 }
 @end

@@ -62,8 +62,8 @@
 
 - (void)switchToVoiceInputMode {
   self.voiceButton.selected = YES;
-  [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar.png"] forState:UIControlStateNormal];
-  [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar.png"] forState:UIControlStateHighlighted];
+  [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/keyboard_toolbar.png"] forState:UIControlStateNormal];
+  [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/keyboard_toolbar.png"] forState:UIControlStateHighlighted];
 
   [self.textView setHidden:YES];
   [self.startRecordButton setHidden:NO];
@@ -83,27 +83,27 @@
 - (void)switchToolbarToTextMode {
   self.voiceButton.selected=NO;
   self.voiceButton.contentMode = UIViewContentModeCenter;
-  [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar.png"] forState:UIControlStateNormal];
-  [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar.png"] forState:UIControlStateHighlighted];
+  [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/voice_toolbar.png"] forState:UIControlStateNormal];
+  [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/voice_toolbar.png"] forState:UIControlStateHighlighted];
   [self.startRecordButton setHidden:YES];
   [self.textView setHidden:NO];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  [self.addButton setImage:[UIImage imageNamed:@"add01.png"] forState:UIControlStateNormal];
+  [self.addButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/add01.png"] forState:UIControlStateNormal];
   if (self.voiceButton.selected == NO) {
-    [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar.png"] forState:UIControlStateNormal];
-    [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar.png"] forState:UIControlStateHighlighted];
+    [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/voice_toolbar.png"] forState:UIControlStateNormal];
+    [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/voice_toolbar.png"] forState:UIControlStateHighlighted];
   } else{
-    [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar.png"] forState:UIControlStateNormal];
-    [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar.png"] forState:UIControlStateHighlighted];
+    [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/keyboard_toolbar.png"] forState:UIControlStateNormal];
+    [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/keyboard_toolbar.png"] forState:UIControlStateHighlighted];
   }
   [self setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
 }
 
 - (void)drawRect:(CGRect)rect {
-    [self.addButton setImage:[UIImage imageNamed:@"add01.png"] forState:UIControlStateNormal];
+    [self.addButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/add01.png"] forState:UIControlStateNormal];
 
   if (self.startRecordButton){
     [self.startRecordButton mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -119,7 +119,7 @@
     return;
   }
   self.voiceButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
-  [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar.png"] forState:UIControlStateNormal];
+  [self.voiceButton setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/voice_toolbar.png"] forState:UIControlStateNormal];
   self.textView.delegate = self;
   
   self.textView.returnKeyType = UIReturnKeySend;
