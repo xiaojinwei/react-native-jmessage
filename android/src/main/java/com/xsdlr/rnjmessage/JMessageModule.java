@@ -304,7 +304,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         }
     }
     @ReactMethod
-    public void toChatpage(String key,String isSingle){
+    public void toChatpage(String key,boolean isSingle){
 //        setupJMessage();
 
         UserInfo info = JMessageClient.getMyInfo();
@@ -313,11 +313,16 @@ public class JMessageModule extends ReactContextBaseJavaModule {
             return;
         }else {
             Toast.makeText(getCurrentActivity(), "获取用户信息成功，进入聊天界面",Toast.LENGTH_LONG).show();
-            String mTargetId = info.getUserName();
-            String targetAppKey = info.getAppKey();
+
             Intent intent = new Intent();
-            intent.putExtra(Contracts.TARGET_ID, mTargetId);
-            intent.putExtra(Contracts.TARGET_APP_KEY, targetAppKey);
+            if (isSingle) {//进入单聊
+                String mTargetId = info.getUserName();
+                String targetAppKey = info.getAppKey();
+                intent.putExtra(Contracts.TARGET_ID, mTargetId);
+                intent.putExtra(Contracts.TARGET_APP_KEY, targetAppKey);
+            }else{//进入群组聊天
+                intent.putExtra(Contracts.GROUP_ID, "群组1");
+            }
             intent.setClass(getCurrentActivity(), ChatActivity.class);
             getCurrentActivity().startActivity(intent);
         }
