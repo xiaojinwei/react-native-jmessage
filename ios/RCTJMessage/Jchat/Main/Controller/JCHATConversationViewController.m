@@ -69,6 +69,7 @@
   [self addNotification];
   [self addDelegate];
   [self getGroupMemberListWithGetMessageFlag:YES];
+   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,6 +159,7 @@
   
   _moreViewContainer.moreView.delegate = self;
   _moreViewContainer.moreView.backgroundColor = messageTableColor;
+    
 }
 
 - (void)setupNavigation {

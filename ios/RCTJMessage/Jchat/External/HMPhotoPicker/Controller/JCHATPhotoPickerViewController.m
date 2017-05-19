@@ -14,7 +14,16 @@
 @end
 
 @implementation JCHATPhotoPickerViewController
-
+- (instancetype)init
+{
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+    //    NSArray *nibs =  [bundle loadNibNamed:@"JCHATConversationViewController" owner:nil options:nil];
+    self = [super initWithNibName:@"JCHATPhotoPickerViewController" bundle:bundle];
+    if (self) {
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.navigationController.navigationBar.translucent = NO;

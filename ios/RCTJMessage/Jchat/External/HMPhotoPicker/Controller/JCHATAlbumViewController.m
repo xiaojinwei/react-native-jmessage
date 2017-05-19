@@ -21,6 +21,16 @@
 @end
 
 @implementation JCHATAlbumViewController
+- (instancetype)init
+{
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+    //    NSArray *nibs =  [bundle loadNibNamed:@"JCHATConversationViewController" owner:nil options:nil];
+    self = [super initWithNibName:@"JCHATAlbumViewController" bundle:bundle];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad {// add model
   [super viewDidLoad];
@@ -33,8 +43,8 @@
   } else {
     [self prepareAlbumArrWithAssert];
   }
-
-  [_albumTable registerNib:[UINib nibWithNibName:@"JCHATAlbumTableViewCell" bundle:nil]
+NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+  [_albumTable registerNib:[UINib_ext nibWithNibName:@"JCHATAlbumTableViewCell" bundle:bundle]
     forCellReuseIdentifier:@"JCHATAlbumTableViewCell"];
   
   _albumTable.delegate = self;

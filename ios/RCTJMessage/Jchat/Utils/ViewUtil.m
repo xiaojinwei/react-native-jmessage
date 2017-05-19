@@ -43,7 +43,8 @@
 }
 
 + (UIView *)nib:(char *)nib owner:(id)owner{
-  NSArray *nibs=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithUTF8String:nib]
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+  NSArray *nibs=[bundle loadNibNamed:[NSString stringWithUTF8String:nib]
                                               owner:owner
                                             options:nil];
   return [nibs objectAtIndex:0];
@@ -59,7 +60,8 @@
 }
 
 + (void)table:(UITableView *)table registerNib:(char *)nib {
-  [table registerNib:[UINib nibWithNibName:[NSString stringWithUTF8String:nib] bundle:nil] forCellReuseIdentifier:[NSString stringWithUTF8String:nib]];
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+  [table registerNib:[UINib_ext nibWithNibName:[NSString stringWithUTF8String:nib] bundle:bundle] forCellReuseIdentifier:[NSString stringWithUTF8String:nib]];
 }
 
 

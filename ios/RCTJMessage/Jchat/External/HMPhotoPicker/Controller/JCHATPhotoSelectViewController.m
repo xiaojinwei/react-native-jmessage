@@ -33,7 +33,16 @@
 @end
 
 @implementation JCHATPhotoSelectViewController
-
+- (instancetype)init
+{
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+    //    NSArray *nibs =  [bundle loadNibNamed:@"JCHATConversationViewController" owner:nil options:nil];
+    self = [super initWithNibName:@"JCHATPhotoSelectViewController" bundle:bundle];
+    if (self) {
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
   [super viewDidLoad];
   sendBtn.titleLabel.font=[UIFont systemFontOfSize:14];
@@ -121,8 +130,9 @@
 - (void)setUpCollectionView {
   photoGridView.minimumZoomScale = 0;
   photoGridView.contentOffset = CGPointMake(0, 64);
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
   [photoGridView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"gradientCell"];
-  [photoGridView registerNib:[UINib nibWithNibName:@"ThumbImageCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"ThumbImageCollectionViewCell"];
+  [photoGridView registerNib:[UINib_ext nibWithNibName:@"ThumbImageCollectionViewCell" bundle:bundle] forCellWithReuseIdentifier:@"ThumbImageCollectionViewCell"];
   [self.view addSubview:photoGridView];
   UICollectionViewFlowLayout *collectLayout = (UICollectionViewFlowLayout *)photoGridView.collectionViewLayout;
   NSLog(@"translucent %@",[UINavigationBar appearance].translucent?@"yes":@"no");

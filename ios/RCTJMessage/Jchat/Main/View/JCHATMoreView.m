@@ -50,7 +50,7 @@
   
   _moreView = NIB(JCHATMoreView);
   
-  _moreView.frame =CGRectMake(0, 0, 320, 100);
+  
     [_moreView.photoBtn setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/photo_24.png"] forState:UIControlStateNormal];
     [_moreView.cameraBtn setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/camera_35.png"] forState:UIControlStateNormal];
     _moreView.backgroundColor=UIColorFromRGB(0xffffff);
@@ -58,6 +58,12 @@
   
   //  _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   [self addSubview:_moreView];
+//     [ UIScreen mainScreen ].bounds.size.width
+    _moreView.frame =CGRectMake(0, 0,375, 100);
+    
+    [_moreView layoutIfNeeded];
+    self.backgroundColor=[UIColor whiteColor];
+    
 }
 
 @end

@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,6 +16,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XW3-Sc-UxH">
+                    <rect key="frame" x="50" y="10" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="7Y1-39-JbT"/>
                         <constraint firstAttribute="height" constant="60" id="nM6-O2-yaN"/>
@@ -28,6 +32,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Juz-wz-A0c">
+                    <rect key="frame" x="210" y="20" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="BWQ-8l-kr5"/>
                         <constraint firstAttribute="width" constant="60" id="DcW-ml-W6P"/>
@@ -43,16 +48,14 @@
                         <action selector="cameraBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="FfB-f9-GNg"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEN-mw-UCp">
-                    <frame key="frameInset" minX="90" minY="78" width="60" height="12"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相册" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEN-mw-UCp">
+                    <rect key="frame" x="50" y="70.5" width="60" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wts-vA-doN">
-                    <frame key="frameInset" minX="90" minY="78" width="60" height="12"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="拍照" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wts-vA-doN">
+                    <rect key="frame" x="210" y="70.5" width="60" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -60,10 +63,16 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Juz-wz-A0c" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="80" id="2jJ-ig-LlC"/>
+                <constraint firstItem="XW3-Sc-UxH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-80" id="8CZ-Dk-LEH"/>
+                <constraint firstItem="kEN-mw-UCp" firstAttribute="width" secondItem="XW3-Sc-UxH" secondAttribute="width" id="ELf-Ia-xlA"/>
                 <constraint firstItem="XW3-Sc-UxH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="GS3-t6-Ems"/>
+                <constraint firstItem="Juz-wz-A0c" firstAttribute="centerX" secondItem="Wts-vA-doN" secondAttribute="centerX" id="JOE-ln-tQC"/>
+                <constraint firstItem="Juz-wz-A0c" firstAttribute="width" secondItem="Wts-vA-doN" secondAttribute="width" id="Juw-k7-8Ze"/>
                 <constraint firstItem="Juz-wz-A0c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="LNu-RF-PNN"/>
-                <constraint firstItem="Juz-wz-A0c" firstAttribute="leading" secondItem="XW3-Sc-UxH" secondAttribute="trailing" constant="75" id="Yyq-6y-RQ8"/>
-                <constraint firstItem="XW3-Sc-UxH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="90" id="gM1-Ec-Ovo"/>
+                <constraint firstItem="kEN-mw-UCp" firstAttribute="centerX" secondItem="XW3-Sc-UxH" secondAttribute="centerX" id="Pnl-2f-gPV"/>
+                <constraint firstItem="Juz-wz-A0c" firstAttribute="bottom" secondItem="Wts-vA-doN" secondAttribute="bottom" constant="-5" id="TQc-Nr-2nc"/>
+                <constraint firstItem="kEN-mw-UCp" firstAttribute="bottom" secondItem="XW3-Sc-UxH" secondAttribute="bottom" constant="15" id="UV3-ob-3aL"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

@@ -132,11 +132,9 @@ RCT_EXPORT_METHOD(toChatpage:(NSString *)username isSingle:(BOOL)isSingle){
     if (isSingle) {
         [JMSGConversation createSingleConversationWithUsername:username completionHandler:^(id resultObject, NSError *error) {
             if (!error) {
-//                dispatch_sync(dispatch_get_main_queue(), ^{
-                    JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
-                    jchat.conversation=resultObject;
-                    [nav pushViewController:jchat animated:YES];
-//                });
+                JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
+                jchat.conversation=resultObject;
+                [nav pushViewController:jchat animated:YES];
                 
             } else {
                 //创建单聊会话失败

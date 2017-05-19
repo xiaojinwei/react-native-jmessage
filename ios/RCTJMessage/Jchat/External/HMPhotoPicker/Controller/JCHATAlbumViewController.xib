@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATAlbumViewController">
             <connections>
-                <outlet property="albumTable" destination="Ttp-oK-XBp" id="lej-28-fcu"/>
+                <outlet property="albumTable" destination="Ttp-oK-XBp" id="fNs-ZU-eLh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

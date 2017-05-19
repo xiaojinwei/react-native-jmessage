@@ -1,15 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HMPhotoSelectViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATPhotoSelectViewController">
             <connections>
                 <outlet property="browserBtn" destination="Nke-HT-336" id="dAf-Xa-OO7"/>
-                <outlet property="photoGridView" destination="hGR-Ud-5JT" id="p6P-ge-PC4"/>
+                <outlet property="photoGridView" destination="hGR-Ud-5JT" id="7Wb-Dh-hEh"/>
                 <outlet property="selectedPhotoLabel" destination="jbw-g4-NAf" id="yvQ-hB-fAy"/>
                 <outlet property="sendBtn" destination="9Gf-Gx-kOs" id="vJn-Sr-1fP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,8 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hGR-Ud-5JT">
-                    <frame key="frameInset" width="600" height="555"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hGR-Ud-5JT" customClass="JCHATSelectImgCollectionView">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="555"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="oGo-bn-S37">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -30,9 +33,10 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3r5-lG-OqP">
-                    <frame key="frameInset" minY="555" width="600" height="45"/>
+                    <rect key="frame" x="0.0" y="555" width="600" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nke-HT-336">
+                            <rect key="frame" x="16" y="7.5" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="fcs-KL-iCf"/>
                                 <constraint firstAttribute="height" constant="30" id="iV9-v7-l0S"/>
@@ -44,7 +48,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Gf-Gx-kOs">
-                            <frame key="frameInset" minX="554" minY="7" width="30" height="30"/>
+                            <rect key="frame" x="554" y="7" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="NRe-ob-CAv"/>
                                 <constraint firstAttribute="width" constant="30" id="adP-lH-PMn"/>
@@ -55,7 +59,7 @@
                             </connections>
                         </button>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbw-g4-NAf">
-                            <frame key="frameInset" minX="529" minY="13" width="20" height="20"/>
+                            <rect key="frame" x="529" y="13" width="20" height="20"/>
                             <color key="backgroundColor" red="0.098542461522795222" green="1" blue="0.0" alpha="0.50548537234042556" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="VDH-Pc-KQp"/>

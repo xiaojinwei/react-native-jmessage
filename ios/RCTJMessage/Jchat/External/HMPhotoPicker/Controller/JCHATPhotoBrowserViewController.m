@@ -25,7 +25,16 @@ UIScrollViewDelegate> {
 @end
 
 @implementation JCHATPhotoBrowserViewController
-
+- (instancetype)init
+{
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+    //    NSArray *nibs =  [bundle loadNibNamed:@"JCHATConversationViewController" owner:nil options:nil];
+    self = [super initWithNibName:@"JCHATPhotoBrowserViewController" bundle:bundle];
+    if (self) {
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self.navigationController setNavigationBarHidden:YES];
@@ -64,7 +73,8 @@ UIScrollViewDelegate> {
   [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
   collectionView.pagingEnabled = YES;
   [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"gradientCell"];
-  [collectionView registerNib:[UINib nibWithNibName:@"JCHATPhotoBrowserCollectionViewCell" bundle:nil]
+    NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]];
+  [collectionView registerNib:[UINib_ext nibWithNibName:@"JCHATPhotoBrowserCollectionViewCell" bundle:bundle]
    forCellWithReuseIdentifier:@"JCHATPhotoBrowserCollectionViewCell"];
   collectionView.delegate = self;
   collectionView.dataSource = self;
