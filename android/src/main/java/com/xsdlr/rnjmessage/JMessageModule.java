@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -15,9 +16,13 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.modules.toast.ToastModule;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.xsdlr.rnjmessage.im.Contracts;
 import com.xsdlr.rnjmessage.im.activity.ChatMainActivity;
+import com.xsdlr.rnjmessage.im.chatting.ChatActivity;
+import com.xsdlr.rnjmessage.im.chatting.utils.HandleResponseCode;
 import com.xsdlr.rnjmessage.model.ConversationIDJSONModel;
 
 import java.io.File;
@@ -97,6 +102,27 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         System.out.println(info);
         boolean isLoggedIn = info != null && info.getUserID() != 0;
         promise.resolve(isLoggedIn);
+    }
+    /**
+     * 注册
+     * @param username  用户名
+     * @param password  密码
+     * @param promise
+     */
+    @ReactMethod
+    public void register(String username, String password, final Promise promise) {
+        final JMessageModule _this = this;
+        JMessageClient.register(username, password, new BasicCallback() {
+            @Override
+            public void gotResult(int responseCode, String loginDesc) {
+                if (responseCode == 0) {
+                    _this.myInfo(promise);
+                } else {
+                    promise.reject(String.valueOf(responseCode), loginDesc);
+                }
+            }
+        });
+
     }
     /**
      * 登录
@@ -278,11 +304,23 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         }
     }
     @ReactMethod
-    public void toChatpage(String key){
-        setupJMessage();
-        Intent intent = new Intent(getCurrentActivity(), ChatMainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getCurrentActivity().startActivity(intent);
+    public void toChatpage(String key,String isSingle){
+//        setupJMessage();
+
+        UserInfo info = JMessageClient.getMyInfo();
+        if (info == null) {
+            Toast.makeText(getCurrentActivity(), "获取用户信息失败",Toast.LENGTH_LONG).show();
+            return;
+        }else {
+            Toast.makeText(getCurrentActivity(), "获取用户信息成功，进入聊天界面",Toast.LENGTH_LONG).show();
+            String mTargetId = info.getUserName();
+            String targetAppKey = info.getAppKey();
+            Intent intent = new Intent();
+            intent.putExtra(Contracts.TARGET_ID, mTargetId);
+            intent.putExtra(Contracts.TARGET_APP_KEY, targetAppKey);
+            intent.setClass(getCurrentActivity(), ChatActivity.class);
+            getCurrentActivity().startActivity(intent);
+        }
 
     }
     /**
