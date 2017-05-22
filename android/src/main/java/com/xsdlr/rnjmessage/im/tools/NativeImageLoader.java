@@ -205,6 +205,7 @@ public class NativeImageLoader {
         BitmapFactory.Options options = new BitmapFactory.Options();
         //设置为true,表示解析Bitmap对象，该对象不占内存
         options.inJustDecodeBounds = true;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
         BitmapFactory.decodeFile(path, options);
         //设置缩放比例
         options.inSampleSize = calculateInSampleSize(options, viewWidth, viewHeight);

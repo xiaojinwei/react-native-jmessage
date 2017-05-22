@@ -14,6 +14,7 @@
     <dimen name="msg_del_offset">70dp</dimen>
 
     <!-- 文字的大小 -->
+    <dimen name="text_normal_size">16sp</dimen>
     <dimen name="text_minimum_size">10sp</dimen>
     <dimen name="text_default_size">12sp</dimen>
     <dimen name="text_small_size">14sp</dimen>

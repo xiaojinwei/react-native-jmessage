@@ -24,7 +24,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
+import com.xsdlr.rnjmessage.im.Contracts;
 import com.xsdlr.rnjmessage.im.activity.BaseActivity;
+import com.xsdlr.rnjmessage.im.activity.PickPictureTotalActivity;
 import com.xsdlr.rnjmessage.im.chatting.utils.BitmapLoader;
 import com.xsdlr.rnjmessage.im.chatting.utils.DialogCreator;
 import com.xsdlr.rnjmessage.im.chatting.utils.Event;
@@ -57,21 +59,21 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         ChatView.OnSizeChangedListener, ChatView.OnKeyBoardChangeListener {
 
     private static final String TAG = "ChatActivity";
-    private static final String MEMBERS_COUNT = "membersCount";
-    private static final String GROUP_NAME = "groupName";
-    private static final String DRAFT = "draft";
-    private static final String MsgIDs = "msgIDs";
-    private static final String NAME = "name";
-    public static final String NICKNAME = "nickname";
-    private static final String TARGET_ID = "targetId";
-    private static final String TARGET_APP_KEY = "targetAppKey";
-    private static final String GROUP_ID = "groupId";
-    private static final int REQUEST_CODE_TAKE_PHOTO = 4;
-    private static final int REQUEST_CODE_SELECT_PICTURE = 6;
-    private static final int RESULT_CODE_SELECT_PICTURE = 8;
-    private static final int REQUEST_CODE_CHAT_DETAIL = 14;
-    private static final int RESULT_CODE_CHAT_DETAIL = 15;
-    private static final int RESULT_CODE_FRIEND_INFO = 17;
+//    private static final String MEMBERS_COUNT = "membersCount";
+//    private static final String GROUP_NAME = "groupName";
+//    private static final String DRAFT = "draft";
+//    private static final String MsgIDs = "msgIDs";
+//    private static final String NAME = "name";
+//    public static final String NICKNAME = "nickname";
+//    private static final String TARGET_ID = "targetId";
+//    private static final String TARGET_APP_KEY = "targetAppKey";
+//    private static final String GROUP_ID = "groupId";
+//    private static final int REQUEST_CODE_TAKE_PHOTO = 4;
+//    private static final int REQUEST_CODE_SELECT_PICTURE = 6;
+//    private static final int RESULT_CODE_SELECT_PICTURE = 8;
+//    private static final int REQUEST_CODE_CHAT_DETAIL = 14;
+//    private static final int RESULT_CODE_CHAT_DETAIL = 15;
+//    private static final int RESULT_CODE_FRIEND_INFO = 17;
     private static final int REFRESH_LAST_PAGE = 0x1023;
     private static final int REFRESH_CHAT_TITLE = 0x1024;
     private static final int REFRESH_GROUP_NAME = 0x1025;
@@ -113,8 +115,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         initReceiver();
 
         Intent intent = getIntent();
-        mTargetId = intent.getStringExtra(TARGET_ID);
-        mTargetAppKey = intent.getStringExtra(TARGET_APP_KEY);
+        mTargetId = intent.getStringExtra(Contracts.TARGET_ID);
+        mTargetAppKey = intent.getStringExtra(Contracts.TARGET_APP_KEY);
         if (!TextUtils.isEmpty(mTargetId)) {
             mIsSingle = true;
             mConv = JMessageClient.getSingleConversation(mTargetId, mTargetAppKey);
@@ -137,7 +139,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             mChatAdapter = new MsgListAdapter(mContext, mTargetId, mTargetAppKey, longClickListener);
         } else {
             mIsSingle = false;
-            mGroupId = intent.getLongExtra(GROUP_ID, 0);
+            mGroupId = intent.getLongExtra(Contracts.GROUP_ID, 0);
             Log.d(TAG, "GroupId : " + mGroupId);
 
             //UIKit 直接用getGroupInfo更新标题,而不用考虑从创建群聊跳转过来
@@ -157,7 +159,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             mChatAdapter = new MsgListAdapter(mContext, mGroupId, longClickListener);
         }
 
-        String draft = intent.getStringExtra(DRAFT);
+        String draft = intent.getStringExtra(Contracts.DRAFT);
         if (draft != null && !TextUtils.isEmpty(draft)) {
             mChatView.setInputText(draft);
         }
@@ -280,17 +282,17 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             }
             Intent intent = new Intent();
             if (mIsSingle) {
-                intent.putExtra(TARGET_ID, mTargetId);
-                intent.putExtra(TARGET_APP_KEY, mTargetAppKey);
+                intent.putExtra(Contracts.TARGET_ID, mTargetId);
+                intent.putExtra(Contracts.TARGET_APP_KEY, mTargetAppKey);
             } else {
-                intent.putExtra(GROUP_ID, mGroupId);
+                intent.putExtra(Contracts.GROUP_ID, mGroupId);
             }
-//            if (!FileHelper.isSdCardExist()) {
-//                Toast.makeText(this, IdHelper.getString(mContext, "sdcard_not_exist_toast"), Toast.LENGTH_SHORT).show();
-//            } else {
-//                intent.setClass(this, PickPictureTotalActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE_SELECT_PICTURE);
-//            }
+            if (!FileHelper.isSdCardExist()) {
+                Toast.makeText(this, IdHelper.getString(mContext, "sdcard_not_exist_toast"), Toast.LENGTH_SHORT).show();
+            } else {
+                intent.setClass(this, PickPictureTotalActivity.class);
+                startActivityForResult(intent, Contracts.REQUEST_CODE_SELECT_PICTURE);
+            }
         }
     }
 
@@ -300,7 +302,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPhotoPath)));
             try {
-                startActivityForResult(intent, REQUEST_CODE_TAKE_PHOTO);
+                startActivityForResult(intent, Contracts.REQUEST_CODE_TAKE_PHOTO);
             } catch (ActivityNotFoundException anf) {
                 Toast.makeText(mContext, IdHelper.getString(mContext, "camera_not_prepared"),
                         Toast.LENGTH_SHORT).show();
@@ -317,7 +319,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
      * @param data intent
      */
     private void handleImgRefresh(Intent data) {
-        mChatAdapter.setSendImg(data.getIntArrayExtra(MsgIDs));
+        mChatAdapter.setSendImg(data.getIntArrayExtra(Contracts.MsgIDs));
         mChatView.setToBottom();
     }
 
@@ -385,14 +387,14 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         if (!RecordVoiceButton.mIsPressed) {
             mChatView.dismissRecordDialog();
         }
-        String targetId = getIntent().getStringExtra(TARGET_ID);
+        String targetId = getIntent().getStringExtra(Contracts.TARGET_ID);
         if (!mIsSingle) {
-            long groupId = getIntent().getLongExtra(GROUP_ID, 0);
+            long groupId = getIntent().getLongExtra(Contracts.GROUP_ID, 0);
             if (groupId != 0) {
                 JMessageClient.enterGroupConversation(groupId);
             }
         } else if (null != targetId) {
-            String appKey = getIntent().getStringExtra(TARGET_APP_KEY);
+            String appKey = getIntent().getStringExtra(Contracts.TARGET_APP_KEY);
             JMessageClient.enterSingleConversation(targetId, appKey);
         }
         mChatAdapter.initMediaPlayer();
@@ -414,7 +416,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         if (resultCode == RESULT_CANCELED) {
             return;
         }
-        if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
+        if (requestCode == Contracts.REQUEST_CODE_TAKE_PHOTO) {
             final Conversation conv = mConv;
             try {
                 String originPath = mPhotoPath;
@@ -425,7 +427,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                         if (status == 0) {
                             Message msg = conv.createSendMessage(imageContent);
                             Intent intent = new Intent();
-                            intent.putExtra(MsgIDs, new int[]{msg.getId()});
+                            intent.putExtra(Contracts.MsgIDs, new int[]{msg.getId()});
                             handleImgRefresh(intent);
                         }
                     }
@@ -433,39 +435,39 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             }  catch (NullPointerException e) {
                 Log.i(TAG, "onActivityResult unexpected result");
             }
-        } else if (resultCode == RESULT_CODE_SELECT_PICTURE) {
+        } else if (resultCode == Contracts.RESULT_CODE_SELECT_PICTURE) {
             handleImgRefresh(data);
             //如果作为UIKit使用,去掉以下几段代码
-        } else if (resultCode == RESULT_CODE_CHAT_DETAIL) {
+        } else if (resultCode == Contracts.RESULT_CODE_CHAT_DETAIL) {
             if (!mIsSingle) {
                 GroupInfo groupInfo = (GroupInfo) mConv.getTargetInfo();
                 UserInfo userInfo = groupInfo.getGroupMemberInfo(JMessageClient.getMyInfo().getUserName());
                 //如果自己在群聊中，同时显示群人数
                 if (userInfo != null) {
-                    if (TextUtils.isEmpty(data.getStringExtra(NAME))) {
+                    if (TextUtils.isEmpty(data.getStringExtra(Contracts.NAME))) {
                         mChatView.setChatTitle(IdHelper.getString(mContext, "group"),
-                                data.getIntExtra(MEMBERS_COUNT, 0));
+                                data.getIntExtra(Contracts.MEMBERS_COUNT, 0));
                     } else {
-                        mChatView.setChatTitle(data.getStringExtra(NAME),
-                                data.getIntExtra(MEMBERS_COUNT, 0));
+                        mChatView.setChatTitle(data.getStringExtra(Contracts.NAME),
+                                data.getIntExtra(Contracts.MEMBERS_COUNT, 0));
                     }
                 } else {
-                    if (TextUtils.isEmpty(data.getStringExtra(NAME))) {
+                    if (TextUtils.isEmpty(data.getStringExtra(Contracts.NAME))) {
                         mChatView.setChatTitle(IdHelper.getString(mContext, "group"));
                         mChatView.dismissGroupNum();
                     } else {
-                        mChatView.setChatTitle(data.getStringExtra(NAME));
+                        mChatView.setChatTitle(data.getStringExtra(Contracts.NAME));
                         mChatView.dismissGroupNum();
                     }
                 }
 
-            } else mChatView.setChatTitle(data.getStringExtra(NAME));
+            } else mChatView.setChatTitle(data.getStringExtra(Contracts.NAME));
             if (data.getBooleanExtra("deleteMsg", false)) {
                 mChatAdapter.clearMsgList();
             }
-        } else if (resultCode == RESULT_CODE_FRIEND_INFO) {
+        } else if (resultCode == Contracts.RESULT_CODE_FRIEND_INFO) {
             if (mIsSingle) {
-                String nickname = data.getStringExtra(NICKNAME);
+                String nickname = data.getStringExtra(Contracts.NICKNAME);
                 if (!TextUtils.isEmpty(nickname)) {
                     mChatView.setChatTitle(nickname);
                 }
@@ -557,13 +559,13 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                         break;
                     case REFRESH_GROUP_NAME:
                         if (activity.mConv != null) {
-                            int num = msg.getData().getInt(MEMBERS_COUNT);
-                            String groupName = msg.getData().getString(GROUP_NAME);
+                            int num = msg.getData().getInt(Contracts.MEMBERS_COUNT);
+                            String groupName = msg.getData().getString(Contracts.GROUP_NAME);
                             activity.mChatView.setChatTitle(groupName, num);
                         }
                         break;
                     case REFRESH_GROUP_NUM:
-                        int num = msg.getData().getInt(MEMBERS_COUNT);
+                        int num = msg.getData().getInt(Contracts.MEMBERS_COUNT);
                         activity.mChatView.setChatTitle(IdHelper.getString(activity, "group"), num);
                         break;
                     case REFRESH_CHAT_TITLE:
@@ -716,15 +718,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             android.os.Message handleMessage = mUIHandler.obtainMessage();
             handleMessage.what = REFRESH_GROUP_NAME;
             Bundle bundle = new Bundle();
-            bundle.putString(GROUP_NAME, groupInfo.getGroupName());
-            bundle.putInt(MEMBERS_COUNT, groupInfo.getGroupMembers().size());
+            bundle.putString(Contracts.GROUP_NAME, groupInfo.getGroupName());
+            bundle.putInt(Contracts.MEMBERS_COUNT, groupInfo.getGroupMembers().size());
             handleMessage.setData(bundle);
             handleMessage.sendToTarget();
         } else {
             android.os.Message handleMessage = mUIHandler.obtainMessage();
             handleMessage.what = REFRESH_GROUP_NUM;
             Bundle bundle = new Bundle();
-            bundle.putInt(MEMBERS_COUNT, groupInfo.getGroupMembers().size());
+            bundle.putInt(Contracts.MEMBERS_COUNT, groupInfo.getGroupMembers().size());
             handleMessage.setData(bundle);
             handleMessage.sendToTarget();
         }
