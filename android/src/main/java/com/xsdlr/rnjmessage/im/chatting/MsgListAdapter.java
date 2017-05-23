@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.xsdlr.rnjmessage.im.Contracts;
+import com.xsdlr.rnjmessage.im.activity.BrowserViewPagerActivity;
 import com.xsdlr.rnjmessage.im.chatting.utils.DialogCreator;
 import com.xsdlr.rnjmessage.im.chatting.utils.FileHelper;
 import com.xsdlr.rnjmessage.im.chatting.utils.HandleResponseCode;
@@ -1292,16 +1295,16 @@ public class MsgListAdapter extends BaseAdapter {
                 }
             } else if (holder.picture != null && v.getId() == holder.picture.getId()) {
                 //TODO jump to BrowserViewPagerActivity
-//                Intent intent = new Intent();
-//                intent.putExtra(JChatDemoApplication.TARGET_ID, mTargetId);
-//                intent.putExtra("msgId", msg.getId());
-//                intent.putExtra(JChatDemoApplication.GROUP_ID, mGroupId);
-//                intent.putExtra(JChatDemoApplication.TARGET_APP_KEY, mTargetAppKey);
-//                intent.putExtra("msgCount", mMsgList.size());
-//                intent.putIntegerArrayListExtra(JChatDemoApplication.MsgIDs, getImgMsgIDList());
-//                intent.putExtra("fromChatActivity", true);
-//                intent.setClass(mContext, BrowserViewPagerActivity.class);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra(Contracts.TARGET_ID, mTargetId);
+                intent.putExtra("msgId", msg.getId());
+                intent.putExtra(Contracts.GROUP_ID, mGroupId);
+                intent.putExtra(Contracts.TARGET_APP_KEY, mTargetAppKey);
+                intent.putExtra("msgCount", mMsgList.size());
+                intent.putIntegerArrayListExtra(Contracts.MsgIDs, getImgMsgIDList());
+                intent.putExtra("fromChatActivity", true);
+                intent.setClass(mContext, BrowserViewPagerActivity.class);
+                mContext.startActivity(intent);
             }
         }
     }
