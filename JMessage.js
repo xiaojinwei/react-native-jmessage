@@ -43,6 +43,31 @@ export default class JMessage {
     static isLoggedIn() {
         return JMessageModule.isLoggedIn();
     }
+
+    /***
+     * 修改用户信息
+     * userFieldType:
+     /// 用户信息字段: 用户名
+     kJMSGUserFieldsNickname = 0,
+     /// 用户信息字段: 生日
+     kJMSGUserFieldsBirthday = 1,
+     /// 用户信息字段: 签名
+     kJMSGUserFieldsSignature = 2,
+     /// 用户信息字段: 性别
+     kJMSGUserFieldsGender = 3,
+     /// 用户信息字段: 区域
+     kJMSGUserFieldsRegion = 4,
+     /// 用户信息字段: 头像 (内部定义的 media_id)
+     kJMSGUserFieldsAvatar = 5,
+
+     * @param parameter 要修改的值
+     * @param kJMSGUserFieldsGender 要修改的key
+     * @returns {*}
+     */
+    static updateMyInfoWithParameter(parameter,kJMSGUserFields){
+        return JMessageModule.updateMyInfoWithParameter(parameter,kJMSGUserFields)
+
+    }
     static myInfo() {
         return JMessageModule.myInfo().then((info) => {
             const {avatar} = info;

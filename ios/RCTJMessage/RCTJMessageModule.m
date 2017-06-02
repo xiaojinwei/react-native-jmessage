@@ -569,6 +569,46 @@ RCT_EXPORT_METHOD(removeConversation
         resolve(nil);
     }];
 }
+/**
+ MARK: 修改用户的信息
+ userFieldType:
+ /// 用户信息字段: 用户名
+ kJMSGUserFieldsNickname = 0,
+ /// 用户信息字段: 生日
+ kJMSGUserFieldsBirthday = 1,
+ /// 用户信息字段: 签名
+ kJMSGUserFieldsSignature = 2,
+ /// 用户信息字段: 性别
+ kJMSGUserFieldsGender = 3,
+ /// 用户信息字段: 区域
+ kJMSGUserFieldsRegion = 4,
+ /// 用户信息字段: 头像 (内部定义的 media_id)
+ kJMSGUserFieldsAvatar = 5,0
+
+ @param parameter 要修改的值
+ @param kJMSGUserFieldsGender 要修改的key
+ 
+ */
+
+RCT_EXPORT_METHOD(updateMyInfoWithParameter
+                  :(NSString*)parameter
+                  :(NSNumber *)kJMSGUserFields
+                  :(RCTPromiseResolveBlock)resolve
+                  :(RCTPromiseRejectBlock)reject{
+                      id useParameter=parameter;
+                      if(kJMSGUserFields==1||kJMSGUserFields==3){
+                          useParameter = [NSNumber numberWithInteger:[parameter intValue]];
+                      }else if(kJMSGUserFields==5){
+                          useParameter=[NSData dataWithContentsOfURL:[NSURL URLWithString:parameter]];
+                      }
+                      [JMSGUser updateMyInfoWithParameter:useParameter userFieldType:kJMSGUserFields completionHandler:^(id resultObject, NSError *error) {
+                          if (!error) {
+                              resolve(@"success");
+                          } else {
+                              reject([@(error.code) stringValue], error.localizedDescription, error);
+                          }
+                      }];
+})
 //MARK: 私有方法
 - (NSString *) toStringWithUserGender:(JMSGUserGender) gender {
     switch (gender) {
@@ -844,6 +884,7 @@ RCT_EXPORT_METHOD(removeConversation
         }
     }];
 }
+
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
 }

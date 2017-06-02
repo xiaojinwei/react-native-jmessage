@@ -211,6 +211,62 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         Conversation conversation = Conversation.createGroupConversation(gid);
         sendMessage(conversation, type, data, promise);
     }
+
+
+    @ReactMethod
+    public void updateMyInfoWithParameter(String parameter,Integer kJMSGUserFields, final Promise promise){
+
+        UserInfo info = JMessageClient.getMyInfo();
+        BasicCallback callback=new BasicCallback() {
+            @Override
+            public void gotResult(int status, String s) {
+                if (status == 0) {
+                    promise.resolve("success");
+                } else {
+                    promise.reject(status+"", s);
+                }
+
+            }
+        };
+        switch (kJMSGUserFields){
+            case 0:{
+                UserInfo.Field updateField = UserInfo.Field.values()[kJMSGUserFields];
+                info.setNickname(parameter);
+                JMessageClient.updateMyInfo(updateField, info, callback);
+            }
+            break;
+            case 1:{
+                UserInfo.Field updateField = UserInfo.Field.values()[kJMSGUserFields];
+                info.setBirthday(Integer.parseInt(parameter));
+                JMessageClient.updateMyInfo(updateField, info, callback);
+            }
+            break;
+            case 2:{
+                UserInfo.Field updateField = UserInfo.Field.values()[kJMSGUserFields];
+                info.setSignature(parameter);
+                JMessageClient.updateMyInfo(updateField, info, callback);
+            }
+            break;
+            case 3:{
+                UserInfo.Field updateField = UserInfo.Field.values()[kJMSGUserFields];
+                info.setGender(UserInfo.Gender.values()[Integer.parseInt(parameter)]);
+                JMessageClient.updateMyInfo(updateField, info, callback);
+            }
+            break;
+            case 4:{
+                UserInfo.Field updateField = UserInfo.Field.values()[kJMSGUserFields];
+                info.setRegion(parameter);
+                JMessageClient.updateMyInfo(updateField, info, callback);
+            }
+            break;
+            case 5:{
+                File file = new File(parameter);
+                JMessageClient.updateUserAvatar(file, callback);
+            }
+            break;
+        }
+
+    }
     /**
      * 根据会话发送消息
      * @param cid
