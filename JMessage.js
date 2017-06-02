@@ -158,8 +158,8 @@ export default class JMessage {
     static removeConversation(cid) {
         return JMessageModule.removeConversation(cid);
     }
-    static toChatpage(userName,isSingle){
-        return JMessageModule.toChatpage(userName,isSingle);
+    static toChatpage(userName,appKey,isSingle){
+        return JMessageModule.toChatpage(userName,appKey,isSingle);
     }
 }
 
