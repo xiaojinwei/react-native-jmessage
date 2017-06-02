@@ -122,15 +122,15 @@ RCT_EXPORT_MODULE()
     [self sendEventWithName:@"onReceiveMessageDownloadFailed"
                        body: [self toDictoryWithMessage:message]];
 }
-RCT_EXPORT_METHOD(toChatpage:(NSString *)username isSingle:(BOOL)isSingle){
-//    NSLog(@"%@",key);
+RCT_EXPORT_METHOD(toChatpage:(NSString *)username appKey:(NSString *)appKey  isSingle:(BOOL)isSingle){
+    //    NSLog(@"%@",key);
     UINavigationController *nav = [UIApplication sharedApplication].delegate.window.rootViewController;
-//    LoginViewController *login=[[LoginViewController alloc]init];
-//    
-//    [nav pushViewController:login animated:YES];
-//    JMSGConversation
+    //    LoginViewController *login=[[LoginViewController alloc]init];
+    //
+    //    [nav pushViewController:login animated:YES];
+    //    JMSGConversation
     if (isSingle) {
-        [JMSGConversation createSingleConversationWithUsername:username completionHandler:^(id resultObject, NSError *error) {
+        [JMSGConversation createSingleConversationWithUsername:username appKey:appKey completionHandler:^(id resultObject, NSError *error) {
             if (!error) {
                 JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
                 jchat.conversation=resultObject;
@@ -175,7 +175,7 @@ RCT_EXPORT_METHOD(isLoggedIn
 }
 /**
  MARK: 登陆
-
+ 
  @param username 用户名
  @param password 密码
  */
@@ -227,7 +227,7 @@ RCT_EXPORT_METHOD(logout
 /**
  MARK: 获得个人用户信息
  
-*/
+ */
 RCT_EXPORT_METHOD(myInfo
                   :(RCTPromiseResolveBlock)resolve
                   :(RCTPromiseRejectBlock)reject) {
@@ -254,7 +254,7 @@ RCT_EXPORT_METHOD(myInfo
 }
 /**
  MARK: 发送单聊消息
-
+ 
  @param username 用户名
  @param type     类型(目前只支持text,image)
  @param data     数据
@@ -501,7 +501,7 @@ RCT_EXPORT_METHOD(historyMessages
 }
 /**
  MARK: 清除未读记录
-
+ 
  @param cid 会话id
  */
 RCT_EXPORT_METHOD(clearUnreadCount
@@ -552,16 +552,16 @@ RCT_EXPORT_METHOD(removeConversation
         JMSGConversation *conversation = resultObject;
         switch (conversation.conversationType) {
             case kJMSGConversationTypeSingle:
-                {
-                    JMSGUser *userInfo = conversation.target;
-                    [JMSGConversation deleteSingleConversationWithUsername:userInfo.username];
-                }
+            {
+                JMSGUser *userInfo = conversation.target;
+                [JMSGConversation deleteSingleConversationWithUsername:userInfo.username];
+            }
                 break;
             case kJMSGConversationTypeGroup:
-                {
-                    JMSGGroup *groupInfo = conversation.target;
-                    [JMSGConversation deleteGroupConversationWithGroupId:groupInfo.gid];
-                }
+            {
+                JMSGGroup *groupInfo = conversation.target;
+                [JMSGConversation deleteGroupConversationWithGroupId:groupInfo.gid];
+            }
                 break;
             default:
                 break;
@@ -584,23 +584,26 @@ RCT_EXPORT_METHOD(removeConversation
  kJMSGUserFieldsRegion = 4,
  /// 用户信息字段: 头像 (内部定义的 media_id)
  kJMSGUserFieldsAvatar = 5,0
-
+ 
  @param parameter 要修改的值
  @param kJMSGUserFieldsGender 要修改的key
  
  */
 
 RCT_EXPORT_METHOD(updateMyInfoWithParameter
-                  :(NSString*)parameter
-                  :(NSNumber *)kJMSGUserFields
+                  :(NSString *)parameter
+                  :(int)kJMSGUserFields
                   :(RCTPromiseResolveBlock)resolve
                   :(RCTPromiseRejectBlock)reject{
+                      
                       id useParameter=parameter;
                       if(kJMSGUserFields==1||kJMSGUserFields==3){
                           useParameter = [NSNumber numberWithInteger:[parameter intValue]];
                       }else if(kJMSGUserFields==5){
-                          useParameter=[NSData dataWithContentsOfURL:[NSURL URLWithString:parameter]];
+                          useParameter=[NSData dataWithContentsOfFile:parameter];
+                          
                       }
+                      NSLog(@"url==%@==%@======%i",parameter,useParameter,kJMSGUserFields);
                       [JMSGUser updateMyInfoWithParameter:useParameter userFieldType:kJMSGUserFields completionHandler:^(id resultObject, NSError *error) {
                           if (!error) {
                               resolve(@"success");
@@ -608,7 +611,7 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
                               reject([@(error.code) stringValue], error.localizedDescription, error);
                           }
                       }];
-})
+                  })
 //MARK: 私有方法
 - (NSString *) toStringWithUserGender:(JMSGUserGender) gender {
     switch (gender) {
@@ -703,7 +706,7 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
 
 /**
  发送聊天消息
-
+ 
  @param name 对方用户名（群号）
  @param isSingle 是否为单聊
  @param contentType 内容类型
@@ -730,21 +733,21 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
             return;
         }
         [self createConversationWithAppKey:appkey
-                                isSingle:isSingle
-                               nameOrGID:name
-                       completionHandler:^(id resultObject, NSError *error) {
-            if (!error) {
-                JMSGConversation *conversation = resultObject;
-                JMSGMessage *message = [conversation createMessageWithContent:[[JMSGTextContent alloc] initWithText:text]];
-                [self nativeSendMessageWithConversation:conversation
-                                                message:message
-                                                timeout:timeout
-                                                resolve:resolve
-                                                 reject:reject];
-            } else {
-                reject([@(error.code) stringValue], error.localizedDescription, error);
-            }
-        }];
+                                  isSingle:isSingle
+                                 nameOrGID:name
+                         completionHandler:^(id resultObject, NSError *error) {
+                             if (!error) {
+                                 JMSGConversation *conversation = resultObject;
+                                 JMSGMessage *message = [conversation createMessageWithContent:[[JMSGTextContent alloc] initWithText:text]];
+                                 [self nativeSendMessageWithConversation:conversation
+                                                                 message:message
+                                                                 timeout:timeout
+                                                                 resolve:resolve
+                                                                  reject:reject];
+                             } else {
+                                 reject([@(error.code) stringValue], error.localizedDescription, error);
+                             }
+                         }];
     } else if ([type caseInsensitiveCompare:@"Image"] == NSOrderedSame) {
         NSString *imageURL = [data valueForKey:@"image"];
         NSData *imageData = [NSData dataWithContentsOfFile:imageURL];
@@ -757,24 +760,24 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
             return;
         }
         [self createConversationWithAppKey:appkey
-                                isSingle:isSingle
-                               nameOrGID:name
-                       completionHandler:^(id resultObject, NSError *error) {
-            if (!error) {
-                JMSGConversation *conversation = resultObject;
-                [conversation createMessageAsyncWithImageContent:[[JMSGImageContent alloc] initWithImageData:imageData]
-                                               completionHandler:^(id resultObject, NSError *error) {
-                    JMSGMessage *message = resultObject;
-                    [self nativeSendMessageWithConversation:conversation
-                                                    message:message
-                                                    timeout:timeout
-                                                    resolve:resolve
-                                                     reject:reject];
-                }];
-            } else {
-                reject([@(error.code) stringValue], error.localizedDescription, error);
-            }
-        }];
+                                  isSingle:isSingle
+                                 nameOrGID:name
+                         completionHandler:^(id resultObject, NSError *error) {
+                             if (!error) {
+                                 JMSGConversation *conversation = resultObject;
+                                 [conversation createMessageAsyncWithImageContent:[[JMSGImageContent alloc] initWithImageData:imageData]
+                                                                completionHandler:^(id resultObject, NSError *error) {
+                                                                    JMSGMessage *message = resultObject;
+                                                                    [self nativeSendMessageWithConversation:conversation
+                                                                                                    message:message
+                                                                                                    timeout:timeout
+                                                                                                    resolve:resolve
+                                                                                                     reject:reject];
+                                                                }];
+                             } else {
+                                 reject([@(error.code) stringValue], error.localizedDescription, error);
+                             }
+                         }];
     } else {
         NSError *error = [[NSError alloc] initWithDomain:@""
                                                     code:kJMSGErrorRNMessageProtocolContentTypeNotSupport
@@ -786,15 +789,15 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
 
 /**
  创建聊天会话
-
+ 
  @param isSingle 是否为单聊
  @param name 对方用户名（群号）
  @param handler 回调
  */
 - (void) createConversationWithAppKey:(NSString*)appkey
-                           isSingle:(BOOL)isSingle
-                          nameOrGID:(NSString*)name
-                  completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler {
+                             isSingle:(BOOL)isSingle
+                            nameOrGID:(NSString*)name
+                    completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler {
     if (isSingle) {
         if(appkey) {
             [JMSGConversation createSingleConversationWithUsername:name appKey:appkey completionHandler:handler];
@@ -808,7 +811,7 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
 
 /**
  native发送消息
-
+ 
  @param conversation 会话
  @param message 消息
  @param timeout 发送超时时间
@@ -818,8 +821,8 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
 - (void) nativeSendMessageWithConversation:(JMSGConversation*)conversation
                                    message:(JMSGMessage*)message
                                    timeout:(NSTimeInterval)timeout
-                              resolve:(RCTPromiseResolveBlock)resolve
-                               reject:(RCTPromiseRejectBlock)reject {
+                                   resolve:(RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject {
     NSString *msgId = message.msgId;
     [_sendMessageIdDic setValue:resolve forKey:msgId];
     [conversation sendMessage:message];
@@ -838,16 +841,16 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
 
 /**
  检测会话有效性
-
+ 
  @param cid 会话id
  @param completionHandler 回调
  */
 - (void) detectConversationValidById:(NSString*)cid
-                        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler {
+                   completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler {
     NSError *conversationInvalidError = [[NSError alloc] initWithDomain:@""
-                                                code:kJMSGErrorRNParamConversationInvalid
-                                            userInfo:@{NSLocalizedDescriptionKey: @"会话无效"
-                                                       }];
+                                                                   code:kJMSGErrorRNParamConversationInvalid
+                                                               userInfo:@{NSLocalizedDescriptionKey: @"会话无效"
+                                                                          }];
     
     NSData *data = [[NSData alloc] initWithBase64EncodedString:cid options:NSDataBase64DecodingIgnoreUnknownCharacters];
     NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -873,16 +876,16 @@ RCT_EXPORT_METHOD(updateMyInfoWithParameter
             return;
     }
     [self createConversationWithAppKey:appkey
-                            isSingle:isSingle
-                           nameOrGID:nameOrGID
-                   completionHandler:^(id resultObject, NSError *error) {
-        if (!error) {
-            JMSGConversation *conversation = resultObject;
-            handler(conversation, nil);
-        } else {
-            handler(nil, conversationInvalidError);
-        }
-    }];
+                              isSingle:isSingle
+                             nameOrGID:nameOrGID
+                     completionHandler:^(id resultObject, NSError *error) {
+                         if (!error) {
+                             JMSGConversation *conversation = resultObject;
+                             handler(conversation, nil);
+                         } else {
+                             handler(nil, conversationInvalidError);
+                         }
+                     }];
 }
 
 - (dispatch_queue_t)methodQueue {

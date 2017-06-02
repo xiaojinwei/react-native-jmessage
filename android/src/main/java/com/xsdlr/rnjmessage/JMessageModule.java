@@ -360,7 +360,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         }
     }
     @ReactMethod
-    public void toChatpage(String key,boolean isSingle){
+    public void toChatpage(String userName,String appKey,boolean isSingle){
 //        setupJMessage();
 
         UserInfo info = JMessageClient.getMyInfo();
@@ -374,10 +374,10 @@ public class JMessageModule extends ReactContextBaseJavaModule {
             if (isSingle) {//进入单聊
                 String mTargetId = info.getUserName();
                 String targetAppKey = info.getAppKey();
-                intent.putExtra(Contracts.TARGET_ID, mTargetId);
-                intent.putExtra(Contracts.TARGET_APP_KEY, targetAppKey);
+                intent.putExtra(userName, mTargetId);
+                intent.putExtra(appKey, targetAppKey);
             }else{//进入群组聊天
-                intent.putExtra(Contracts.GROUP_ID, "群组1");
+                intent.putExtra(userName, "群组1");
             }
             intent.setClass(getCurrentActivity(), ChatActivity.class);
             getCurrentActivity().startActivity(intent);
