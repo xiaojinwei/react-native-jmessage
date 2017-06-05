@@ -330,10 +330,8 @@
 		CE7381841ECC28CE0061542B /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73816D1ECC28CE0061542B /* DDDispatchQueueLogFormatter.m */; };
 		CE7381851ECC28CE0061542B /* DDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE73816E1ECC28CE0061542B /* DDMultiFormatter.h */; };
 		CE7381861ECC28CE0061542B /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73816F1ECC28CE0061542B /* DDMultiFormatter.m */; };
-		CE88C8011ECADA570083741C /* RCTJPushActionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CE88C7FB1ECADA570083741C /* RCTJPushActionQueue.h */; };
-		CE88C8021ECADA570083741C /* RCTJPushActionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88C7FC1ECADA570083741C /* RCTJPushActionQueue.m */; };
-		CE88C8031ECADA570083741C /* RCTJPushModule.h in Headers */ = {isa = PBXBuildFile; fileRef = CE88C7FD1ECADA570083741C /* RCTJPushModule.h */; };
-		CE88C8041ECADA570083741C /* RCTJPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88C7FE1ECADA570083741C /* RCTJPushModule.m */; };
+		CE85F4FA1EE3F9F70074DDF5 /* RCTJPushModule.h in Headers */ = {isa = PBXBuildFile; fileRef = CE85F4F81EE3F9F70074DDF5 /* RCTJPushModule.h */; };
+		CE85F4FB1EE3F9F70074DDF5 /* RCTJPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85F4F91EE3F9F70074DDF5 /* RCTJPushModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -692,11 +690,9 @@
 		CE73816D1ECC28CE0061542B /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		CE73816E1ECC28CE0061542B /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
 		CE73816F1ECC28CE0061542B /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
+		CE85F4F81EE3F9F70074DDF5 /* RCTJPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushModule.h; sourceTree = "<group>"; };
+		CE85F4F91EE3F9F70074DDF5 /* RCTJPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushModule.m; sourceTree = "<group>"; };
 		CE88C7F91ECADA570083741C /* jpush-ios-3.0.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.5.a"; sourceTree = "<group>"; };
-		CE88C7FB1ECADA570083741C /* RCTJPushActionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushActionQueue.h; sourceTree = "<group>"; };
-		CE88C7FC1ECADA570083741C /* RCTJPushActionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushActionQueue.m; sourceTree = "<group>"; };
-		CE88C7FD1ECADA570083741C /* RCTJPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushModule.h; sourceTree = "<group>"; };
-		CE88C7FE1ECADA570083741C /* RCTJPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1357,10 +1353,8 @@
 			children = (
 				CE737C6E1ECBF40C0061542B /* JPUSHService.h */,
 				CE88C7F91ECADA570083741C /* jpush-ios-3.0.5.a */,
-				CE88C7FB1ECADA570083741C /* RCTJPushActionQueue.h */,
-				CE88C7FC1ECADA570083741C /* RCTJPushActionQueue.m */,
-				CE88C7FD1ECADA570083741C /* RCTJPushModule.h */,
-				CE88C7FE1ECADA570083741C /* RCTJPushModule.m */,
+				CE85F4F81EE3F9F70074DDF5 /* RCTJPushModule.h */,
+				CE85F4F91EE3F9F70074DDF5 /* RCTJPushModule.m */,
 			);
 			path = RCTJPushModele;
 			sourceTree = "<group>";
@@ -1390,6 +1384,7 @@
 				CE7380C91ECC1F530061542B /* YLGIFImage.h in Headers */,
 				CE7380801ECC1F520061542B /* MASUtilities.h in Headers */,
 				CE73817B1ECC28CE0061542B /* DDLog+LOGV.h in Headers */,
+				CE85F4FA1EE3F9F70074DDF5 /* RCTJPushModule.h in Headers */,
 				CE7380F51ECC1F530061542B /* XHMacro.h in Headers */,
 				CE7380741ECC1F520061542B /* JCHATCustomFormatter.h in Headers */,
 				CE7381811ECC28CE0061542B /* DDContextFilterLogFormatter.h in Headers */,
@@ -1411,7 +1406,6 @@
 				CE7380511ECC1F520061542B /* JCHATSendMsgController.h in Headers */,
 				CE7380491ECC1F520061542B /* UIColor+expanded.h in Headers */,
 				CD4E9FEA1E5447AC009E2752 /* RCTJMessageModule.h in Headers */,
-				CE88C8031ECADA570083741C /* RCTJPushModule.h in Headers */,
 				CE7380F21ECC1F530061542B /* JCHATToolBar.h in Headers */,
 				CE7381751ECC28CE0061542B /* DDASLLogger.h in Headers */,
 				CE7380881ECC1F520061542B /* NSLayoutConstraint+MASDebugAdditions.h in Headers */,
@@ -1431,7 +1425,6 @@
 				CE7380671ECC1F520061542B /* JCHATPhotoModel.h in Headers */,
 				CE7380C61ECC1F530061542B /* UIView+AutoLayout.h in Headers */,
 				CE7380B41ECC1F530061542B /* UIButton+WebCache.h in Headers */,
-				CE88C8011ECADA570083741C /* RCTJPushActionQueue.h in Headers */,
 				CE7380E81ECC1F530061542B /* JCHATMessageContentView.h in Headers */,
 				CE7380CE1ECC1F530061542B /* JCHATConversationViewController.h in Headers */,
 				CE73805D1ECC1F520061542B /* JCHATAlbumViewController.h in Headers */,
@@ -1735,6 +1728,7 @@
 				CD86E06C1E6D639600A0B8AE /* NSJSONSerialization+JSONString.m in Sources */,
 				CE7381741ECC28CE0061542B /* DDASLLogCapture.m in Sources */,
 				CE73806F1ECC1F520061542B /* JCHATSelectImgCollectionView.m in Sources */,
+				CE85F4FB1EE3F9F70074DDF5 /* RCTJPushModule.m in Sources */,
 				CE7380D11ECC1F530061542B /* JchatMessageListViewController.m in Sources */,
 				CE7380821ECC1F520061542B /* MASViewAttribute.m in Sources */,
 				CE7380FC1ECC1F530061542B /* XHVoiceRecordHUD.m in Sources */,
@@ -1748,7 +1742,6 @@
 				CE7380AE1ECC1F530061542B /* SDWebImageManager+MJ.m in Sources */,
 				CE7380DD1ECC1F530061542B /* JCHATLoadMessageTableViewCell.m in Sources */,
 				CE7380501ECC1F520061542B /* JCHATFileManager.m in Sources */,
-				CE88C8041ECADA570083741C /* RCTJPushModule.m in Sources */,
 				CE73817D1ECC28CE0061542B /* DDLog.m in Sources */,
 				CE7381801ECC28CE0061542B /* DDTTYLogger.m in Sources */,
 				CE7380901ECC1F520061542B /* MBProgressHUD+Add.m in Sources */,
@@ -1762,7 +1755,6 @@
 				CD3B6D321DEEBFAD0011B9F5 /* RCTJMessageModule.m in Sources */,
 				CE73808E1ECC1F520061542B /* ViewController+MASAdditions.m in Sources */,
 				CE73809C1ECC1F530061542B /* MJPhotoToolbar.m in Sources */,
-				CE88C8021ECADA570083741C /* RCTJPushActionQueue.m in Sources */,
 				CE7380D91ECC1F530061542B /* JCHATRawAudioDataPlayer.m in Sources */,
 				CE07355A1ECECECD00D5D648 /* UINib_ext.m in Sources */,
 				CE7380BB1ECC1F530061542B /* UIImage+WebP.m in Sources */,
