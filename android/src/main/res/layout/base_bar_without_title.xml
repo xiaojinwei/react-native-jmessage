@@ -3,7 +3,7 @@
     android:id="@+id/title_bar_rl"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_height"
-    android:background="#6599E4">
+    android:background="@color/jmui_jpush_blue">
 
         <ImageButton
             android:id="@+id/return_btn"
@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:visibility="gone"
             />
 
@@ -33,6 +33,6 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/send_picture_btn_bg"
             android:text="@string/jmui_send"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_normal_size"/>
 </RelativeLayout>

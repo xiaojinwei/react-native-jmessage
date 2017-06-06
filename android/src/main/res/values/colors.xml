@@ -4,7 +4,7 @@
 
     <color name="jmui_chat_text_color">#373334</color>
     <color name="jmui_item_click_bg_color">#dddddd</color>
-    <color name="jmui_jpush_blue">#3f80dc</color>
+    <color name="jmui_jpush_blue">#f3f3f3</color>
     <color name="jmui_send_press_color">#346fc3</color>
     <color name="jmui_default_cursor_color">#8db4eb</color>
     <color name="jmui_chat_detail_split_line_color">#d4d4d4</color>

@@ -8,7 +8,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:id="@+id/jmui_menu_title_bar"
@@ -34,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="190dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/black"
                     android:singleLine="true"
                     android:textSize="20sp"/>
 
@@ -42,7 +45,7 @@
                     android:id="@+id/jmui_group_num_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/black"
                     android:singleLine="true"
                     android:textSize="20sp"/>
 
@@ -54,6 +57,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/jmui_chat_detail"
+                android:visibility="gone"
                 android:background="@drawable/jmui_back_btn_bg" />
 
         </RelativeLayout>
@@ -170,7 +174,7 @@
                         android:background="@drawable/jmui_register_btn_bg"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="@string/jmui_send"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/black"
                         android:padding="5dp"
                         android:textSize="14sp"
                         android:visibility="gone" />
