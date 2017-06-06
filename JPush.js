@@ -22,13 +22,13 @@ module.exports = JPush= {
     initPush() {
         JPushModule.initPush();
     },
-    setAlias(alias:String,handler: Function) {
+    setAlias(alias:String) {
         console.log('inter setAlias');
-        JPushModule.setAlias(alias,handler);
+        JPushModule.setAlias(alias);
     },
 
-    removeAlias(alias:String,handler: Function) {
-        JPushModule.setAlias('',handler);
+    removeAlias(alias:String) {
+        JPushModule.setAlias('');
     },
 
     getDeviceToken(handler: Function) {
