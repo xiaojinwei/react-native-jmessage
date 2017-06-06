@@ -2,6 +2,8 @@ import {
     NativeModules,
     Platform,
     NativeEventEmitter,
+    DeviceEventEmitter, //android
+    NativeAppEventEmitter, //ios
 } from 'react-native';
 import Base64 from 'base-64';
 import { requsetMediaURL } from './lib/restApi';
@@ -11,20 +13,27 @@ import {cloneDeep, isEmpty} from 'lodash';
 const JMessageModule = NativeModules.JMessageModule;
 
 export default class JMessage {
-    static eventEmitter = new NativeEventEmitter(JMessageModule);
+    static eventEmitter = Platform.OS==='ios'?NativeAppEventEmitter:DeviceEventEmitter;
     static appKey = JMessageModule.AppKey;
     static masterSecret = JMessageModule.MasterSecret;
     static authKey = Base64.encode(`${JMessageModule.AppKey}:${JMessageModule.MasterSecret}`);
 
     static events = {
         "onReceiveMessage": "onReceiveMessage",
+        "onJGSendMessage": "onJGSendMessage",
     };
 
     static addReceiveMessageListener(cb) {
-        return JMessage.eventEmitter.addListener('onReceiveMessage', (message) => {
+        // return JMessage.eventEmitter.addListener('onReceiveMessage', (message) => {
+        //     console.log('onReceiveMessage===',message);
+        //     const _message = formatMessage(message);
+        //     supportMessageMediaURL(_message).then((message) => cb(message));
+        // });
+        return JMessage.addEventListener('onReceiveMessage', (message) => {
+            console.log('addSendMessageListener===',message);
             const _message = formatMessage(message);
             supportMessageMediaURL(_message).then((message) => cb(message));
-        });
+        })
     }
     static removeAllListener(eventNames = Object.keys(JMessage.events)) {
         if (Array.isArray(eventNames)) {
@@ -33,6 +42,31 @@ export default class JMessage {
             }
         } else {
             JMessage.eventEmitter.removeAllListeners(eventNames);
+        }
+    }
+    static addSendMessageListener(cb) {
+        return JMessage.addEventListener('onJGSendMessage', (message) => {
+            console.log('addSendMessageListener===',message);
+            const _message = formatMessage(message);
+            supportMessageMediaURL(_message).then((message) => cb(message));
+        })
+        // return JMessage.eventEmitter.addListener('onSendMessage', (message) => {
+        //     console.log('addSendMessageListener===',message);
+        //     const _message = formatMessage(message);
+        //     supportMessageMediaURL(_message).then((message) => cb(message));
+        // });
+    }
+    static addEventListener(eventName: string, handler: Function) {
+        if(Platform.OS === 'android') {
+            return DeviceEventEmitter.addListener(eventName, (event) => {
+                handler(event);
+            });
+        }
+        else {
+            return NativeAppEventEmitter.addListener(
+                eventName, (userInfo) => {
+                    handler(userInfo);
+                });
         }
     }
     static init() {
@@ -164,6 +198,7 @@ export default class JMessage {
 }
 
 const supportMessageMediaURL = (message) => {
+    console.log('supportMessageMediaURL',message);
     const {content = {}, from = {}, target = {}} = message;
     const requsetMediaURLPromise = mid => requsetMediaURL(JMessage.authKey, mid);
     return Promise
@@ -183,12 +218,15 @@ const supportMessageMediaURL = (message) => {
 };
 
 const formatMessage = (message) => {
-    const _message = cloneDeep(message)
-    try {
-        _message.content = JSON.parse(_message.content);
-    } catch (ex) {
-        _message.contentJSONString = _message.content;
-        _message.content = {};
+    if(message){
+        const _message = cloneDeep(message)
+        try {
+            _message.content = JSON.parse(_message.content);
+        } catch (ex) {
+            _message.contentJSONString = _message.content;
+            _message.content = {};
+        }
+        return camelcaseKeys(_message, {deep: true});
     }
-    return camelcaseKeys(_message, {deep: true});
+    return ''
 };

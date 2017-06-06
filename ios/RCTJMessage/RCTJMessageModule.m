@@ -11,6 +11,8 @@
 #import <JMessage/JMSGImageContent.h>
 #import "LoginViewController.h"
 #import "JCHATConversationViewController.h"
+#import "RCTEventDispatcher.h"
+
 @interface RCTJMessageModule () {
 @private
     NSMutableDictionary *_sendMessageIdDic;
@@ -18,7 +20,7 @@
 @end
 
 @implementation RCTJMessageModule
-
+@synthesize bridge = _bridge;
 RCT_EXPORT_MODULE()
 
 - (instancetype)init
@@ -29,6 +31,7 @@ RCT_EXPORT_MODULE()
         self.appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppKey"];
         self.masterSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangMasterSecret"];
         self.appChannel = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppChannel"];
+        [JMessage addDelegate:self withConversation:nil];
     }
     return self;
 }
@@ -36,6 +39,7 @@ RCT_EXPORT_MODULE()
 - (NSArray<NSString *> *)supportedEvents {
     return @[
              @"onReceiveMessage",
+             @"onJGSendMessage",
              @"onReceiveMessageDownloadFailed"
              ];
 }
@@ -50,6 +54,7 @@ RCT_EXPORT_MODULE()
                     channel:appChannel
            apsForProduction:isProduction
                    category:category];
+    
 }
 
 - (void)startObserving {
@@ -68,14 +73,19 @@ RCT_EXPORT_MODULE()
 //MARK: 通知相关
 - (void)onSendMessageResponse:(JMSGMessage *)message error:(NSError *)error {
     if (!error) {
-        RCTPromiseResolveBlock resolve = [_sendMessageIdDic objectForKey:message.msgId];
-        if (resolve) {
-            resolve([self toDictoryWithMessage:message]);
-            [_sendMessageIdDic removeObjectForKey:message.msgId];
-        }
+//        RCTPromiseResolveBlock resolve = [_sendMessageIdDic objectForKey:message.msgId];
+//        if (resolve) {
+//            resolve([self toDictoryWithMessage:message]);
+//            [_sendMessageIdDic removeObjectForKey:message.msgId];
+//        }
+        [self.bridge.eventDispatcher sendAppEventWithName:@"onReceiveMessage" body:[self toDictoryWithMessage:message]];
+//        [self sendEventWithName:@"onSendMessage"
+//                           body:[self toDictoryWithMessage:message]];
     }
 }
-
+- (void)onUnreadChanged:(NSUInteger)newCount{
+    NSLog(@"newCount========%i",newCount);
+}
 - (void)onReceiveNotificationEvent:(JMSGNotificationEvent *)event {
     switch (event.eventType) {
         case kJMSGEventNotificationNoDisturbChange:
@@ -113,14 +123,19 @@ RCT_EXPORT_MODULE()
 
 - (void)onReceiveMessage:(JMSGMessage *)message error:(NSError *)error {
     if (!error) {
-        [self sendEventWithName:@"onReceiveMessage"
-                           body:[self toDictoryWithMessage:message]];
+//        [self sendEventWithName:@"onReceiveMessage"
+//                           body:[self toDictoryWithMessage:message]];
+        [self.bridge.eventDispatcher sendAppEventWithName:@"onReceiveMessage" body:[self toDictoryWithMessage:message]];
     }
+}
+- (void)onConversationChanged:(JMSGConversation *)conversation{
+    NSLog(@"kaishi le dew e ");
 }
 
 - (void)onReceiveMessageDownloadFailed:(JMSGMessage *)message {
-    [self sendEventWithName:@"onReceiveMessageDownloadFailed"
-                       body: [self toDictoryWithMessage:message]];
+//    [self sendEventWithName:@"onReceiveMessageDownloadFailed"
+//                       body: [self toDictoryWithMessage:message]];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"onReceiveMessageDownloadFailed" body:[self toDictoryWithMessage:message]];
 }
 RCT_EXPORT_METHOD(toChatpage:(NSString *)username appKey:(NSString *)appKey  isSingle:(BOOL)isSingle){
     //    NSLog(@"%@",key);
@@ -132,7 +147,9 @@ RCT_EXPORT_METHOD(toChatpage:(NSString *)username appKey:(NSString *)appKey  isS
     if (isSingle) {
         [JMSGConversation createSingleConversationWithUsername:username appKey:appKey completionHandler:^(id resultObject, NSError *error) {
             if (!error) {
-                JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
+                JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]initWithBackFunction:^{
+                    [self.bridge.eventDispatcher sendAppEventWithName:@"onReceiveMessage" body:nil];
+                }];
                 jchat.conversation=resultObject;
                 [nav pushViewController:jchat animated:YES];
                 
@@ -143,7 +160,9 @@ RCT_EXPORT_METHOD(toChatpage:(NSString *)username appKey:(NSString *)appKey  isS
     }else{
         [JMSGConversation createGroupConversationWithGroupId:username completionHandler:^(id resultObject, NSError *error) {
             if (!error) {
-                JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]init];
+                JCHATConversationViewController *jchat=[[JCHATConversationViewController alloc]initWithBackFunction:^{
+                    [self.bridge.eventDispatcher sendAppEventWithName:@"onReceiveMessage" body:nil];
+                }];
                 jchat.conversation=resultObject;
                 [nav pushViewController:jchat animated:YES];
             } else {
@@ -151,17 +170,6 @@ RCT_EXPORT_METHOD(toChatpage:(NSString *)username appKey:(NSString *)appKey  isS
             }
         }];
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 //MARK: 公开方法
 /**
@@ -417,7 +425,7 @@ RCT_EXPORT_METHOD(allConversations
                                                                                      }
                                                                            options:NSJSONWritingPrettyPrinted
                                                                              error:nil];
-                            cid = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                            cid=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                         }
                             break;
                         case kJMSGConversationTypeGroup:
@@ -431,7 +439,7 @@ RCT_EXPORT_METHOD(allConversations
                                                                                      }
                                                                            options:NSJSONWritingPrettyPrinted
                                                                              error:nil];
-                            cid = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                            cid=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                         }
                             break;
                         default:

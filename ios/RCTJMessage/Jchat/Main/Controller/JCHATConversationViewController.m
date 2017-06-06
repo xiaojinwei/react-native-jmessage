@@ -38,18 +38,18 @@
   NSMutableArray *_userArr;//
   UIButton *_rightBtn;
 }
-
+@property(copy,nonatomic)onChatPageBack onChatPageBack;
 @end
 
 
 @implementation JCHATConversationViewController//change name chatcontroller
-- (instancetype)init
+- (instancetype)initWithBackFunction:(onChatPageBack)onChatPageBack
 {
     NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"RCTJMessageBundle" withExtension:@"bundle"]]; 
 //    NSArray *nibs =  [bundle loadNibNamed:@"JCHATConversationViewController" owner:nil options:nil];
     self = [super initWithNibName:@"JCHATConversationViewController" bundle:bundle];
     if (self) {
-        
+        self.onChatPageBack=onChatPageBack;
     }
     return self;
 }
@@ -179,9 +179,17 @@
   
   [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
-  
+    
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftBtn setFrame:CGRectMake(0, 0, 10, 17)];
+    [leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [leftBtn setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/back_arrow_small"] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
   }
-
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
+    self.onChatPageBack();
+}
 - (void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
   if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeGroup) {
     JMSGGroup *group = nil;

@@ -21,7 +21,7 @@
 #define interval 60*2 //static =const
 #define navigationRightButtonRect CGRectMake(0, 0, 14, 17)
 #define messageTableColor [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1]
-
+typedef void (^onChatPageBack)();
 static NSInteger const messagePageNumber = 25;
 static NSInteger const messagefristPageNumber = 20;
 
@@ -55,6 +55,7 @@ UITextViewDelegate>
 @property(assign, nonatomic) BOOL isConversationChange;
 @property(weak,nonatomic)id superViewController;
 
+
 /**
  *  管理录音工具对象
  */
@@ -64,7 +65,7 @@ UITextViewDelegate>
  *  记录旧的textView contentSize Heigth
  */
 @property(nonatomic, assign) CGFloat previousTextViewContentHeight;
-
+- (instancetype)initWithBackFunction:(onChatPageBack)onChatPageBack;
 - (void)setupView;
 - (void)prepareImageMessage:(UIImage *)img;
 @end

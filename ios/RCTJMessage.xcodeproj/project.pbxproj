@@ -332,6 +332,8 @@
 		CE7381861ECC28CE0061542B /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73816F1ECC28CE0061542B /* DDMultiFormatter.m */; };
 		CE85F4FA1EE3F9F70074DDF5 /* RCTJPushModule.h in Headers */ = {isa = PBXBuildFile; fileRef = CE85F4F81EE3F9F70074DDF5 /* RCTJPushModule.h */; };
 		CE85F4FB1EE3F9F70074DDF5 /* RCTJPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85F4F91EE3F9F70074DDF5 /* RCTJPushModule.m */; };
+		CEC6D9841EE6AF69002D069D /* back_arrow_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC6D9821EE6AF69002D069D /* back_arrow_small@2x.png */; };
+		CEC6D9851EE6AF69002D069D /* back_arrow_small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC6D9831EE6AF69002D069D /* back_arrow_small@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -693,6 +695,8 @@
 		CE85F4F81EE3F9F70074DDF5 /* RCTJPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTJPushModule.h; sourceTree = "<group>"; };
 		CE85F4F91EE3F9F70074DDF5 /* RCTJPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTJPushModule.m; sourceTree = "<group>"; };
 		CE88C7F91ECADA570083741C /* jpush-ios-3.0.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.5.a"; sourceTree = "<group>"; };
+		CEC6D9821EE6AF69002D069D /* back_arrow_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_arrow_small@2x.png"; sourceTree = "<group>"; };
+		CEC6D9831EE6AF69002D069D /* back_arrow_small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_arrow_small@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -751,6 +755,8 @@
 		CE07348B1ECEBEC000D5D648 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEC6D9821EE6AF69002D069D /* back_arrow_small@2x.png */,
+				CEC6D9831EE6AF69002D069D /* back_arrow_small@3x.png */,
 				CE07348C1ECEBEC000D5D648 /* add01@2x.png */,
 				CE07348D1ECEBEC000D5D648 /* add01@3x.png */,
 				CE07348E1ECEBEC000D5D648 /* AlertViewtextFieldBackgroupImage@2x.png */,
@@ -1568,6 +1574,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC6D9851EE6AF69002D069D /* back_arrow_small@3x.png in Resources */,
 				CE0735461ECEBEC100D5D648 /* RecordingSignal001@2x.png in Resources */,
 				CE335E581ECDA529004D7BD3 /* JCHATAlbumViewController.xib in Resources */,
 				CE335E591ECDA529004D7BD3 /* JCHATPhotoBrowserViewController.xib in Resources */,
@@ -1611,6 +1618,7 @@
 				CE07350B1ECEBEC000D5D648 /* addMan_pre@2x.png in Resources */,
 				CE335E5E1ECDA529004D7BD3 /* ThumbImageCollectionViewCell.xib in Resources */,
 				CE07354A1ECEBEC100D5D648 /* RecordingSignal005@2x.png in Resources */,
+				CEC6D9841EE6AF69002D069D /* back_arrow_small@2x.png in Resources */,
 				CE0735241ECEBEC000D5D648 /* keyboard_toolbar_pre@2x.png in Resources */,
 				CE0735551ECEBEC100D5D648 /* yuyin@2x.png in Resources */,
 				CE07352F1ECEBEC000D5D648 /* select@3x.png in Resources */,

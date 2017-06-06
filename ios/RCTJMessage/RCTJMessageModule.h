@@ -11,7 +11,6 @@
 #import <JMessage/JMessage.h>
 #import <JMessage/JMessageDelegate.h>
 #import "NSJSONSerialization+JSONString.h"
-
 #if __has_include("RCTEventEmitter.h")
 #import "RCTEventEmitter.h"
 #elif __has_include(<React/RCTEventEmitter.h>)  // back compatibility for RN version < 0.40
@@ -19,10 +18,16 @@
 #else
 #import "React/RCTEventEmitter.h"               // Required when used as a Pod in a Swift project
 #endif
-
+#if __has_include(<React/RCTBridgeModule.h>)
+#import <React/RCTBridgeModule.h>
+#elif __has_include("RCTBridgeModule.h")
+#import "RCTBridgeModule.h"
+#elif __has_include("React/RCTBridgeModule.h")
+#import "React/RCTBridgeModule.h"
+#endif
 #define OPTION_NULL(value) value ? value : [NSNull null]
 
-@interface RCTJMessageModule : RCTEventEmitter <RCTBridgeModule, JMessageDelegate>
+@interface RCTJMessageModule : NSObject <RCTBridgeModule, JMessageDelegate>
 
 typedef NS_ENUM(NSInteger, JMSGRNErrorCode) {
     // ------------------------ Message (1863xxx)

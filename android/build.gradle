@@ -10,9 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
-            JIGUANG_APPKEY: '7856f2efcdac4cc48753f1e5',
+            JIGUANG_APPKEY: 'acd72f2f940853038ffe100a',
             JGUANG_APPCHANNEL: "developer-default",
-            JIGUANG_MASTER_SECRET: '222222'
+            JIGUANG_MASTER_SECRET: '82959ed8cbfb3c3b572c7fc5'
         ]
     }
     buildTypes {
