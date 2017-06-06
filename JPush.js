@@ -19,12 +19,16 @@ module.exports = JPush= {
     // addAlias(alias:String,type:String) {
     //     JPushModule.addAlias(alias,type);
     // },
+    initPush() {
+        JPushModule.initPush();
+    },
     setAlias(alias:String) {
+        console.log('inter setAlias');
         JPushModule.setAlias(alias);
     },
 
     removeAlias(alias:String) {
-        JPushModule.removeAlias(alias);
+        JPushModule.setAlias('');
     },
 
     getDeviceToken(handler: Function) {
@@ -33,6 +37,7 @@ module.exports = JPush= {
 
     didReceiveMessage(handler: Function) {
         receiveMessageSubscript = this.addEventListener(JPushModule.DidReceiveMessage, message => {
+            console.log('didReceiveMessage-->message:'+message.toString())
             //处于后台时，拦截收到的消息
             if(AppState.currentState === 'background') {
                 return;

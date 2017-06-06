@@ -1,6 +1,5 @@
 package com.xsdlr.rnjpush;
 
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +11,14 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
-import cn.jpush.android.api.BasicPushNotificationBuilder;
-import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
@@ -31,6 +28,9 @@ public class JPushModule extends ReactContextBaseJavaModule {
     private Context mContext;
     private static ReactApplicationContext mRAC;
     private static CountDownLatch mLatch;
+
+    protected static final String DidReceiveMessage = "DidReceiveMessage";
+    protected static final String DidOpenMessage = "DidOpenMessage";
 
     public JPushModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -59,6 +59,15 @@ public class JPushModule extends ReactContextBaseJavaModule {
         super.onCatalystInstanceDestroy();
     }
 
+    @Override
+    public Map<String, Object> getConstants() {
+        final Map<String, Object> constants = new HashMap<>();
+        constants.put(DidReceiveMessage, DidReceiveMessage);
+        constants.put(DidOpenMessage, DidOpenMessage);
+        return constants;
+
+    }
+
     @ReactMethod
     public void initPush() {
         mContext = getCurrentActivity();
@@ -67,21 +76,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         Logger.i(TAG, "init Success!");
     }
 
-    @ReactMethod
-    public void getInfo(Callback successCallback) {
-        WritableMap map = Arguments.createMap();
-        String appKey = "AppKey:" + ExampleUtil.getAppKey(getReactApplicationContext());
-        map.putString("myAppKey", appKey);
-        String imei = "IMEI: " + ExampleUtil.getImei(getReactApplicationContext(), "");
-        map.putString("myImei", imei);
-        String packageName = "PackageName: " + getReactApplicationContext().getPackageName();
-        map.putString("myPackageName", packageName);
-        String deviceId = "DeviceId: " + ExampleUtil.getDeviceId(getReactApplicationContext());
-        map.putString("myDeviceId", deviceId);
-        String version = "Version: " + ExampleUtil.GetVersion(getReactApplicationContext());
-        map.putString("myVersion", version);
-        successCallback.invoke(map);
-    }
+
 
     @ReactMethod
     public void stopPush() {
@@ -99,81 +94,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         Logger.toast(mContext, "Resume push success");
     }
 
-    /**
-     * Set tags, this API is covering logic not incremental logic, means call this API will cover tags which
-     * have been set. See document https://docs.jiguang.cn/jpush/client/Android/android_api/#api_3
-     * for detail.
-     *
-     * @param strArray tags array
-     * @param callback callback
-     */
-    @ReactMethod
-    public void setTags(final ReadableArray strArray, final Callback callback) {
-        mContext = getCurrentActivity();
-        Logger.i(TAG, "tag: " + strArray.toString());
-        if (strArray.size() > 0) {
-            Set<String> tagSet = new LinkedHashSet<>();
-            for (int i = 0; i < strArray.size(); i++) {
-                if (!ExampleUtil.isValidTagAndAlias(strArray.getString(i))) {
-                    Logger.toast(mContext, "Invalid tag !");
-                    return;
-                }
-                tagSet.add(strArray.getString(i));
-            }
-            // final ProgressDialog dialog = new ProgressDialog(mContext);
-            // dialog.setMessage("Loading");
-            // dialog.show();
-            JPushInterface.setTags(getReactApplicationContext(),
-                    tagSet, new TagAliasCallback() {
-                        @Override
-                        public void gotResult(int status, String desc, Set<String> set) {
-                            // dialog.dismiss();
-                            switch (status) {
-                                case 0:
-                                    Logger.i(TAG, "Set tag success. tag: " + strArray.toString());
-                                    Logger.toast(getReactApplicationContext(), "Set tag success");
-                                    callback.invoke(0);
-                                    break;
-                                case 6002:
-                                    Logger.i(TAG, "Set tag timeout");
-                                    Logger.toast(getReactApplicationContext(),
-                                            "Set tag timeout, check your network");
-                                    callback.invoke("Set tag timeout");
-                                    break;
-                                default:
-                                    Logger.toast(getReactApplicationContext(),
-                                            "Error code: " + status);
-                                    callback.invoke("Set tag failed. Error code: " + status);
-                            }
-                        }
-                    });
-        } else {
-            Logger.toast(mContext, "Empty tag, try to cancel tags ");
-            Logger.i(TAG, "Empty tag, will cancel early settings");
-            JPushInterface.setTags(getReactApplicationContext(), new LinkedHashSet<String>(), new TagAliasCallback() {
-                @Override
-                public void gotResult(int status, String desc, Set<String> set) {
-                    switch (status) {
-                        case 0:
-                            Logger.i(TAG, "Cancel tag success. ");
-                            Logger.toast(getReactApplicationContext(), "Cancel tag success");
-                            callback.invoke(0);
-                            break;
-                        case 6002:
-                            Logger.i(TAG, "Set tag timeout");
-                            Logger.toast(getReactApplicationContext(),
-                                    "Set tag timeout, check your network");
-                            callback.invoke("Set tag timeout");
-                            break;
-                        default:
-                            Logger.toast(getReactApplicationContext(),
-                                    "Error code: " + status);
-                            callback.invoke("Set tag failed. Error code: " + status);
-                    }
-                }
-            });
-        }
-    }
+
 
     /**
      * Set alias. This API is covering logic rather then incremental logic, means call this API will cover alias
@@ -181,10 +102,10 @@ public class JPushModule extends ReactContextBaseJavaModule {
      * for detail.
      *
      * @param str      alias string.
-     * @param callback callback
+     * @param
      */
     @ReactMethod
-    public void setAlias(String str, final Callback callback) {
+    public void setAlias(String str) {
         mContext = getCurrentActivity();
         final String alias = str.trim();
         Logger.i(TAG, "alias: " + alias);
@@ -197,17 +118,17 @@ public class JPushModule extends ReactContextBaseJavaModule {
                                 case 0:
                                     Logger.i(TAG, "Set alias success");
                                     Logger.toast(getReactApplicationContext(), "Set alias success");
-                                    callback.invoke(0);
+//                                    callback.invoke(0);
                                     break;
                                 case 6002:
                                     Logger.i(TAG, "Set alias timeout");
                                     Logger.toast(getReactApplicationContext(),
                                             "set alias timeout, check your network");
-                                    callback.invoke("Set alias timeout");
+//                                    callback.invoke("Set alias timeout");
                                     break;
                                 default:
                                     Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                                    callback.invoke("Set alias failed. Error code: " + status);
+//                                    callback.invoke("Set alias failed. Error code: " + status);
                             }
                         }
                     });
@@ -221,17 +142,17 @@ public class JPushModule extends ReactContextBaseJavaModule {
                         case 0:
                             Logger.i(TAG, "Cancel alias success");
                             Logger.toast(getReactApplicationContext(), "Cancel alias success");
-                            callback.invoke(0);
+//                            callback.invoke(0);
                             break;
                         case 6002:
                             Logger.i(TAG, "Set alias timeout");
                             Logger.toast(getReactApplicationContext(),
                                     "set alias timeout, check your network");
-                            callback.invoke("Set alias timeout");
+//                            callback.invoke("Set alias timeout");
                             break;
                         default:
                             Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                            callback.invoke("Set alias failed. Error code: " + status);
+//                            callback.invoke("Set alias failed. Error code: " + status);
                     }
                 }
             });
@@ -239,172 +160,16 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Set alias and tags. This API is covering logic rather then incremental logic, means call this
-     * API will override early settings. See document for detail:
-     * https://docs.jiguang.cn/jpush/client/Android/android_api/#api_3
      *
-     * @param alias    alias string
-     * @param tagArray tags
-     * @param callback callback
+     * 获取设备id/registrationId
+     * @param callback
      */
     @ReactMethod
-    public void setAliasAndTags(String alias, ReadableArray tagArray, final Callback callback) {
-        if (tagArray != null) {
-            Logger.i(TAG, "tag: " + tagArray.toString());
-            if (tagArray.size() > 0) {
-                Set<String> tagSet = new LinkedHashSet<>();
-                for (int i = 0; i < tagArray.size(); i++) {
-                    if (!ExampleUtil.isValidTagAndAlias(tagArray.getString(i))) {
-                        Logger.toast(mContext, "Invalid tag !");
-                        return;
-                    }
-                    tagSet.add(tagArray.getString(i));
-                }
-                JPushInterface.setAliasAndTags(getReactApplicationContext(), alias, tagSet, new TagAliasCallback() {
-                    @Override
-                    public void gotResult(int status, String desc, Set<String> set) {
-                        switch (status) {
-                            case 0:
-                                Logger.i(TAG, "Set alias and tags success");
-                                Logger.toast(getReactApplicationContext(), "Set alias and tags success");
-                                callback.invoke(0);
-                                break;
-                            case 6002:
-                                Logger.i(TAG, "Set alias timeout");
-                                Logger.toast(getReactApplicationContext(),
-                                        "set alias timeout, check your network");
-                                callback.invoke("Set alias timeout");
-                                break;
-                            default:
-                                Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                                Logger.i(TAG, "Set alias and tags failed, error code: " + status);
-                                callback.invoke("Set alias and tags failed. Error code: " + status);
-                        }
-                    }
-                });
-            } else {
-                Logger.i(TAG, "Calling setAliasAndTags, tags is empty, will cancel tags settings");
-                JPushInterface.setAliasAndTags(getReactApplicationContext(), alias, new LinkedHashSet<String>(),
-                        new TagAliasCallback() {
-                            @Override
-                            public void gotResult(int status, String s, Set<String> set) {
-                                switch (status) {
-                                    case 0:
-                                        Logger.i(TAG, "Set alias and tags success");
-                                        Logger.toast(getReactApplicationContext(), "Set alias and tags success");
-                                        callback.invoke(0);
-                                        break;
-                                    case 6002:
-                                        Logger.i(TAG, "Set alias timeout");
-                                        Logger.toast(getReactApplicationContext(),
-                                                "set alias timeout, check your network");
-                                        callback.invoke("Set alias timeout");
-                                        break;
-                                    default:
-                                        Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                                        Logger.i(TAG, "Set alias and tags failed, error code: " + status + " error message: " + s);
-                                        callback.invoke("Set alias and tags failed. Error code: " + status);
-                                }
-                            }
-                        });
-            }
-        } else {
-            Logger.i(TAG, "Tag array is null, will not set tag this time.");
-            JPushInterface.setAliasAndTags(getReactApplicationContext(), alias, null, new TagAliasCallback() {
-                @Override
-                public void gotResult(int status, String s, Set<String> set) {
-                    switch (status) {
-                        case 0:
-                            Logger.i(TAG, "Set alias and tags success");
-                            Logger.toast(getReactApplicationContext(), "Set alias and tags success");
-                            callback.invoke(0);
-                            break;
-                        case 6002:
-                            Logger.i(TAG, "Set alias timeout");
-                            Logger.toast(getReactApplicationContext(),
-                                    "set alias timeout, check your network");
-                            callback.invoke("Set alias timeout");
-                            break;
-                        default:
-                            Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                            Logger.i(TAG, "Set alias and tags failed, error code: " + status + " error message: " + s);
-                            callback.invoke("Set alias and tags failed. Error code: " + status);
-                    }
-                }
-            });
-        }
-    }
-
-    /**
-     * 设置通知提示方式 - 基础属性
-     */
-    @ReactMethod
-    public void setStyleBasic() {
-        mContext = getCurrentActivity();
-        if (mContext != null) {
-            BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(mContext);
-            builder.statusBarDrawable = IdHelper.getDrawable(mContext, "ic_launcher");
-            builder.notificationFlags = Notification.FLAG_AUTO_CANCEL;  //设置为点击后自动消失
-            builder.notificationDefaults = Notification.DEFAULT_SOUND;  //设置为铃声（ Notification.DEFAULT_SOUND）或者震动（ Notification.DEFAULT_VIBRATE）
-            JPushInterface.setPushNotificationBuilder(1, builder);
-            Logger.toast(mContext, "Basic Builder - 1");
-        } else {
-            Logger.d(TAG, "Current activity is null, discard event");
-        }
-    }
-
-
-    /**
-     * 设置通知栏样式 - 定义通知栏Layout
-     */
-    @ReactMethod
-    public void setStyleCustom() {
-        mContext = getCurrentActivity();
-        CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(mContext
-                , IdHelper.getLayout(mContext, "customer_notification_layout"),
-                IdHelper.getViewID(mContext, "icon"), IdHelper.getViewID(mContext, "title"),
-                IdHelper.getViewID(mContext, "text"));
-        builder.layoutIconDrawable = IdHelper.getDrawable(mContext, "ic_launcher");
-        builder.developerArg0 = "developerArg2";
-        JPushInterface.setPushNotificationBuilder(2, builder);
-        Logger.toast(mContext, "Custom Builder - 2");
-    }
-
-    /**
-     * Get registration id, different from JPushModule.addGetRegistrationIdListener, this
-     * method has no calling limits.
-     *
-     * @param callback callback with registrationId
-     */
-    @ReactMethod
-    public void getRegistrationID(Callback callback) {
+    public void getDeviceToken(Callback callback) {
         try {
             mContext = getCurrentActivity();
             String id = JPushInterface.getRegistrationID(mContext);
             callback.invoke(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Clear all notifications, suggest invoke this method while exiting app.
-     */
-    @ReactMethod
-    public void clearAllNotifications() {
-        JPushInterface.clearAllNotifications(getReactApplicationContext());
-    }
-
-    /**
-     * Clear specified notification
-     *
-     * @param id the notification id
-     */
-    @ReactMethod
-    public void clearNotificationById(String id) {
-        try {
-            mContext = getCurrentActivity();
-            JPushInterface.clearNotificationById(mContext, Integer.parseInt(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -429,7 +194,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                 map.putString("message", message);
                 map.putString("extras", extras);
                 Logger.i(TAG, "收到自定义消息: " + message);
-                sendEvent("receivePushMsg", map, null);
+                sendEvent(DidReceiveMessage, map, null);
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(data.getAction())) {
                 try {
                     // 通知内容
@@ -450,7 +215,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                     WritableMap map = Arguments.createMap();
                     map.putString("alertContent", alertContent);
                     map.putString("extras", extras);
-                    sendEvent("receiveNotification", map, null);
+                    sendEvent(DidReceiveMessage, map, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -472,11 +237,11 @@ public class JPushModule extends ReactContextBaseJavaModule {
                     // the appointed Activity, and use JS render the appointed Activity.
                     // Please reference examples' SecondActivity for detail,
                     // and JS files are in folder: example/react-native-android
-                    Intent intent = new Intent();
-                    intent.setClassName(context.getPackageName(), context.getPackageName() + ".MainActivity");
-                    intent.putExtras(bundle);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    context.startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClassName(context.getPackageName(), context.getPackageName() + ".MainActivity");
+//                    intent.putExtras(bundle);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    context.startActivity(intent);
                     // 如果需要跳转到指定的界面，那么需要同时启动 MainActivity 及指定界面：
                     // If you need to open appointed Activity, you need to start MainActivity and
                     // appointed Activity at the same time.
@@ -486,7 +251,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
 //                    Intent[] intents = {intent, detailIntent};
                     // 同时启动 MainActivity 以及 SecondActivity
 //                    context.startActivities(intents);
-                    sendEvent("openNotification", map, null);
+                    sendEvent(DidOpenMessage, map, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Logger.i(TAG, "Shouldn't access here");
