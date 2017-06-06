@@ -148,7 +148,8 @@
         <activity android:name="com.xsdlr.rnjmessage.im.activity.LoginActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.RegisterActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.ReloginActivity"/>
-        <activity android:name="com.xsdlr.rnjmessage.im.activity.BrowserViewPagerActivity"/>
+        <activity android:name="com.xsdlr.rnjmessage.im.activity.BrowserViewPagerActivity"
+            android:theme="@style/BlackBgTheme"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.PickPictureTotalActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.PickPictureActivity"/>
     </application>

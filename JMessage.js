@@ -21,7 +21,11 @@ export default class JMessage {
     static events = {
         "onReceiveMessage": "onReceiveMessage",
         "onJGSendMessage": "onJGSendMessage",
+        "onReadMessageBack": "onReadMessageBack",
     };
+    static addOnReadMessageBack(cb) {
+        return JMessage.addEventListener('onReadMessageBack', cb)
+    }
 
     static addReceiveMessageListener(cb) {
         // return JMessage.eventEmitter.addListener('onReceiveMessage', (message) => {

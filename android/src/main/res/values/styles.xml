@@ -5,6 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="BlackBgTheme" parent="android:Theme.NoTitleBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
     <style name="push_style">
         <item name="android:hint">@string/style_hint</item>
         <item name="android:inputType">number</item>

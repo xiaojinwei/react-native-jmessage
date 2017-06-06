@@ -24,6 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
+import com.xsdlr.rnjmessage.JMessageModule;
 import com.xsdlr.rnjmessage.im.Contracts;
 import com.xsdlr.rnjmessage.im.activity.BaseActivity;
 import com.xsdlr.rnjmessage.im.activity.PickPictureTotalActivity;
@@ -354,6 +355,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
      */
     @Override
     protected void onDestroy() {
+        JMessageModule.onReadMessageBack();//发送一个返回监听事件
         unregisterReceiver(mReceiver);
         mChatAdapter.releaseMediaPlayer();
         mChatView.releaseRecorder();

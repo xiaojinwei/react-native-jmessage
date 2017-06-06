@@ -17,13 +17,10 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.modules.toast.ToastModule;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.xsdlr.rnjmessage.im.Contracts;
-import com.xsdlr.rnjmessage.im.activity.ChatMainActivity;
 import com.xsdlr.rnjmessage.im.chatting.ChatActivity;
-import com.xsdlr.rnjmessage.im.chatting.utils.HandleResponseCode;
 import com.xsdlr.rnjmessage.model.ConversationIDJSONModel;
 
 import java.io.File;
@@ -31,7 +28,9 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nullable;
+
 import cn.jiguang.api.JCoreInterface;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.content.ImageContent;
@@ -57,9 +56,16 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         super(reactContext);
     }
 
+    private static ReactApplicationContext mRAC;
     @Override
     public String getName() {
         return "JMessageModule";
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        mRAC = getReactApplicationContext();
     }
 
     @Nullable
@@ -68,6 +74,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         final Map<String, Object> constants = new HashMap<>();
         constants.put("AppKey", getMetaData("JPUSH_APPKEY"));
         constants.put("MasterSecret", getMetaData("JPUSH_MASTER_SECRET"));
+        constants.put("onReadMessageBack","onReadMessageBack");
         return constants;
     }
     /**
@@ -290,13 +297,18 @@ public class JMessageModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void allConversations(final Promise promise) {
-        List<Conversation> conversations = JMessageClient.getConversationList();
-        WritableArray result = Arguments.createArray();
-        for (Conversation conversation: conversations) {
-            WritableMap conversationMap = transformToWritableMap(conversation);
-            result.pushMap(conversationMap);
+        try {
+            List<Conversation> conversations = JMessageClient.getConversationList();
+            WritableArray result = Arguments.createArray();
+
+            for (Conversation conversation : conversations) {
+                WritableMap conversationMap = transformToWritableMap(conversation);
+                result.pushMap(conversationMap);
+            }
+            promise.resolve(result);
+        }catch (Exception e){
+            promise.reject(null,e.getMessage());
         }
-        promise.resolve(result);
     }
     /**
      * 获得历史消息
@@ -396,6 +408,11 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         Message message = event.getMessage();
         this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("onReceiveMessage", transformToWritableMap(message));
+    }
+
+    public static void onReadMessageBack(){
+        mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onReadMessageBack", "onReadMessageBack");
     }
 
     private WritableMap transformToWritableMap(Message message) {
