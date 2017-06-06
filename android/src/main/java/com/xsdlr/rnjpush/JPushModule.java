@@ -102,10 +102,10 @@ public class JPushModule extends ReactContextBaseJavaModule {
      * for detail.
      *
      * @param str      alias string.
-     * @param callback callback
+     * @param
      */
     @ReactMethod
-    public void setAlias(String str, final Callback callback) {
+    public void setAlias(String str) {
         mContext = getCurrentActivity();
         final String alias = str.trim();
         Logger.i(TAG, "alias: " + alias);
@@ -118,17 +118,17 @@ public class JPushModule extends ReactContextBaseJavaModule {
                                 case 0:
                                     Logger.i(TAG, "Set alias success");
                                     Logger.toast(getReactApplicationContext(), "Set alias success");
-                                    callback.invoke(0);
+//                                    callback.invoke(0);
                                     break;
                                 case 6002:
                                     Logger.i(TAG, "Set alias timeout");
                                     Logger.toast(getReactApplicationContext(),
                                             "set alias timeout, check your network");
-                                    callback.invoke("Set alias timeout");
+//                                    callback.invoke("Set alias timeout");
                                     break;
                                 default:
                                     Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                                    callback.invoke("Set alias failed. Error code: " + status);
+//                                    callback.invoke("Set alias failed. Error code: " + status);
                             }
                         }
                     });
@@ -142,17 +142,17 @@ public class JPushModule extends ReactContextBaseJavaModule {
                         case 0:
                             Logger.i(TAG, "Cancel alias success");
                             Logger.toast(getReactApplicationContext(), "Cancel alias success");
-                            callback.invoke(0);
+//                            callback.invoke(0);
                             break;
                         case 6002:
                             Logger.i(TAG, "Set alias timeout");
                             Logger.toast(getReactApplicationContext(),
                                     "set alias timeout, check your network");
-                            callback.invoke("Set alias timeout");
+//                            callback.invoke("Set alias timeout");
                             break;
                         default:
                             Logger.toast(getReactApplicationContext(), "Error code: " + status);
-                            callback.invoke("Set alias failed. Error code: " + status);
+//                            callback.invoke("Set alias failed. Error code: " + status);
                     }
                 }
             });
