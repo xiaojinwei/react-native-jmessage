@@ -449,6 +449,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
 
         result.putString("laseMessage", getLastMessageContent(conversation));
         result.putInt("unreadCount", conversation.getUnReadMsgCnt());
+        result.putString("timestamp", conversation.getLastMsgDate()+"");
 
         ConversationIDJSONModel conversationIDJSONModel = new ConversationIDJSONModel();
         conversationIDJSONModel.setAppkey(conversation.getTargetAppKey());
