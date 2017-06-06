@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
@@ -368,16 +369,19 @@ public class JMessageModule extends ReactContextBaseJavaModule {
             Toast.makeText(getCurrentActivity(), "获取用户信息失败",Toast.LENGTH_LONG).show();
             return;
         }else {
-            Toast.makeText(getCurrentActivity(), "获取用户信息成功，进入聊天界面",Toast.LENGTH_LONG).show();
+//            Toast.makeText(getCurrentActivity(), "获取用户信息成功，进入聊天界面",Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent();
             if (isSingle) {//进入单聊
-                String mTargetId = info.getUserName();
-                String targetAppKey = info.getAppKey();
-                intent.putExtra(userName, mTargetId);
-                intent.putExtra(appKey, targetAppKey);
+                Log.i("chat=========","进入单聊");
+//                String mTargetId = info.getUserName();
+//                String targetAppKey = info.getAppKey();
+                intent.putExtra(Contracts.TARGET_ID, userName);
+                intent.putExtra(Contracts.TARGET_APP_KEY, appKey);
             }else{//进入群组聊天
-                intent.putExtra(userName, "群组1");
+                Log.i("chat=========进入群聊",userName);
+                intent.putExtra(Contracts.GROUP_ID, Long.valueOf(userName));
+
             }
             intent.setClass(getCurrentActivity(), ChatActivity.class);
             getCurrentActivity().startActivity(intent);
