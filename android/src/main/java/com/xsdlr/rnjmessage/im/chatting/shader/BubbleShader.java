@@ -10,6 +10,7 @@ package com.xsdlr.rnjmessage.im.chatting.shader;
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -19,7 +20,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import com.xsdlr.rnjmessage.im.chatting.utils.IdHelper;
+import com.xsdlr.rnjmessage.R;
 
 
 public class BubbleShader extends ShaderHelper {
@@ -44,18 +45,34 @@ public class BubbleShader extends ShaderHelper {
     public void init(Context context, AttributeSet attrs, int defStyle) {
         super.init(context, attrs, defStyle);
         borderWidth = 0;
-        if (attrs != null) {
-            int[] declareStyleableArray = IdHelper.getResourceDeclareStyleableIntArray(context, "ShaderImageView");
-            if (declareStyleableArray != null) {
-                TypedArray typedArray = context.obtainStyledAttributes(attrs, declareStyleableArray, defStyle, 0);
-                //第一个参数是该属性在R文件中生成的数组的下标(按照字母顺序排列),而不是在attrs文件中声明的顺序.下同
-                triangleHeightPx = typedArray.getDimensionPixelSize(7, 0);
-                int arrowPositionInt = typedArray.getInt(0, ArrowPosition.LEFT.ordinal());
+//        if (attrs != null) {
+//            int[] declareStyleableArray = IdHelper.getResourceDeclareStyleableIntArray(context, "ShaderImageView");
+//            if (declareStyleableArray != null) {
+//                TypedArray typedArray = context.obtainStyledAttributes(attrs, declareStyleableArray, defStyle, 0);
+//                //第一个参数是该属性在R文件中生成的数组的下标(按照字母顺序排列),而不是在attrs文件中声明的顺序.下同
+//                triangleHeightPx = typedArray.getDimensionPixelSize(7, 0);
+//                int arrowPositionInt = typedArray.getInt(0, ArrowPosition.LEFT.ordinal());
+//                arrowPosition = ArrowPosition.values()[arrowPositionInt];
+//                radius = typedArray.getDimensionPixelSize(6, radius);
+//                typedArray.recycle();
+//            }
+//        }
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ShaderImageView, defStyle, 0);
+        int n = a.getIndexCount();
+        for (int i = 0; i < n; i++)
+        {
+            int attr = a.getIndex(i);
+            if (attr == R.styleable.ShaderImageView_siArrowPosition){
+                int arrowPositionInt = a.getInt(0, ArrowPosition.LEFT.ordinal());
                 arrowPosition = ArrowPosition.values()[arrowPositionInt];
-                radius = typedArray.getDimensionPixelSize(6, radius);
-                typedArray.recycle();
+            }else if (attr == R.styleable.ShaderImageView_siTriangleHeight){
+                triangleHeightPx = a.getDimensionPixelSize(7,0);
+            }else if (attr == R.styleable.ShaderImageView_siArrowPosition){
+                radius = a.getDimensionPixelSize(6, radius);
             }
         }
+        a.recycle();
 
         if (triangleHeightPx == 0) {
             triangleHeightPx = dpToPx(context.getResources().getDisplayMetrics(), DEFAULT_HEIGHT_DP);
