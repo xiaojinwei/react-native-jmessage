@@ -47,6 +47,7 @@ RCT_EXPORT_MODULE()
 + (void)setupJMessage:(NSDictionary *)launchOptions
      apsForProduction:(BOOL)isProduction
              category:(NSSet *)category {
+     [JMessage registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil];
     NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppKey"];
     NSString *appChannel = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppChannel"];
     [JMessage setupJMessage:launchOptions

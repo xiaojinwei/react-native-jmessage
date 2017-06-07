@@ -15,7 +15,7 @@
 #import "React/RCTBridgeModule.h"
 #endif
 @interface RCTJPushModule : NSObject<RCTBridgeModule>
-+ (void)registerWithAppkey:(NSString *)appkey channel:(NSString *)channel launchOptions:(NSDictionary *)launchOptions withApp:(id)app;
++ (void)registerWithlaunchOptions:(NSDictionary *)launchOptions withApp:(id)app;
 + (void)application:(UIApplication *)application didRegisterDeviceToken:(NSData *)deviceToken;
 + (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 + (void)didReceiveRemoteNotificationWhenFirstLaunchApp:(NSDictionary *)launchOptions;

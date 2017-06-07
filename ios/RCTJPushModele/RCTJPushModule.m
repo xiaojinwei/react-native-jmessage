@@ -89,8 +89,9 @@ RCT_EXPORT_METHOD(getDeviceToken:(RCTResponseSenderBlock)callback) {
 
 
 
-+ (void)registerWithAppkey:(NSString *)appkey channel:(NSString *)channel launchOptions:(NSDictionary *)launchOptions withApp:(id)app {
-    
++ (void)registerWithlaunchOptions:(NSDictionary *)launchOptions withApp:(id)app {
+    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppKey"];
+    NSString *appChannel = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppChannel"];
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
@@ -113,12 +114,12 @@ RCT_EXPORT_METHOD(getDeviceToken:(RCTResponseSenderBlock)callback) {
    
 #ifdef DEBUG
     [JPUSHService setDebugMode];
-    [JPUSHService setupWithOption:launchOptions appKey:appkey
-                          channel:channel apsForProduction:false];
+    [JPUSHService setupWithOption:launchOptions appKey:appKey
+                          channel:@"dev" apsForProduction:false];
 #else
     [JPUSHService setLogOFF];
     [JPUSHService setupWithOption:launchOptions appKey:appkey
-                          channel:channel apsForProduction:true];
+                          channel:@"appstore" apsForProduction:true];
 #endif
 }
 
@@ -136,21 +137,22 @@ RCT_EXPORT_METHOD(removeAlias:(NSString *)alias type:(NSString *)type){
 }
 
 + (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [JPUSHService handleRemoteNotification:userInfo];
+    
 //    //send event
-    if (application.applicationState == UIApplicationStateInactive) {
-        [[RCTJPushModule sharedInstance] didOpenRemoteNotification:userInfo];
-    }
-    else {
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         [[RCTJPushModule sharedInstance] didReceiveRemoteNotification:userInfo];
     }
+    else {
+        [[RCTJPushModule sharedInstance] didOpenRemoteNotification:userInfo];
+    }
+    [JPUSHService handleRemoteNotification:userInfo];
 }
 
 + (void)didReceiveRemoteNotificationWhenFirstLaunchApp:(NSDictionary *)launchOptions {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), [self sharedMethodQueue], ^{
         //判断当前模块是否正在加载，已经加载成功，则发送事件
         if(![RCTJPushModule sharedInstance].bridge.isLoading) {
-            [[RCTJPushModule sharedInstance] didReceiveRemoteNotification:launchOptions];
+            [JPUSHService handleRemoteNotification:launchOptions];
             [[RCTJPushModule sharedInstance] didOpenRemoteNotification:launchOptions];
         }
         else {
