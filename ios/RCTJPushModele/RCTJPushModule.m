@@ -118,7 +118,7 @@ RCT_EXPORT_METHOD(getDeviceToken:(RCTResponseSenderBlock)callback) {
                           channel:@"dev" apsForProduction:false];
 #else
     [JPUSHService setLogOFF];
-    [JPUSHService setupWithOption:launchOptions appKey:appkey
+    [JPUSHService setupWithOption:launchOptions appKey:appKey
                           channel:@"appstore" apsForProduction:true];
 #endif
 }

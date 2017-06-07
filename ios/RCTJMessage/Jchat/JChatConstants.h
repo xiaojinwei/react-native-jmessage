@@ -88,7 +88,7 @@
 #ifdef DEBUG
 //  static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 #else
-  static const DDLogLevel ddLogLevel = DDLogLevelInfo;
+//  static const DDLogLevel ddLogLevel = DDLogLevelInfo;
 #endif
 
 
