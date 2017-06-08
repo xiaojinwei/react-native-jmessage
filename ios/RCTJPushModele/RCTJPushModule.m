@@ -90,8 +90,9 @@ RCT_EXPORT_METHOD(getDeviceToken:(RCTResponseSenderBlock)callback) {
 
 
 + (void)registerWithlaunchOptions:(NSDictionary *)launchOptions withApp:(id)app {
-    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppKey"];
-    NSString *appChannel = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppChannel"];
+    
+    NSString *appKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NativeConfig" ofType:@".plist"]] objectForKey:@"JiguangAppKey"];
+    NSString *appChannel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NativeConfig" ofType:@".plist"]] objectForKey:@"JiguangAppChannel"];
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];

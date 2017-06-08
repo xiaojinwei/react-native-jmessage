@@ -28,9 +28,9 @@ RCT_EXPORT_MODULE()
     self = [super init];
     _sendMessageIdDic = [@{} mutableCopy];
     if (self) {
-        self.appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppKey"];
-        self.masterSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangMasterSecret"];
-        self.appChannel = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"JiguangAppChannel"];
+        self.appKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NativeConfig" ofType:@".plist"]] objectForKey:@"JiguangAppKey"];
+        self.masterSecret = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NativeConfig" ofType:@".plist"]] objectForKey:@"JiguangMasterSecret"];
+        self.appChannel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NativeConfig" ofType:@".plist"]] objectForKey:@"JiguangAppChannel"];
         [JMessage addDelegate:self withConversation:nil];
     }
     return self;
