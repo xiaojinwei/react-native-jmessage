@@ -2,18 +2,14 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [
-            JIGUANG_APPKEY: 'acd72f2f940853038ffe100a',
-            JGUANG_APPCHANNEL: "developer-default",
-            JIGUANG_MASTER_SECRET: '82959ed8cbfb3c3b572c7fc5'
-        ]
+
     }
     buildTypes {
         release {
