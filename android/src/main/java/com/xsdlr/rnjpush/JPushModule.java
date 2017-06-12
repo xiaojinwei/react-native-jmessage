@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -93,7 +94,14 @@ public class JPushModule extends ReactContextBaseJavaModule {
         Logger.i(TAG, "Resume push");
         Logger.toast(mContext, "Resume push success");
     }
-
+    @ReactMethod
+    public void isPushStopped(final Promise promise) {
+        mContext = getCurrentActivity();
+        boolean isPushStopped = JPushInterface.isPushStopped(getReactApplicationContext());
+        promise.resolve(isPushStopped);
+        Logger.i(TAG, "isPushStopped:"+isPushStopped);
+//        Logger.toast(mContext, "isPushStopped:"+isPushStopped);
+    }
 
 
     /**

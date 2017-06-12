@@ -47,6 +47,10 @@ module.exports = JPush= {
     resumePush() {
         JPushModule.resumePush();
     },
+    isPushStopped() {
+        return JPushModule.isPushStopped();
+    },
+
 
     didReceiveMessage(handler: Function) {
         receiveMessageSubscript = this.addEventListener(JPushModule.DidReceiveMessage, message => {
