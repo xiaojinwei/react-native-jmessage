@@ -34,6 +34,19 @@ module.exports = JPush= {
     getDeviceToken(handler: Function) {
         JPushModule.getDeviceToken(handler);
     },
+    /**
+     * Android 关闭推送
+     */
+    stopPush() {
+        JPushModule.stopPush();
+    },
+
+    /**
+     * Android 开启推送
+     */
+    resumePush() {
+        JPushModule.resumePush();
+    },
 
     didReceiveMessage(handler: Function) {
         receiveMessageSubscript = this.addEventListener(JPushModule.DidReceiveMessage, message => {
