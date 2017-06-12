@@ -49,7 +49,7 @@ public class DialogCreator {
 
     public static Dialog createLongPressMessageDialog(Context context, String title, boolean hide,
                                                       View.OnClickListener listener){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context,IdHelper.getStyle(context, "AlertDialogTheme"));
         View view = LayoutInflater.from(context).inflate(IdHelper.getLayout(context, "jmui_dialog_msg_alert"), null);
         builder.setView(view);
         Button copyBtn = (Button) view.findViewById(IdHelper.getViewID(context, "jmui_copy_msg_btn"));
@@ -75,7 +75,7 @@ public class DialogCreator {
     }
 
     public static Dialog createResendDialog(Context context, View.OnClickListener listener){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context,IdHelper.getStyle(context, "AlertDialogTheme"));
         View view = LayoutInflater.from(context).inflate(IdHelper.getLayout(context,
                 "jmui_dialog_base_with_button"), null);
         builder.setView(view);
