@@ -132,7 +132,10 @@ RCT_EXPORT_METHOD(setAlias:(NSString *)alias){
 RCT_EXPORT_METHOD(removeAlias:(NSString *)alias type:(NSString *)type){
     [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
 }
-
+RCT_EXPORT_METHOD(isPushStopped:(RCTPromiseResolveBlock)resolve
+                  :(RCTPromiseRejectBlock)reject){
+    resolve(@([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone));
+}
 + (void)application:(UIApplication *)application didRegisterDeviceToken:(NSData *)deviceToken {
     [JPUSHService registerDeviceToken:deviceToken];
 }
