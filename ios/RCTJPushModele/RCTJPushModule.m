@@ -136,6 +136,9 @@ RCT_EXPORT_METHOD(isPushStopped:(RCTPromiseResolveBlock)resolve
                   :(RCTPromiseRejectBlock)reject){
     resolve(@([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone));
 }
+RCT_EXPORT_METHOD(toNotificationSetPage){
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+}
 + (void)application:(UIApplication *)application didRegisterDeviceToken:(NSData *)deviceToken {
     [JPUSHService registerDeviceToken:deviceToken];
 }

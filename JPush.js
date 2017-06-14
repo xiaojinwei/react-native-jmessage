@@ -50,8 +50,9 @@ module.exports = JPush= {
     isPushStopped() {
         return JPushModule.isPushStopped();
     },
-
-
+    toNotificationSetPage(){
+        return JPushModule.toNotificationSetPage();
+    },
     didReceiveMessage(handler: Function) {
         receiveMessageSubscript = this.addEventListener(JPushModule.DidReceiveMessage, message => {
             console.log('didReceiveMessage-->message:'+message.toString())
