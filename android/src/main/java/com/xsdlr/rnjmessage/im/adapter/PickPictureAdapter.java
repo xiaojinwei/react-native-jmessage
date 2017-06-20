@@ -1,8 +1,9 @@
 package com.xsdlr.rnjmessage.im.adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.SparseBooleanArray;
@@ -14,23 +15,17 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.common.ImageDecodeOptions;
 import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
 import com.xsdlr.rnjmessage.R;
 import com.xsdlr.rnjmessage.im.chatting.utils.FrescoImageUtil;
-import com.xsdlr.rnjmessage.im.tools.NativeImageLoader;
-import com.xsdlr.rnjmessage.im.view.MyImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -204,7 +199,7 @@ public class PickPictureAdapter extends BaseAdapter {
 
         void bindData(final String path){
 
-        //利用NativeImageLoader类加载本地图片
+            //利用NativeImageLoader类加载本地图片
 //        Bitmap bitmap = NativeImageLoader.getInstance().loadNativeImage(path, (int) (80 * mDensity),
 //                new NativeImageLoader.NativeImageCallBack() {
 //
