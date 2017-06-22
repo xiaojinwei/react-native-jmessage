@@ -87,8 +87,6 @@ RCT_EXPORT_METHOD(getDeviceToken:(RCTResponseSenderBlock)callback) {
     callback(@[deviceToken]);
 }
 
-
-
 + (void)registerWithlaunchOptions:(NSDictionary *)launchOptions withApp:(id)app {
     
     NSString *appKey = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"NativeConfig" ofType:@".plist"]] objectForKey:@"JiguangAppKey"];
@@ -167,5 +165,8 @@ RCT_EXPORT_METHOD(toNotificationSetPage){
         }
     });
 }
-
++(void)setBadgeNumber:(int)badge{
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
+    [JPUSHService setBadge:badge];
+}
 @end

@@ -53,9 +53,6 @@
             "CoreTelephony",
             "libz"
         ]
-    },
-    "commands": {
-        "postlink": "node node_modules/react-native-jmessage/scripts/postlink/run"
     }
 }
 }
