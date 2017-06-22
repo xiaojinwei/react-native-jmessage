@@ -186,7 +186,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void removeCount() {
-        SharePreferencesUtil.saveInt(getCurrentActivity(),BadgeCountKey,0);
+        SharePreferencesUtil.saveInt(getReactApplicationContext(),BadgeCountKey,0);
         ShortcutBadger.removeCount(getReactApplicationContext()); //for 1.1.4+
     }
 
