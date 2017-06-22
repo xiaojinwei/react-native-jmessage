@@ -31,4 +31,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/jpush-android_v3.0.6.jar')
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "me.leolin:ShortcutBadger:1.1.16@aar"
 }

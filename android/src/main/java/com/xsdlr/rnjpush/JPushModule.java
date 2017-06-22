@@ -22,6 +22,7 @@ import java.util.concurrent.CountDownLatch;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class JPushModule extends ReactContextBaseJavaModule {
 
@@ -32,6 +33,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     protected static final String DidReceiveMessage = "DidReceiveMessage";
     protected static final String DidOpenMessage = "DidOpenMessage";
+    protected static final String BadgeCountKey = "badgeCount";
 
     public JPushModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -53,6 +55,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         super.initialize();
         mLatch.countDown();
         mRAC = getReactApplicationContext();
+        removeCount();
     }
 
     @Override
@@ -168,6 +171,25 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     /**
+     * 设置角标
+     * @param context
+     */
+    @ReactMethod
+    public static void applyCount(Context context) {
+        int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
+        ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
+    }
+
+    /**
+     * 删除角标
+     */
+    @ReactMethod
+    public void removeCount() {
+        SharePreferencesUtil.saveInt(getCurrentActivity(),BadgeCountKey,0);
+        ShortcutBadger.removeCount(getReactApplicationContext()); //for 1.1.4+
+    }
+
+    /**
      *
      * 获取设备id/registrationId
      * @param callback
@@ -196,6 +218,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         public void onReceive(Context context, Intent data) {
             Bundle bundle = data.getExtras();
             if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
+                applyCount(context);
                 String message = data.getStringExtra(JPushInterface.EXTRA_MESSAGE);
                 String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 WritableMap map = Arguments.createMap();
@@ -205,6 +228,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                 sendEvent(DidReceiveMessage, map, null);
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(data.getAction())) {
                 try {
+                    applyCount(context);
                     // 通知内容
                     String alertContent = bundle.getString(JPushInterface.EXTRA_ALERT);
                     // extra 字段的 json 字符串
