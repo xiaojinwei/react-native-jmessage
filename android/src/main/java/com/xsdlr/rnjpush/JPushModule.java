@@ -3,6 +3,8 @@ package com.xsdlr.rnjpush;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -268,11 +270,12 @@ public class JPushModule extends ReactContextBaseJavaModule {
                     // the appointed Activity, and use JS render the appointed Activity.
                     // Please reference examples' SecondActivity for detail,
                     // and JS files are in folder: example/react-native-android
-//                    Intent intent = new Intent();
-//                    intent.setClassName(context.getPackageName(), context.getPackageName() + ".MainActivity");
-//                    intent.putExtras(bundle);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    context.startActivity(intent);
+                    Intent intent = new Intent();
+                    String package_path = getAppMetaData(context,"package_path");
+                    intent.setClassName(context.getPackageName(), package_path+".MainActivity");
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(intent);
                     // 如果需要跳转到指定的界面，那么需要同时启动 MainActivity 及指定界面：
                     // If you need to open appointed Activity, you need to start MainActivity and
                     // appointed Activity at the same time.
@@ -302,6 +305,35 @@ public class JPushModule extends ReactContextBaseJavaModule {
             }
         }
 
+    }
+
+    /**
+     * 获取application中指定的meta-data
+     * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
+     */
+    public static String getAppMetaData(Context ctx, String key) {
+        if (ctx == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
+        try {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager != null) {
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        resultData = applicationInfo.metaData.getString(key);
+                    }else{
+                        return ctx.getPackageName();
+                    }
+                }
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return resultData;
     }
 
     private static void sendEvent(String methodName, WritableMap map, String data) {
