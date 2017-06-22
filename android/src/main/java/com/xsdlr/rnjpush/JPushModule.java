@@ -174,7 +174,6 @@ public class JPushModule extends ReactContextBaseJavaModule {
      * 设置角标
      * @param context
      */
-    @ReactMethod
     public static void applyCount(Context context) {
         int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
         ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
@@ -184,7 +183,6 @@ public class JPushModule extends ReactContextBaseJavaModule {
     /**
      * 删除角标
      */
-    @ReactMethod
     public void removeCount() {
         SharePreferencesUtil.saveInt(getReactApplicationContext(),BadgeCountKey,0);
         ShortcutBadger.removeCount(getReactApplicationContext()); //for 1.1.4+
