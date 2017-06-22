@@ -178,6 +178,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
     public static void applyCount(Context context) {
         int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
         ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
+        SharePreferencesUtil.saveInt(context,BadgeCountKey,badgeCount);
     }
 
     /**
