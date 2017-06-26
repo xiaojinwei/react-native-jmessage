@@ -37,7 +37,7 @@ static NSInteger const readViewRadius = 4;
     self.backgroundColor = [UIColor clearColor];
     _headView = [UIImageView new];
     [_headView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/headDefalt.png"]];
-    _headView.layer.cornerRadius = 5;
+    _headView.layer.cornerRadius = headHeight/2;
     _headView.layer.masksToBounds = YES;
     _headView.contentMode = UIViewContentModeScaleAspectFill;
     _messageContent = [JCHATMessageContentView new];
