@@ -136,7 +136,10 @@
         <meta-data
             android:name="JPUSH_MASTER_SECRET"
             android:value="${JIGUANG_MASTER_SECRET}" />
-
+        <!--主APP中包结构-->
+        <meta-data
+            android:name="package_path"
+            android:value="${package_path}" />
         <activity
             android:name="com.xsdlr.rnjmessage.im.activity.DemoActivity">
         </activity>

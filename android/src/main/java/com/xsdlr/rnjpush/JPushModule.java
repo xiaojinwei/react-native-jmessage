@@ -3,6 +3,8 @@ package com.xsdlr.rnjpush;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -22,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class JPushModule extends ReactContextBaseJavaModule {
 
@@ -32,6 +35,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     protected static final String DidReceiveMessage = "DidReceiveMessage";
     protected static final String DidOpenMessage = "DidOpenMessage";
+    protected static final String BadgeCountKey = "badgeCount";
 
     public JPushModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -53,6 +57,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         super.initialize();
         mLatch.countDown();
         mRAC = getReactApplicationContext();
+        removeCount();
     }
 
     @Override
@@ -168,6 +173,24 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     /**
+     * 设置角标
+     * @param context
+     */
+    public static void applyCount(Context context) {
+        int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
+        ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
+        SharePreferencesUtil.saveInt(context,BadgeCountKey,badgeCount);
+    }
+
+    /**
+     * 删除角标
+     */
+    public void removeCount() {
+        SharePreferencesUtil.saveInt(getReactApplicationContext(),BadgeCountKey,0);
+        ShortcutBadger.removeCount(getReactApplicationContext()); //for 1.1.4+
+    }
+
+    /**
      *
      * 获取设备id/registrationId
      * @param callback
@@ -196,6 +219,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         public void onReceive(Context context, Intent data) {
             Bundle bundle = data.getExtras();
             if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
+                applyCount(context);
                 String message = data.getStringExtra(JPushInterface.EXTRA_MESSAGE);
                 String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 WritableMap map = Arguments.createMap();
@@ -205,6 +229,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                 sendEvent(DidReceiveMessage, map, null);
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(data.getAction())) {
                 try {
+                    applyCount(context);
                     // 通知内容
                     String alertContent = bundle.getString(JPushInterface.EXTRA_ALERT);
                     // extra 字段的 json 字符串
@@ -245,11 +270,12 @@ public class JPushModule extends ReactContextBaseJavaModule {
                     // the appointed Activity, and use JS render the appointed Activity.
                     // Please reference examples' SecondActivity for detail,
                     // and JS files are in folder: example/react-native-android
-//                    Intent intent = new Intent();
-//                    intent.setClassName(context.getPackageName(), context.getPackageName() + ".MainActivity");
-//                    intent.putExtras(bundle);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    context.startActivity(intent);
+                    Intent intent = new Intent();
+                    String package_path = getAppMetaData(context,"package_path");
+                    intent.setClassName(context.getPackageName(), package_path+".MainActivity");
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(intent);
                     // 如果需要跳转到指定的界面，那么需要同时启动 MainActivity 及指定界面：
                     // If you need to open appointed Activity, you need to start MainActivity and
                     // appointed Activity at the same time.
@@ -279,6 +305,35 @@ public class JPushModule extends ReactContextBaseJavaModule {
             }
         }
 
+    }
+
+    /**
+     * 获取application中指定的meta-data
+     * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
+     */
+    public static String getAppMetaData(Context ctx, String key) {
+        if (ctx == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
+        try {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager != null) {
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        resultData = applicationInfo.metaData.getString(key);
+                    }else{
+                        return ctx.getPackageName();
+                    }
+                }
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return resultData;
     }
 
     private static void sendEvent(String methodName, WritableMap map, String data) {
