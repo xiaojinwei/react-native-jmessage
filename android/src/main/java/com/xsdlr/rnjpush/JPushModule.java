@@ -178,7 +178,10 @@ public class JPushModule extends ReactContextBaseJavaModule {
      */
     public static void applyCount(Context context) {
         int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
-        ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
+        //极光会自动在通知发送一个通知，如果App不在最前面，角标会自动+1，这就是这时候就是等于小米可以跟极光已经配合做好角标了，不需要我们做什么，如果这时候我们再手动更新角标，则用户会收到两条通知，所以在发送之前需要判断一下是否小米手机
+        if (!DeviceUtil.isXiaoMi(context)) {
+            ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
+        }
         SharePreferencesUtil.saveInt(context,BadgeCountKey,badgeCount);
     }
 
