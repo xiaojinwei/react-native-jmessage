@@ -154,16 +154,19 @@ RCT_EXPORT_METHOD(toNotificationSetPage){
 }
 
 + (void)didReceiveRemoteNotificationWhenFirstLaunchApp:(NSDictionary *)launchOptions {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), [self sharedMethodQueue], ^{
-        //判断当前模块是否正在加载，已经加载成功，则发送事件
-        if(![RCTJPushModule sharedInstance].bridge.isLoading) {
-            [JPUSHService handleRemoteNotification:launchOptions];
-            [[RCTJPushModule sharedInstance] didOpenRemoteNotification:launchOptions];
-        }
-        else {
-            [self didReceiveRemoteNotificationWhenFirstLaunchApp:launchOptions];
-        }
-    });
+    if(launchOptions){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), [self sharedMethodQueue], ^{
+            //判断当前模块是否正在加载，已经加载成功，则发送事件
+            if(![RCTJPushModule sharedInstance].bridge.isLoading) {
+                [JPUSHService handleRemoteNotification:launchOptions];
+                [[RCTJPushModule sharedInstance] didOpenRemoteNotification:launchOptions];
+            }
+            else {
+                [self didReceiveRemoteNotificationWhenFirstLaunchApp:launchOptions];
+            }
+        });
+    }
+    
 }
 +(void)setBadgeNumber:(int)badge{
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
