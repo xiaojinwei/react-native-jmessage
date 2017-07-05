@@ -22,6 +22,7 @@ import com.google.gson.JsonParseException;
 import com.xsdlr.rnjmessage.im.Contracts;
 import com.xsdlr.rnjmessage.im.chatting.ChatActivity;
 import com.xsdlr.rnjmessage.model.ConversationIDJSONModel;
+import com.xsdlr.rnjpush.DeviceUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -415,6 +416,13 @@ public class JMessageModule extends ReactContextBaseJavaModule {
     }
 
     public void onEvent(NotificationClickEvent event){
+
+        Intent intent = new Intent();
+        String package_path = DeviceUtil.getAppMetaData(this.getReactApplicationContext(),"package_path");
+        intent.setClassName(this.getReactApplicationContext().getPackageName(), package_path+".MainActivity");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        this.getReactApplicationContext().startActivity(intent);
+
         Message message = event.getMessage();
         this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("onNotificationClickEvent", transformToWritableMap(message));
