@@ -39,6 +39,13 @@ export default class JMessage {
             supportMessageMediaURL(_message).then((message) => cb(message));
         })
     }
+    static addNotificationClickEvent(cb) {
+        return JMessage.addEventListener('onNotificationClickEvent', (message) => {
+            console.log('onNotificationClickEvent===',message);
+            const _message = formatMessage(message);
+            supportMessageMediaURL(_message).then((message) => cb(message));
+        })
+    }
     static removeAllListener(eventNames = Object.keys(JMessage.events)) {
         if (Array.isArray(eventNames)) {
             for ( eventName of eventNames) {

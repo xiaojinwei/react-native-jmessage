@@ -39,6 +39,7 @@ import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.enums.ContentType;
 import cn.jpush.im.android.api.enums.ConversationType;
 import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.Message;
@@ -75,6 +76,9 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         constants.put("AppKey", getMetaData("JPUSH_APPKEY"));
         constants.put("MasterSecret", getMetaData("JPUSH_MASTER_SECRET"));
         constants.put("onReadMessageBack","onReadMessageBack");
+        constants.put("onReceiveMessage","onReceiveMessage");
+        constants.put("onNotificationClickEvent","onNotificationClickEvent");
+
         return constants;
     }
     /**
@@ -408,6 +412,12 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         Message message = event.getMessage();
         this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("onReceiveMessage", transformToWritableMap(message));
+    }
+
+    public void onEvent(NotificationClickEvent event){
+        Message message = event.getMessage();
+        this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onNotificationClickEvent", transformToWritableMap(message));
     }
 
     public static void onReadMessageBack(){
