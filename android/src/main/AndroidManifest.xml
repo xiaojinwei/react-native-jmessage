@@ -146,7 +146,8 @@
         <activity android:name="com.xsdlr.rnjmessage.im.activity.BaseActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.AboutActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.chatting.ChatActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTask"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.ChatMainActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.LoginActivity"/>
         <activity android:name="com.xsdlr.rnjmessage.im.activity.RegisterActivity"/>
