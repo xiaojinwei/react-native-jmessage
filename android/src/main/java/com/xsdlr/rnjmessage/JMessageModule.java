@@ -1,10 +1,12 @@
 package com.xsdlr.rnjmessage;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -426,7 +428,10 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         Message message = event.getMessage();
         this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("onNotificationClickEvent", transformToWritableMap(message));
+        
     }
+
+
 
     public static void onReadMessageBack(){
         mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -449,14 +454,18 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         WritableMap target = Arguments.createMap();
         target.putInt("type", messagePropsToInt(message.getTargetType()));
         target.putString("typeDesc", messagePropsToString(message.getTargetType()));
+
         switch (message.getTargetType()) {
             case single:
                 UserInfo userInfo = (UserInfo)message.getTargetInfo();
+                result.putString("username", userInfo.getUserName());
                 target.putString("name", userInfo.getUserName());
                 target.putString("nickname", userInfo.getNickname());
+                target.putString("appkey",userInfo.getAppKey());
                 break;
             case group:
                 GroupInfo groupInfo = (GroupInfo)message.getTargetInfo();
+                result.putDouble("groupId", groupInfo.getGroupID());
                 target.putString("name", groupInfo.getGroupName());
                 target.putString("nickname", groupInfo.getGroupDescription());
                 break;
