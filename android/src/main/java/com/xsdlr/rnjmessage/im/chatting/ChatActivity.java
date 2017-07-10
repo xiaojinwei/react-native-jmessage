@@ -41,6 +41,7 @@ import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetGroupInfoCallback;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.content.EventNotificationContent;
 import cn.jpush.im.android.api.content.ImageContent;
 import cn.jpush.im.android.api.content.TextContent;
@@ -125,6 +126,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 UserInfo userInfo = (UserInfo)mConv.getTargetInfo();
                 if (TextUtils.isEmpty(userInfo.getNickname())) {
                     mChatView.setChatTitle(userInfo.getUserName());
+                    updateInfo();
                 }else {
                     mChatView.setChatTitle(userInfo.getNickname());
                 }
@@ -133,6 +135,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 UserInfo userInfo = (UserInfo)mConv.getTargetInfo();
                 if (TextUtils.isEmpty(userInfo.getNickname())) {
                     mChatView.setChatTitle(userInfo.getUserName());
+                    updateInfo();
                 }else {
                     mChatView.setChatTitle(userInfo.getNickname());
                 }
@@ -177,6 +180,16 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         });
         // 滑动到底部
         mChatView.setToBottom();
+    }
+    void updateInfo(){
+        JMessageClient.getUserInfo(mTargetId, mTargetAppKey, new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int responseCode, String responseMessage, UserInfo info) {
+                if (responseCode == 0) {
+                    mChatView.setChatTitle(info.getNickname());
+                }
+            }
+        });
     }
 
     // 监听耳机插入
