@@ -10,39 +10,48 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <com.xsdlr.rnjmessage.im.chatting.CircleImageView
             android:id="@+id/jmui_avatar_iv"
             style="@style/jmui_chat_item_sender_avatar_style" />
 
+        <TextView
+            android:id="@+id/jmui_display_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/jmui_avatar_iv"
+            style="@style/jmui_chat_display_name_style"
+            android:gravity="right"
+            android:layout_marginLeft="10dp"
+            android:text="我"/>
         <FrameLayout
             android:id="@+id/jmui_msg_fl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/jmui_display_name_tv"
             android:layout_toLeftOf="@id/jmui_avatar_iv"
-            android:maxWidth="200.0dip"
-             >
+            android:maxWidth="200.0dip">
 
             <com.xsdlr.rnjmessage.im.chatting.BubbleImageView
                 android:id="@+id/jmui_picture_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:siArrowPosition="right"
                 android:layout_gravity="center"
-                app:siRadius="5dp"
-                android:src="@drawable/jmui_fetch_failed"/>
+                android:src="@drawable/jmui_fetch_failed"
+                app:siArrowPosition="right"
+                app:siRadius="5dp" />
 
             <TextView
                 android:id="@+id/jmui_progress_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="24sp"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:textSize="24sp"
+                android:visibility="gone" />
         </FrameLayout>
 
         <ImageView
@@ -52,7 +61,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
             android:layout_toLeftOf="@id/jmui_msg_fl"
-            android:src="@drawable/jmui_sending_img"/>
+            android:src="@drawable/jmui_sending_img" />
 
         <ImageButton
             android:id="@+id/jmui_fail_resend_ib"
@@ -61,9 +70,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/jmui_msg_fl"
+            android:background="@drawable/jmui_send_error"
             android:clickable="true"
             android:scaleType="fitCenter"
-            android:background="@drawable/jmui_send_error"
             android:visibility="gone" />
     </RelativeLayout>
 

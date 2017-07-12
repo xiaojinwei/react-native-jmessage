@@ -152,7 +152,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 public void gotResult(int status, String desc, GroupInfo groupInfo) {
                     if (status == 0) {
                         mGroupInfo = groupInfo;
-                        mChatView.setChatTitle(groupInfo.getGroupName());
+                        mChatView.setChatTitle(groupInfo.getGroupName()+"("+ groupInfo.getGroupMembers().size()+")");
                     }
                 }
             });

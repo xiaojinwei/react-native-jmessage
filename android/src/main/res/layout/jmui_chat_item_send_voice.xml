@@ -15,11 +15,21 @@
             android:id="@+id/jmui_avatar_iv"
             style="@style/jmui_chat_item_sender_avatar_style"/>
 
+        <TextView
+            android:id="@+id/jmui_display_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/jmui_avatar_iv"
+            style="@style/jmui_chat_display_name_style"
+            android:gravity="right"
+            android:layout_marginLeft="10dp"
+            android:text="我"/>
         <FrameLayout
             android:id="@+id/jmui_voice_fl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_below="@id/jmui_display_name_tv"
             android:layout_toLeftOf="@id/jmui_avatar_iv"
             android:gravity="right">
 

@@ -692,7 +692,9 @@ public class MsgListAdapter extends BaseAdapter {
                     showResendDialog(holder, msg);
                 }
             });
-
+            if (mIsGroup) {
+                holder.displayName.setVisibility(View.VISIBLE);
+            }
         } else {
             if (mIsGroup) {
                 holder.displayName.setVisibility(View.VISIBLE);
@@ -844,6 +846,9 @@ public class MsgListAdapter extends BaseAdapter {
                     showResendDialog(holder, msg);
                 }
             });
+            if (mIsGroup) {
+                holder.displayName.setVisibility(View.VISIBLE);
+            }
         }
         if (holder.picture != null) {
             // 点击预览图片
@@ -1045,11 +1050,14 @@ public class MsgListAdapter extends BaseAdapter {
                         showResendDialog(holder, msg);
                     } else {
                         Toast.makeText(mContext, mContext.getString(IdHelper.getString(mContext,
-                                        "jmui_sdcard_not_exist_toast")),
+                                "jmui_sdcard_not_exist_toast")),
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+            if (mIsGroup) {
+                holder.displayName.setVisibility(View.VISIBLE);
+            }
         } else switch (msg.getStatus()) {
             case receive_success:
                 if (mIsGroup) {
@@ -1089,7 +1097,7 @@ public class MsgListAdapter extends BaseAdapter {
                             public void onComplete(int status, String desc, File file) {
                                 if (status != 0) {
                                     Toast.makeText(mContext, IdHelper.getString(mContext,
-                                                    "jmui_voice_fetch_failed_toast"),
+                                            "jmui_voice_fetch_failed_toast"),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.i("VoiceMessage", "reload success");

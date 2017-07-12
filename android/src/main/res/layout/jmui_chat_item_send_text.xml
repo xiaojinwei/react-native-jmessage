@@ -12,14 +12,23 @@
         android:layout_below="@+id/jmui_send_time_txt"
         style="@style/jmui_chat_item_sender_avatar_style" />
 
-
+    <TextView
+        android:id="@+id/jmui_display_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/jmui_avatar_iv"
+        android:layout_below="@+id/jmui_send_time_txt"
+        style="@style/jmui_chat_display_name_style"
+        android:gravity="right"
+        android:layout_marginRight="10dp"
+        android:text="我"/>
     <TextView
         android:id="@+id/jmui_msg_content"
         style="@style/jmui_msg_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/jmui_avatar_iv"
-        android:layout_below="@+id/jmui_send_time_txt"
+        android:layout_below="@+id/jmui_display_name_tv"
         android:layout_marginRight="3dp"
         android:background="@drawable/jmui_msg_send_bg"
         android:paddingLeft="10dp"
