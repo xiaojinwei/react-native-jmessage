@@ -154,7 +154,7 @@ RCT_EXPORT_METHOD(toNotificationSetPage){
 }
 
 + (void)didReceiveRemoteNotificationWhenFirstLaunchApp:(NSDictionary *)launchOptions {
-    if(launchOptions){
+    if(launchOptions&&[launchOptions objectForKey:@"aps"]){
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), [self sharedMethodQueue], ^{
             //判断当前模块是否正在加载，已经加载成功，则发送事件
             if(![RCTJPushModule sharedInstance].bridge.isLoading) {
