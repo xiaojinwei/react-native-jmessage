@@ -35,7 +35,6 @@ public class JPushModule extends ReactContextBaseJavaModule {
 
     protected static final String DidReceiveMessage = "DidReceiveMessage";
     protected static final String DidOpenMessage = "DidOpenMessage";
-    protected static final String BadgeCountKey = "badgeCount";
 
     public JPushModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -57,7 +56,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         super.initialize();
         mLatch.countDown();
         mRAC = getReactApplicationContext();
-        removeCount();
+        DeviceUtil.removeCount(this.getReactApplicationContext());
     }
 
     @Override
@@ -173,27 +172,6 @@ public class JPushModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * 设置角标
-     * @param context
-     */
-    public static void applyCount(Context context) {
-        int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
-        //极光会自动在通知发送一个通知，如果App不在最前面，角标会自动+1，这就是这时候就是等于小米可以跟极光已经配合做好角标了，不需要我们做什么，如果这时候我们再手动更新角标，则用户会收到两条通知，所以在发送之前需要判断一下是否小米手机
-        if (!DeviceUtil.isXiaoMi(context)) {
-            ShortcutBadger.applyCount(context, badgeCount++); //for 1.1.4+
-        }
-        SharePreferencesUtil.saveInt(context,BadgeCountKey,badgeCount);
-    }
-
-    /**
-     * 删除角标
-     */
-    public void removeCount() {
-        SharePreferencesUtil.saveInt(getReactApplicationContext(),BadgeCountKey,0);
-        ShortcutBadger.removeCount(getReactApplicationContext()); //for 1.1.4+
-    }
-
-    /**
      *
      * 获取设备id/registrationId
      * @param callback
@@ -222,7 +200,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         public void onReceive(Context context, Intent data) {
             Bundle bundle = data.getExtras();
             if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
-                applyCount(context);
+                DeviceUtil.applyCount(context);
                 String message = data.getStringExtra(JPushInterface.EXTRA_MESSAGE);
                 String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 WritableMap map = Arguments.createMap();
@@ -232,7 +210,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                 sendEvent(DidReceiveMessage, map, null);
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(data.getAction())) {
                 try {
-                    applyCount(context);
+                    DeviceUtil.applyCount(context);
                     // 通知内容
                     String alertContent = bundle.getString(JPushInterface.EXTRA_ALERT);
                     // extra 字段的 json 字符串
