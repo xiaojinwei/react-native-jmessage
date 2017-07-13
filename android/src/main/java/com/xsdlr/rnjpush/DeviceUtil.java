@@ -7,12 +7,16 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.TextUtils;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 /**
  * Created by abc on 2017/6/26.
  */
 
 public class DeviceUtil {
     private static String mCurrentLauncherName;
+    protected static final String BadgeCountKey = "badgeCount";
+
     public static boolean isXiaoMi(Context context) {
         if (TextUtils.isEmpty(mCurrentLauncherName)) {
             mCurrentLauncherName = getCurrentLaunchname(context);
@@ -65,5 +69,26 @@ public class DeviceUtil {
         }
 
         return resultData;
+    }
+
+    /**
+     * 设置角标
+     * @param context
+     */
+    public static void applyCount(Context context) {
+        int badgeCount = SharePreferencesUtil.getInt(context,BadgeCountKey,0);
+        //极光会自动在通知发送一个通知，如果App不在最前面，角标会自动+1，这就是这时候就是等于小米可以跟极光已经配合做好角标了，不需要我们做什么，如果这时候我们再手动更新角标，则用户会收到两条通知，所以在发送之前需要判断一下是否小米手机
+        if (!isXiaoMi(context)) {
+            ShortcutBadger.applyCount(context, ++badgeCount); //for 1.1.4+
+        }
+        SharePreferencesUtil.saveInt(context,BadgeCountKey,badgeCount);
+    }
+
+    /**
+     * 删除角标
+     */
+    public static void removeCount(Context context) {
+        SharePreferencesUtil.saveInt(context,BadgeCountKey,0);
+        ShortcutBadger.removeCount(context); //for 1.1.4+
     }
 }

@@ -70,6 +70,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
     public void initialize() {
         super.initialize();
         mRAC = getReactApplicationContext();
+        DeviceUtil.removeCount(this.getReactApplicationContext());
     }
 
     @Nullable
@@ -412,6 +413,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
      * @param event
      */
     public void onEvent(MessageEvent event) {
+        DeviceUtil.applyCount(this.getReactApplicationContext());
         Message message = event.getMessage();
         this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("onReceiveMessage", transformToWritableMap(message));
