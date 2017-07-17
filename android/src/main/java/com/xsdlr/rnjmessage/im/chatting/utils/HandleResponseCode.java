@@ -52,9 +52,9 @@ public class HandleResponseCode {
                 break;
             case 800013:
                 content.setText(IdHelper.getString(context, "jmui_server_800013"));
-                Intent intent = new Intent();
-                intent.setClass(context, DemoActivity.class);
-                context.startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(context, DemoActivity.class);
+//                context.startActivity(intent);
                 break;
             case 801001:
             case 802001:

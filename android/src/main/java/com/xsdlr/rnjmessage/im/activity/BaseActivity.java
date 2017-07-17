@@ -60,9 +60,9 @@ public class BaseActivity extends Activity {
         @Override
         public void onClick(View v) {
             dialog.dismiss();
-            Intent intent = new Intent();
-            intent.setClass(BaseActivity.this, DemoActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent();
+//            intent.setClass(BaseActivity.this, DemoActivity.class);
+//            startActivity(intent);
             BaseActivity.this.finish();
         }
     };
@@ -104,10 +104,10 @@ public class BaseActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        Intent intent = new Intent();
-                        intent.setClass(BaseActivity.this, DemoActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+//                        Intent intent = new Intent();
+//                        intent.setClass(BaseActivity.this, DemoActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(intent);
                         BaseActivity.this.finish();
                     }
                 };
