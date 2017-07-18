@@ -15,7 +15,6 @@
 #import "MBProgressHUD+Add.h"
 #import "UIImage+ResizeMagick.h"
 
-
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <JMessage/JMSGConversation.h>
 #import "JCHATStringUtils.h"
@@ -920,21 +919,30 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (model.isTime == YES) {
     return 31;
   }
-  
   if (model.message.contentType == kJMSGContentTypeEventNotification) {
     return model.contentHeight + 17;
   }
-  
   if (model.message.contentType == kJMSGContentTypeText) {
+      //判断是不是群聊对方
+      if (model.message.targetType==kJMSGConversationTypeGroup) {
+          return model.contentHeight + 17+nameHegiht;
+      }
     return model.contentHeight + 17;
   } else if (model.message.contentType == kJMSGContentTypeImage) {
     
     if (model.imageSize.height == 0) {
       [model setupImageSize];
     }
+      //判断是不是群聊对方
+    if (model.message.targetType==kJMSGConversationTypeGroup) {
+          return model.imageSize.height < 44?59:model.imageSize.height + 14+nameHegiht;
+    }
     return model.imageSize.height < 44?59:model.imageSize.height + 14;
     
   } else if (model.message.contentType == kJMSGContentTypeVoice) {
+      if (model.message.targetType==kJMSGConversationTypeGroup) {
+          return 69+nameHegiht;
+      }
     return 69;
   } else {
     return 49;
@@ -998,26 +1006,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     JCHATShowTimeCell *cell=(JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
       if (cell==nil) {
           cell=[[JCHATShowTimeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-      }else{
+      }
+      else{
           for (UIView *subView in cell.contentView.subviews)
           {
               [subView removeFromSuperview];
           }
-          
-
       }
       cell.selectionStyle = UITableViewCellSelectionStyleNone;
-       cell.model=model;
-    if (model.isErrorMessage) {
-      cell.messageTimeLabel.text = [NSString stringWithFormat:@"%@ 错误码:%ld",st_receiveErrorMessageDes,model.messageError.code];
-      return cell;
-    }
-    
-    if (model.message.contentType == kJMSGContentTypeEventNotification) {
-      cell.messageTimeLabel.text = [((JMSGEventContent *)model.message.content) showEventNotification];
-    } else {
-      cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime longLongValue]];
-    }
+    cell.model=model;
     return cell;
     
   } else {

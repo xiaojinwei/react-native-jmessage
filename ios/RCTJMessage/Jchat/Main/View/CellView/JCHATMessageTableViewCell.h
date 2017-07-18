@@ -49,6 +49,7 @@ playVoiceDelegate,JMSGMessageDelegate>
 
 //image
 @property (strong, nonatomic) UILabel *percentLabel;
+@property(strong,nonatomic)UILabel *nameLabel;
 
 //voice
 @property(assign, nonatomic)BOOL continuePlayer;

@@ -13,11 +13,16 @@
 #import "YFGIFImageView.h"
 #import "UIColor+expanded.h"
 #import "MBProgressHUD+Add.h"
+#import "UIView+AutoLayout.h"
 //#define ReceivedBubbleColor UIColorFromRGB(0xd3fab4)
 //#define sendedBubbleColor [UIColor whiteColor]
+
 #define messageStatusBtnFrame [_model.message isReceived]?CGRectMake(_voiceTimeLabel.frame.origin.x + 5, _messageContent.frame.size.height/2 - 8, 15, 15):CGRectMake(_voiceTimeLabel.frame.origin.x - 20, _messageContent.frame.size.height/2 - 8, 15, 15)
+
 #define messagePercentLabelFrame [_model.message isReceived]?CGPointMake(_messageContent.frame.size.width/2 + crossgrap/2, _messageContent.frame.size.height/2):CGPointMake(_messageContent.frame.size.width/2 - crossgrap/2, _messageContent.frame.size.height/2)
+
 #define kVoiceTimeLabelFrame [_model.message isReceived]?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x - 45, _messageContent.frame.size.height/2 - 8, 35, 17)
+
 #define kVoiceTimeLabelHidenFrame [_model.message isReceived]?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 5, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x, _messageContent.frame.size.height/2 - 8, 35, 17)
 
 static NSInteger const headHeight = 46;
@@ -29,9 +34,7 @@ static NSInteger const readViewRadius = 4;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
-  
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-  
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
@@ -43,13 +46,11 @@ static NSInteger const readViewRadius = 4;
     _messageContent = [JCHATMessageContentView new];
     [self addSubview:_headView];
     [self addSubview:_messageContent];
-    
     _readView = [UIView new];
     [_readView setBackgroundColor:[UIColor redColor]];
     _readView.layer.cornerRadius = readViewRadius;
     [self addSubview:self.readView];
     self.continuePlayer = NO;
-    
     self.sendFailView = [UIImageView new];
     [self.sendFailView setUserInteractionEnabled:YES];
     [self.sendFailView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/fail05"]];
@@ -62,27 +63,27 @@ static NSInteger const readViewRadius = 4;
 //    _circleView.hidesWhenStopped = YES;
 //    [self addSubview:_circleView];
       YFGIFImageView*gifView=[[YFGIFImageView alloc]init];
-      NSString *gifPath=[[NSBundle mainBundle]pathForResource:@"发送中.gif" ofType:nil];
-      gifView.backgroundColor=[UIColor clearColor];
+      NSString *gifPath=[[NSBundle mainBundle]pathForResource:@"RCTJMessageBundle.bundle/load.gif" ofType:nil];
       gifView.gifPath=gifPath;
       [gifView setHidden:NO];
       [self addSubview:gifView];
-      _circleView=gifView;
+     _circleView=gifView;
     _voiceTimeLabel = [UILabel new];
     _voiceTimeLabel.backgroundColor = [UIColor clearColor];
     _voiceTimeLabel.font = [UIFont systemFontOfSize:16];
     _voiceTimeLabel.textColor=[UIColor colorWithHexString:@"0x9b9b9b"];
     [self addSubview:_voiceTimeLabel];
-    
     _percentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, chatBgViewHeight, chatBgViewHeight)];
     _percentLabel.hidden = NO;
     _percentLabel.font =[UIFont systemFontOfSize:18];
     _percentLabel.textAlignment=NSTextAlignmentCenter;
     _percentLabel.textColor=[UIColor whiteColor];
-    
     [_messageContent addSubview:_percentLabel];
     [_percentLabel setBackgroundColor:[UIColor clearColor]];
-    
+      _nameLabel=[[UILabel alloc] init];
+    _nameLabel.font=[UIFont systemFontOfSize:12];
+      _nameLabel.textColor=[UIColor colorWithString:@"0x545454"];
+    [self addSubview:_nameLabel];
     [self addGestureForAllView];
   }
   return self;
@@ -135,7 +136,6 @@ static NSInteger const readViewRadius = 4;
   } else {
     [self.readView setHidden:NO];
   }
-  
   [self updateFrameWithContentFrame:model.contentSize];
   [self layoutAllView];
 }
@@ -164,13 +164,11 @@ static NSInteger const readViewRadius = 4;
     } else {
       [self.sendFailView setHidden:NO];
     }
-    
     _messageContent.alpha = 1;
   } else {
     _messageContent.alpha = 1;
     [_circleView stopGIF];
     [_circleView setHidden:YES];
-
     [self.sendFailView setHidden:YES];
     [self.percentLabel setHidden:YES];
   }
@@ -231,16 +229,37 @@ static NSInteger const readViewRadius = 4;
 
 - (void)updateFrameWithContentFrame:(CGSize)contentSize {
   BOOL isRecive = [_model.message isReceived];
+
   if (isRecive) {
     [_headView setFrame:CGRectMake(gapWidth, 0, headHeight, headHeight)];
 //    [_messageContent setBubbleSide:isRecive];
-    [_messageContent setFrame:CGRectMake(headHeight + 20, 0, contentSize.width, contentSize.height)];
-    [_readView setFrame:CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, 5, 2 * readViewRadius, 2 * readViewRadius)];
+      
+    //判断是否显示名字
+    if (self.model.message.targetType==kJMSGConversationTypeGroup) {
+      [_messageContent setFrame:CGRectMake(headHeight + 20, nameHegiht, contentSize.width, contentSize.height)];
+      _nameLabel.hidden=NO;
+      _nameLabel.text=self.model.message.fromName;
+      CGSize nameSize=[_nameLabel.text sizeWithFont:[UIFont systemFontOfSize:12]];
+      [_nameLabel setFrame:CGRectMake(headHeight + 20, 0, nameSize.width, nameHegiht)];
+    }else{
+      _nameLabel.hidden=YES;
+      [_messageContent setFrame:CGRectMake(headHeight + 20, 0, contentSize.width, contentSize.height)];
+    }
+    [_readView setFrame:CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, 25, 2 * readViewRadius, 2 * readViewRadius)];
     
   } else {
     [_headView setFrame:CGRectMake(kApplicationWidth - headHeight - gapWidth, 0, headHeight, headHeight)];//头像位置
 //    [_messageContent setBubbleSide:isRecive];
-    [_messageContent setFrame:CGRectMake(kApplicationWidth - headHeight - 20 - contentSize.width, 0, contentSize.width, contentSize.height)];
+      //判断是否显示名字
+      if (self.model.message.targetType==kJMSGConversationTypeGroup) {
+           [_messageContent setFrame:CGRectMake(kApplicationWidth - headHeight - 20 - contentSize.width, nameHegiht, contentSize.width, contentSize.height)];
+          _nameLabel.hidden=NO;
+          _nameLabel.text=@"我";
+          [_nameLabel setFrame:CGRectMake(kApplicationWidth - headHeight - 20-20, 0, 100, nameHegiht)];
+      }else{
+          _nameLabel.hidden=YES;
+          [_messageContent setFrame:CGRectMake(kApplicationWidth - headHeight - 20 - contentSize.width, 0, contentSize.width, contentSize.height)];
+      }
     [_readView setFrame:CGRectMake(_messageContent.frame.origin.x - 10, 5, 8, 8)];
   }
   [_messageContent setMessageContentWith:_model.message];
@@ -251,6 +270,7 @@ static NSInteger const readViewRadius = 4;
   [_circleView setFrame:messageStatusBtnFrame];
   [_sendFailView setFrame:messageStatusBtnFrame];
   [_percentLabel setCenter:messagePercentLabelFrame];
+ 
 }
 
 - (void)tapContent:(UIGestureRecognizer *)gesture {

@@ -125,7 +125,7 @@ static NSInteger const voiceBubbleHeight = 50;
     }
   imgSize.height=realSize.height+24;
   imgSize.width=realSize.width+2*15;
-  _contentSize = imgSize;
+   _contentSize = imgSize;
   _contentHeight = imgSize.height;
   return imgSize;
 }
@@ -140,6 +140,7 @@ static NSInteger const voiceBubbleHeight = 50;
 - (void)setupImageSize {
   if (self.message.status == kJMSGMessageStatusReceiveDownloadFailed) {
     _contentSize = CGSizeMake(77, 57);
+    
     return;
   }
   
@@ -179,7 +180,7 @@ static NSInteger const voiceBubbleHeight = 50;
 //        _contentSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);
 //        return;
 //      }
-      self.imageSize = CGSizeMake(imgWidth, imgHeight);
+    self.imageSize = CGSizeMake(imgWidth, imgHeight);
       _contentSize = CGSizeMake(imgWidth, imgHeight);
     } else {
       NSLog(@"get thumbImageData fail with error %@",error);
@@ -231,5 +232,6 @@ static NSInteger const voiceBubbleHeight = 50;
         voiceBubbleWidth=65+scae*(duration-10);
     }
   _contentSize = CGSizeMake(voiceBubbleWidth, voiceBubbleHeight);
+   
 }
 @end
