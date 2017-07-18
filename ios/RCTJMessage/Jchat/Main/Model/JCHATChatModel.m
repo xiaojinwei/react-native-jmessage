@@ -26,7 +26,6 @@ static NSInteger const voiceBubbleHeight = 50;
 - (void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation {
   _message = message;
   _messageTime = message.timestamp;
-  
   switch (message.contentType) {
     case kJMSGContentTypeUnknown:
     {
@@ -129,7 +128,6 @@ static NSInteger const voiceBubbleHeight = 50;
   _contentHeight = imgSize.height;
   return imgSize;
 }
-
 - (CGSize)getNotificationWithString:(NSString *)string {
   CGSize notiSize= [JCHATStringUtils stringSizeWithWidthString:string withWidthLimit:280 withFont:[UIFont systemFontOfSize:14]];
   _contentHeight = notiSize.height;

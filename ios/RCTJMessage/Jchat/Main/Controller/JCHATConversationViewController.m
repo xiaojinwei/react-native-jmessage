@@ -1002,7 +1002,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   if (model.isTime == YES || model.message.contentType == kJMSGContentTypeEventNotification || model.isErrorMessage) {
    static NSString *cellIdentifier = @"timeCell";
-
     JCHATShowTimeCell *cell=(JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
       if (cell==nil) {
           cell=[[JCHATShowTimeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -1014,8 +1013,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
           }
       }
       cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model=model;
-    return cell;
+      cell.model=model;
+      return cell;
     
   } else {
     static NSString *cellIdentifier = @"MessageCell";
