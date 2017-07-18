@@ -45,7 +45,7 @@ playVoiceDelegate,JMSGMessageDelegate>
 @property(weak, nonatomic) id delegate;
 
 @property (strong, nonatomic) UIImageView *sendFailView;
-@property (strong, nonatomic) YFGIFImageView *circleView;
+@property (strong, nonatomic) UIActivityIndicatorView *circleView;
 
 //image
 @property (strong, nonatomic) UILabel *percentLabel;

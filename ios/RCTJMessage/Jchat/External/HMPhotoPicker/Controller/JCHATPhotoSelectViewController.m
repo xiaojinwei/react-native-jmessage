@@ -59,7 +59,7 @@
   
   imageManager = [[PHCachingImageManager alloc] init];
 
-  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+ 
 //  [defaultCenter addObserver:self selector:@selector(didSelectStatusChange:) name:kSelectStatusChange object:nil];
 //  [defaultCenter addObserver:self selector:@selector(finshToSelectPhoto:) name:kFinishToSelectPhoto object:nil];
   [self setUpCollectionView];
@@ -250,7 +250,6 @@
   [self.navigationController setNavigationBarHidden:NO];
   [photoGridView reloadData];
 }
-
 #pragma mark - CollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
   return allPhotoArr.count;

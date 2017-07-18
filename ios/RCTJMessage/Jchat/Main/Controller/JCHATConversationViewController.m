@@ -68,15 +68,15 @@
   [self addNotification];
   [self addDelegate];
   [self getGroupMemberListWithGetMessageFlag:YES];
+  self.view.backgroundColor=[UIColor whiteColor];
    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  
+  self.navigationController.navigationBar.translucent = NO;
 //  DDLogDebug(@"Event - viewWillAppear");
   [super viewWillAppear:animated];
   [self.toolBarContainer.toolbar drawRect:self.toolBarContainer.toolbar.frame];
-
   [_conversation refreshTargetInfoFromServer:^(id resultObject, NSError *error) {
     [self.navigationController setNavigationBarHidden:NO];
     // 禁用 iOS7 返回手势

@@ -50,7 +50,6 @@ NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource
   _albumTable.delegate = self;
   _albumTable.dataSource = self;
   _albumTable.tableFooterView = [UIView new];
-    _albumTable.layer.borderWidth=1.0;
   if ([[[UIDevice currentDevice]systemVersion] floatValue]>= 8) {
     [self pushToSelectPhotoVCWithIndex:0];
   } else {
@@ -66,7 +65,10 @@ NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource
                                                                           target:self
                                                                           action:@selector(cancel)];
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.navigationController.navigationBar.translucent = YES;
+}
 - (void)prepareAlbumArrWithPhotosFramework {//ios 8 系统以后使用 photos.framework
 //  all photoAlbumdel
   PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc] init];

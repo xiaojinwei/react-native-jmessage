@@ -17,13 +17,13 @@
 //#define ReceivedBubbleColor UIColorFromRGB(0xd3fab4)
 //#define sendedBubbleColor [UIColor whiteColor]
 
-#define messageStatusBtnFrame [_model.message isReceived]?CGRectMake(_voiceTimeLabel.frame.origin.x + 5, _messageContent.frame.size.height/2 - 8, 15, 15):CGRectMake(_voiceTimeLabel.frame.origin.x - 20, _messageContent.frame.size.height/2 - 8, 15, 15)
+#define messageStatusBtnFrame  [_model.message isReceived]?(_model.message.targetType==kJMSGConversationTypeSingle? CGRectMake(_voiceTimeLabel.frame.origin.x + 5, _messageContent.frame.size.height/2 - 8, 15, 15):CGRectMake(_voiceTimeLabel.frame.origin.x + 5, _messageContent.frame.size.height/2 - 8+nameHegiht, 15, 15)):(_model.message.targetType==kJMSGConversationTypeSingle? CGRectMake(_voiceTimeLabel.frame.origin.x - 20, _messageContent.frame.size.height/2 - 8, 15, 15):CGRectMake(_voiceTimeLabel.frame.origin.x - 20, _messageContent.frame.size.height/2 - 8+nameHegiht, 15, 15))
 
 #define messagePercentLabelFrame [_model.message isReceived]?CGPointMake(_messageContent.frame.size.width/2 + crossgrap/2, _messageContent.frame.size.height/2):CGPointMake(_messageContent.frame.size.width/2 - crossgrap/2, _messageContent.frame.size.height/2)
 
-#define kVoiceTimeLabelFrame [_model.message isReceived]?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x - 45, _messageContent.frame.size.height/2 - 8, 35, 17)
+#define kVoiceTimeLabelFrame  [_model.message isReceived]?(_model.message.targetType==kJMSGConversationTypeSingle?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, _messageContent.frame.size.height/2 - 8+nameHegiht, 35, 17)):(_model.message.targetType==kJMSGConversationTypeSingle?CGRectMake(_messageContent.frame.origin.x - 45, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x - 45, _messageContent.frame.size.height/2 - 8+nameHegiht, 35, 17))
 
-#define kVoiceTimeLabelHidenFrame [_model.message isReceived]?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 5, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x, _messageContent.frame.size.height/2 - 8, 35, 17)
+#define kVoiceTimeLabelHidenFrame  [_model.message isReceived]?(_model.message.targetType==kJMSGConversationTypeSingle?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 5, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 5, _messageContent.frame.size.height/2 - 8+nameHegiht, 35, 17)):(_model.message.targetType==kJMSGConversationTypeSingle?CGRectMake(_messageContent.frame.origin.x, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x, _messageContent.frame.size.height/2 - 8+nameHegiht, 35, 17))
 
 static NSInteger const headHeight = 46;
 static NSInteger const gapWidth = 10;
@@ -36,6 +36,9 @@ static NSInteger const readViewRadius = 4;
     reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+      
+     
+
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
     _headView = [UIImageView new];
@@ -56,18 +59,21 @@ static NSInteger const readViewRadius = 4;
     [self.sendFailView setImage:[UIImage imageNamed:@"RCTJMessageBundle.bundle/fail05"]];
     [self addSubview:self.sendFailView];
     
-//    _circleView = [UIActivityIndicatorView new];
-//   
-//    [_circleView setBackgroundColor:[UIColor clearColor]];
-//    [_circleView setHidden:NO];
-//    _circleView.hidesWhenStopped = YES;
-//    [self addSubview:_circleView];
-      YFGIFImageView*gifView=[[YFGIFImageView alloc]init];
-      NSString *gifPath=[[NSBundle mainBundle]pathForResource:@"RCTJMessageBundle.bundle/load.gif" ofType:nil];
-      gifView.gifPath=gifPath;
-      [gifView setHidden:NO];
-      [self addSubview:gifView];
-     _circleView=gifView;
+    _circleView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+   
+    [_circleView setBackgroundColor:[UIColor clearColor]];
+    _circleView.color=[UIColor redColor];
+    [_circleView setHidden:NO];
+   
+   _circleView.hidesWhenStopped = YES;
+    [self addSubview:_circleView];
+//      YFGIFImageView*gifView=[[YFGIFImageView alloc]init];
+//      gifView.backgroundColor=[UIColor whiteColor];
+//      NSString *gifPath=[[NSBundle mainBundle]pathForResource:@"RCTJMessageBundle.bundle/load.gif" ofType:nil];
+//      gifView.gifPath=gifPath;
+//      [gifView setHidden:NO];
+//      [self addSubview:gifView];
+//     _circleView=gifView;
     _voiceTimeLabel = [UILabel new];
     _voiceTimeLabel.backgroundColor = [UIColor clearColor];
     _voiceTimeLabel.font = [UIFont systemFontOfSize:16];
@@ -144,7 +150,7 @@ static NSInteger const readViewRadius = 4;
   if (_model.message.status == kJMSGMessageStatusSending
       || _model.message.status == kJMSGMessageStatusSendDraft) {
     [_circleView setHidden:NO];
-    [_circleView startGIF];
+    [_circleView startAnimating];
     [self.sendFailView setHidden:YES];
     [self.percentLabel setHidden:NO];
     if (_model.message.contentType == kJMSGContentTypeImage) {
@@ -157,7 +163,7 @@ static NSInteger const readViewRadius = 4;
   } else if (_model.message.status == kJMSGMessageStatusSendFailed
              || _model.message.status == kJMSGMessageStatusSendUploadFailed
              || _model.message.status == kJMSGMessageStatusReceiveDownloadFailed) {
-    [_circleView stopGIF];
+    [_circleView stopAnimating];
     [_circleView setHidden:YES];
     if ([_model.message isReceived]) {
       [self.sendFailView setHidden:YES];
@@ -167,7 +173,7 @@ static NSInteger const readViewRadius = 4;
     _messageContent.alpha = 1;
   } else {
     _messageContent.alpha = 1;
-    [_circleView stopGIF];
+    [_circleView stopAnimating];
     [_circleView setHidden:YES];
     [self.sendFailView setHidden:YES];
     [self.percentLabel setHidden:YES];
@@ -282,7 +288,7 @@ static NSInteger const readViewRadius = 4;
       NSLog(@"正在下载缩略图");
       JPIMLog(@"Action");
       [_circleView setHidden:NO];
-      [_circleView startGIF];
+      [_circleView startAnimating];
     } else {
       if (self.delegate && [(id<PictureDelegate>)self.delegate respondsToSelector:@selector(tapPicture:tapView:tableViewCell:)]) {
         [(id<PictureDelegate>)self.delegate tapPicture:_indexPath tapView:(UIImageView *)gesture.view tableViewCell:self];
