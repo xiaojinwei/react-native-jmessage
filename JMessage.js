@@ -22,6 +22,7 @@ export default class JMessage {
         "onReceiveMessage": "onReceiveMessage",
         "onJGSendMessage": "onJGSendMessage",
         "onReadMessageBack": "onReadMessageBack",
+        "onNotificationClickEvent":"onNotificationClickEvent",
     };
     static addOnReadMessageBack(cb) {
         return JMessage.addEventListener('onReadMessageBack', cb)
@@ -49,9 +50,11 @@ export default class JMessage {
     static removeAllListener(eventNames = Object.keys(JMessage.events)) {
         if (Array.isArray(eventNames)) {
             for ( eventName of eventNames) {
+                console.log('eventName=====',eventName)
                 JMessage.eventEmitter.removeAllListeners(eventName);
             }
         } else {
+            console.log('eventName===22222==',eventNames)
             JMessage.eventEmitter.removeAllListeners(eventNames);
         }
     }
@@ -78,8 +81,10 @@ export default class JMessage {
                 eventName, (userInfo) => {
                     handler(userInfo);
                 });
+
         }
     }
+    
     static init() {
         if (Platform.OS === 'android') {
             JMessageModule.setupJMessage();

@@ -81,4 +81,16 @@ module.exports = JPush= {
                 });
         }
     },
+    removeListener(eventName){
+        if(Platform.OS === 'android') {
+            return DeviceEventEmitter.removeAllListeners(eventName)
+        }
+        else {
+            return NativeAppEventEmitter.removeAllListeners(eventName)
+        }
+    },
+    removeAllListeners(){
+        this.removeListener(JPushModule.DidOpenMessage)
+        this.removeListener(JPushModule.DidReceiveMessage)
+    },
 }
