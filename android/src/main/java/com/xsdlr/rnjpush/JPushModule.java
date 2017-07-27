@@ -200,7 +200,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         public void onReceive(Context context, Intent data) {
             Bundle bundle = data.getExtras();
             if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(data.getAction())) {
-                DeviceUtil.applyCount(context);
+//                DeviceUtil.applyCount(context);
                 String message = data.getStringExtra(JPushInterface.EXTRA_MESSAGE);
                 String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 WritableMap map = Arguments.createMap();
