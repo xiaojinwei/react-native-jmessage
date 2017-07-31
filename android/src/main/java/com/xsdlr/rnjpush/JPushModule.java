@@ -107,7 +107,11 @@ public class JPushModule extends ReactContextBaseJavaModule {
 //        Logger.toast(mContext, "isPushStopped:"+isPushStopped);
     }
 
-
+    @ReactMethod
+    public void clearAllNotifications() {
+        mContext = getCurrentActivity();
+        JPushInterface.clearAllNotifications(mContext);
+    }
     /**
      * Set alias. This API is covering logic rather then incremental logic, means call this API will cover alias
      * that have been set before. See document: https://docs.jiguang.cn/jpush/client/Android/android_api/#api_3

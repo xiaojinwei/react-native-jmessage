@@ -50,6 +50,9 @@ module.exports = JPush= {
     isPushStopped() {
         return JPushModule.isPushStopped();
     },
+    clearAllNotifications() {
+        return JPushModule.clearAllNotifications();
+    },
     toNotificationSetPage(){
         return JPushModule.toNotificationSetPage();
     },
