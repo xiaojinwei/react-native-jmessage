@@ -66,6 +66,16 @@ module.exports = JPush= {
             handler(message);
         });
     },
+    didReceiveNotification(handler: Function) {
+        receiveMessageSubscript = this.addEventListener(JPushModule.DidReceiveNotification, message => {
+            console.log('didReceiveNotification-->message:',message)
+            //处于后台时，拦截收到的通知
+            if(AppState.currentState === 'background') {
+                return;
+            }
+            handler(message);
+        });
+    },
 
     didOpenMessage(handler: Function) {
         openMessageSubscription = this.addEventListener(JPushModule.DidOpenMessage, handler);
