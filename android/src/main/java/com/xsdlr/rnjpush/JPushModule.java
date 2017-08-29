@@ -34,6 +34,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
     private static CountDownLatch mLatch;
 
     protected static final String DidReceiveMessage = "DidReceiveMessage";
+    protected static final String DidReceiveNotification = "DidReceiveNotification";
     protected static final String DidOpenMessage = "DidOpenMessage";
 
     public JPushModule(ReactApplicationContext reactContext) {
@@ -69,6 +70,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
         final Map<String, Object> constants = new HashMap<>();
         constants.put(DidReceiveMessage, DidReceiveMessage);
         constants.put(DidOpenMessage, DidOpenMessage);
+        constants.put(DidReceiveNotification,DidReceiveNotification);
         return constants;
 
     }
@@ -233,7 +235,7 @@ public class JPushModule extends ReactContextBaseJavaModule {
                     WritableMap map = Arguments.createMap();
                     map.putString("alertContent", alertContent);
                     map.putString("extras", extras);
-                    sendEvent(DidReceiveMessage, map, null);
+                    sendEvent(DidReceiveNotification, map, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
