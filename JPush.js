@@ -10,7 +10,7 @@ import React, {
 import headlessJsTask from './headlessTask';
 
 const JPushModule = NativeModules.JPushModule;
-var receiveMessageSubscript, openMessageSubscription;
+var receiveMessageSubscript, openMessageSubscription,receiveNotificationSubscript;
 
 module.exports = JPush= {
     // setAppkeyAndSecret(key:String,secret:String) {
@@ -67,14 +67,16 @@ module.exports = JPush= {
         });
     },
     didReceiveNotification(handler: Function) {
-        receiveMessageSubscript = this.addEventListener(JPushModule.DidReceiveNotification, message => {
-            console.log('didReceiveNotification-->message:',message)
-            //处于后台时，拦截收到的通知
-            if(AppState.currentState === 'background') {
-                return;
-            }
-            handler(message);
-        });
+        if(Platform.OS === 'android') {
+            receiveNotificationSubscript = this.addEventListener(JPushModule.DidReceiveNotification, message => {
+                console.log('didReceiveNotification-->message:',message)
+                //处于后台时，拦截收到的通知
+                if(AppState.currentState === 'background') {
+                    return;
+                }
+                handler(message);
+            });
+        }
     },
 
     didOpenMessage(handler: Function) {
