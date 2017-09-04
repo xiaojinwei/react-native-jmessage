@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.xsdlr.rnjmessage.JMessageModule;
 import com.xsdlr.rnjmessage.im.chatting.utils.DialogCreator;
 import com.xsdlr.rnjmessage.im.chatting.utils.FileHelper;
 import com.xsdlr.rnjmessage.im.chatting.utils.IdHelper;
@@ -94,30 +95,34 @@ public class BaseActivity extends Activity {
 //                dialog = DialogCreator.createBaseCustomDialog(mContext, title, msg, onClickListener);
                 break;
             case user_logout:
-                String title = mContext.getString(IdHelper.getString(mContext,
-                        "jmui_user_logout_dialog_title"));
-                String msg = mContext.getString(IdHelper.getString(mContext, "jmui_user_logout_dialog_message"));
-                dialog = DialogCreator.createBaseCustomDialog(mContext, title, msg, onClickListener);
+                JMessageModule.onReceiveLogout();//发送一个用户退出监听事件
+                BaseActivity.this.finish();
+//                String title = mContext.getString(IdHelper.getString(mContext,
+//                        "jmui_user_logout_dialog_title"));
+//                String msg = mContext.getString(IdHelper.getString(mContext, "jmui_user_logout_dialog_message"));
+//                dialog = DialogCreator.createBaseCustomDialog(mContext, title, msg, onClickListener);
                 break;
             case user_deleted:
-                View.OnClickListener listener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-//                        Intent intent = new Intent();
-//                        intent.setClass(BaseActivity.this, DemoActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent);
-                        BaseActivity.this.finish();
-                    }
-                };
-                title = mContext.getString(IdHelper.getString(mContext, "jmui_user_logout_dialog_title"));
-                msg = mContext.getString(IdHelper.getString(mContext, "jmui_user_delete_hint_message"));
-                dialog = DialogCreator.createBaseCustomDialog(mContext, title, msg, listener);
+                JMessageModule.onReceiveLogout();//发送一个用户退出监听事件
+                BaseActivity.this.finish();
+//                View.OnClickListener listener = new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+////                        Intent intent = new Intent();
+////                        intent.setClass(BaseActivity.this, DemoActivity.class);
+////                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+////                        startActivity(intent);
+//                        BaseActivity.this.finish();
+//                    }
+//                };
+//                String title = mContext.getString(IdHelper.getString(mContext, "jmui_user_logout_dialog_title"));
+//                String msg = mContext.getString(IdHelper.getString(mContext, "jmui_user_delete_hint_message"));
+//                dialog = DialogCreator.createBaseCustomDialog(mContext, title, msg, listener);
                 break;
         }
-        dialog.getWindow().setLayout((int) (0.8 * mWidth), WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.show();
+//        dialog.getWindow().setLayout((int) (0.8 * mWidth), WindowManager.LayoutParams.WRAP_CONTENT);
+//        dialog.show();
     }
 
     @Override

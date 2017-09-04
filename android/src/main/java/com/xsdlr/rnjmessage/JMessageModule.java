@@ -82,6 +82,7 @@ public class JMessageModule extends ReactContextBaseJavaModule {
         constants.put("onReadMessageBack","onReadMessageBack");
         constants.put("onReceiveMessage","onReceiveMessage");
         constants.put("onNotificationClickEvent","onNotificationClickEvent");
+        constants.put("onReceiveLogout","onReceiveLogout");
 
         return constants;
     }
@@ -438,6 +439,10 @@ public class JMessageModule extends ReactContextBaseJavaModule {
     public static void onReadMessageBack(){
         mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("onReadMessageBack", "onReadMessageBack");
+    }
+    public static void onReceiveLogout(){
+        mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onReceiveLogout", "onReceiveLogout");
     }
 
     private WritableMap transformToWritableMap(Message message) {
