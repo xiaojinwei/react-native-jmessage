@@ -108,7 +108,7 @@ RCT_EXPORT_MODULE()
             NSLog(@"Receive Server Friend Update Event ");
             break;
         case kJMSGEventNotificationLoginKicked:
-            NSLog(@"Login Kicked Event ");
+            [self.bridge.eventDispatcher sendAppEventWithName:@"onReceiveLogout" body:nil];
             break;
         case kJMSGEventNotificationServerAlterPassword:
             NSLog(@"Server Alter Password Event ");
