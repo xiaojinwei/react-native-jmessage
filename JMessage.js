@@ -23,11 +23,14 @@ export default class JMessage {
         "onJGSendMessage": "onJGSendMessage",
         "onReadMessageBack": "onReadMessageBack",
         "onNotificationClickEvent":"onNotificationClickEvent",
+        "onReceiveLogout":"onReceiveLogout",
     };
     static addOnReadMessageBack(cb) {
         return JMessage.addEventListener('onReadMessageBack', cb)
     }
-
+    static addOnReceiveLogout(cb) {
+        return JMessage.addEventListener('onReceiveLogout', cb)
+    }
     static addReceiveMessageListener(cb) {
         // return JMessage.eventEmitter.addListener('onReceiveMessage', (message) => {
         //     console.log('onReceiveMessage===',message);
