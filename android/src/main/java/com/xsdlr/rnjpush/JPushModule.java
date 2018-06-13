@@ -337,6 +337,8 @@ public class JPushModule extends ReactContextBaseJavaModule {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
