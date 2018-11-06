@@ -130,6 +130,20 @@ RCT_EXPORT_METHOD(setAlias:(NSString *)alias){
 RCT_EXPORT_METHOD(removeAlias:(NSString *)alias type:(NSString *)type){
     [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
 }
+/*!
+ * 设置 tags 的方法
+ */
+RCT_EXPORT_METHOD( setTags:(NSArray *)tags
+                  callback:(RCTResponseSenderBlock)callback) {
+
+    NSSet *tagSet;
+
+    if (tags != NULL) {
+        tagSet = [NSSet setWithArray:tags];
+    }
+
+    [JPUSHService setTags:tagSet callbackSelector:nil object:nil];
+}
 RCT_EXPORT_METHOD(isPushStopped:(RCTPromiseResolveBlock)resolve
                   :(RCTPromiseRejectBlock)reject){
     resolve(@([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone));

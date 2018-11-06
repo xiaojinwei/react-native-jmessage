@@ -14,10 +14,12 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -176,7 +178,31 @@ public class JPushModule extends ReactContextBaseJavaModule {
             });
         }
     }
-
+/**
+     * 设置Tags
+     * @param tags
+     * @param callback
+     */
+    @ReactMethod
+    public void setTags(final ReadableArray tags) {
+        Set<String> tagSet = getSet(tags);
+        JPushInterface.setTags(getReactApplicationContext(), tagSet, new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                Logger.i(TAG, "setTags--status："+i);
+            }
+        });
+    }
+    private Set<String> getSet(ReadableArray strArray) {
+        Set<String> tagSet = new LinkedHashSet<>();
+        for (int i = 0; i < strArray.size(); i++) {
+            if (!ExampleUtil.isValidTagAndAlias(strArray.getString(i))) {
+                Logger.toast(getReactApplicationContext(), "Invalid tag !");
+            }
+            tagSet.add(strArray.getString(i));
+        }
+        return tagSet;
+    }
     /**
      *
      * 获取设备id/registrationId

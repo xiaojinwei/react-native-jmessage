@@ -26,7 +26,9 @@ module.exports = JPush= {
         console.log('inter setAlias');
         JPushModule.setAlias(alias);
     },
-
+    setTags(tags){
+        JPushModule.setTags(tags)
+    },
     removeAlias(alias:String) {
         JPushModule.setAlias('');
     },
