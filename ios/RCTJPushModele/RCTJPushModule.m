@@ -133,8 +133,7 @@ RCT_EXPORT_METHOD(removeAlias:(NSString *)alias type:(NSString *)type){
 /*!
  * 设置 tags 的方法
  */
-RCT_EXPORT_METHOD( setTags:(NSArray *)tags
-                  callback:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD( setTags:(NSArray *)tags) {
 
     NSSet *tagSet;
 
