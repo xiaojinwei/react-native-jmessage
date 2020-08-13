@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.xsdlr.rnjmessage.R;
 import com.xsdlr.rnjmessage.im.Contracts;
@@ -28,7 +29,7 @@ import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
-public class MainController implements OnClickListener, OnPageChangeListener {
+public class MainController implements OnClickListener, ViewPager.OnPageChangeListener {
 
     private final static String TAG = "MainController";
 

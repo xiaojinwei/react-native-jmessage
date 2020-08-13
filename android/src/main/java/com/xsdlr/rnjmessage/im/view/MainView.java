@@ -1,11 +1,12 @@
 package com.xsdlr.rnjmessage.im.view;
 
 import android.content.Context;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.xsdlr.rnjmessage.R;
 
@@ -40,7 +41,7 @@ public class MainView extends RelativeLayout {
         }
     }
 
-    public void setOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener) {
         mViewContainer.addOnPageChangeListener(onPageChangeListener);
     }
 

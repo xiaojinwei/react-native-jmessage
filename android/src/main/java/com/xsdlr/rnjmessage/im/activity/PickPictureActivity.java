@@ -81,10 +81,10 @@ public class PickPictureActivity extends BaseActivity {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == SCROLL_STATE_FLING) {
 
-                    Fresco.getImagePipeline().pause();
+                    //Fresco.getImagePipeline().pause();
 //                    Picasso.with(view.getContext()).pauseTag(TAG);
                 } else {
-                    Fresco.getImagePipeline().resume();
+                    //Fresco.getImagePipeline().resume();
 //                    Picasso.with(view.getContext()).resumeTag(TAG);
                 }
             }
